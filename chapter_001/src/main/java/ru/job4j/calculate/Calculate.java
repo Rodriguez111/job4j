@@ -6,12 +6,15 @@ package ru.job4j.calculate;
 *@author Rodriguez (mymail4java@gmail.com)
 *prints to console "Hello World!"
 *
-Main.
-@param args - args
 */
 
 
 public class Calculate {
+/**
+*Main.
+*@param args - args
+*/
+	
 	public static void main(String[] args){
 		
 		
