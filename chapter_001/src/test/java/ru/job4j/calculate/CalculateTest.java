@@ -20,7 +20,7 @@ public class CalculateTest {
 @Test
 
 public void whenTakeNameThenTreeEchoPlusName() {
-    String input = "Rodriguezz";
+    String input = "Rodriguez";
     String expect = "Echo, echo, echo : Rodriguez"; 
     Calculate calc = new Calculate();
     String result = calc.echo(input);
