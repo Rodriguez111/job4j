@@ -20,4 +20,10 @@ public class MaxTest {
         assertThat(max.max(8, 3), is(8));
     }
 
+    @Test
+    public void whenThirdValueLarger() {
+        Max max = new Max();
+        assertThat(max.max(4, 3, 12), is(12));
+    }
+
 }
