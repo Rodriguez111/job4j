@@ -39,14 +39,15 @@ public class Triangle {
      */
 
     public double area() {
+        double result = -1;
         double ab = a.distanceTo(b);
         double ac = a.distanceTo(c);
         double bc = b.distanceTo(c);
         if (exists(ab, ac, bc)) {
             double semiPerimeter = semiPerimeter(ab, ac, bc);
-            return Math.sqrt(semiPerimeter * (semiPerimeter - ab) * (semiPerimeter - ac) * (semiPerimeter - bc));
+            result =  Math.sqrt(semiPerimeter * (semiPerimeter - ab) * (semiPerimeter - ac) * (semiPerimeter - bc));
         }
-        return -1.0;
+        return result;
     }
 
 }
