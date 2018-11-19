@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 
 
 public class ArrayCharTest {
+
     @Test
     public void whenStartWithPrefixThenTrue() {
         ArrayChar word = new ArrayChar("Hello");
