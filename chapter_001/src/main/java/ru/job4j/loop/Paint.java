@@ -1,5 +1,7 @@
 package ru.job4j.loop;
 
+import java.util.function.BiPredicate;
+
 /**
  * Painting pyramid.
  */
@@ -14,20 +16,7 @@ public class Paint {
      */
 
     public String rightTrl(int height) {
-        StringBuilder stringBuilder = new StringBuilder();
-        String ln = System.lineSeparator();
-        int width = height;
-        for (int row = 0; row != height; row++) {
-            for (int column = 0; column != width; column++) {
-                if (row >= column) {
-                    stringBuilder.append("^");
-                } else {
-                    stringBuilder.append(" ");
-                }
-            }
-            stringBuilder.append(ln);
-        }
-    return  stringBuilder.toString();
+    return loopBy(height, height, (row, column) -> row >= column);
     }
 
     /**
@@ -36,20 +25,7 @@ public class Paint {
      * @return
      */
     public String leftTrl(int height) {
-        StringBuilder stringBuilder = new StringBuilder();
-        String ln = System.lineSeparator();
-        int width = height;
-        for (int row = 0; row != height; row++) {
-            for (int column = 0; column != width; column++) {
-                if (column >= width - row - 1) {
-                    stringBuilder.append("^");
-                } else {
-                    stringBuilder.append(" ");
-                }
-            }
-            stringBuilder.append(ln);
-        }
-        return  stringBuilder.toString();
+        return loopBy(height, height, (row, column) -> column >= height - row - 1);
     }
 
 
@@ -60,18 +36,28 @@ public class Paint {
      */
 
     public String pyramid(int height) {
+        return loopBy(height, 2 * height - 1, (row, column) -> row >= height - column - 1 && column <= row + height - 1);
+    }
+
+
+    /**
+     *
+     * @param height - height of pyramid.
+     * @param width - width of pyramid.
+     * @param predict - check condition.
+     * @return
+     */
+    private String loopBy(int height, int width, BiPredicate<Integer, Integer> predict) {
         StringBuilder stringBuilder = new StringBuilder();
-        String ln = System.lineSeparator();
-        int width = 2 * height - 1;
         for (int row = 0; row != height; row++) {
             for (int column = 0; column != width; column++) {
-                if (row >= height - column - 1 && column <= row + height - 1) {
+                if (predict.test(row, column)) {
                     stringBuilder.append("^");
                 } else {
                     stringBuilder.append(" ");
                 }
             }
-            stringBuilder.append(ln);
+            stringBuilder.append(System.lineSeparator());
         }
         return stringBuilder.toString();
     }

@@ -25,8 +25,6 @@ public class PaintTest {
         StringJoiner sj = new StringJoiner(System.lineSeparator(), "", System.lineSeparator());
         assertThat(result, is(sj.add("   ^").add("  ^^").add(" ^^^").add("^^^^").toString()));
         System.out.println(paint.leftTrl(4));
-        System.out.println("------");
-        System.out.println(paint.leftTrl(4) + (paint.rightTrl(4)));
     }
 
     @Test
