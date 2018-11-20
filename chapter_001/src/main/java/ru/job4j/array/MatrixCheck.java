@@ -15,23 +15,25 @@ public class MatrixCheck {
     public boolean mono(boolean[][] data) {
         boolean result = true;
         boolean firstElement = data[0][0];
-        for (int column = 0; column != data.length;  column++) {
-            for (int row = 0; row != data[0].length;  row++) {
 
-                if (row == column) { //main diagonal
-                    if (data[column][row] != firstElement) {
+        int columns = data[0].length;
+        int rows = data.length;
+            for (int i = 0; i != columns * rows;  i++) {
+
+                if (i /  columns == i % columns) { //main diagonal
+                    if (data[i /  columns][i % columns] != firstElement) {
                         result = false;
                         break;
                     }
                 }
-                if (column + row == data.length - 1) { //secondary diagonal
-                    if (data[column][row] != firstElement) {
+                if (i /  columns + i % columns == data.length - 1) { //secondary diagonal
+                    if (data[i /  columns][i % columns] != firstElement) {
                         result = false;
                         break;
                     }
                 }
             }
-        }
+
         return result;
     }
 }
