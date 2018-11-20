@@ -10,7 +10,7 @@ public class BubbleSortTest {
      BubbleSort bubbleSort = new BubbleSort();
         int[] actual = bubbleSort.sort(new int[]{5, 8, 2, 4, 1, -2, 25});
         int[] expected = new int[]{-2, 1, 2, 4, 5, 8, 25};
-        assertThat(expected, is(actual));
+        assertThat(actual, is(expected));
 
     }
 
