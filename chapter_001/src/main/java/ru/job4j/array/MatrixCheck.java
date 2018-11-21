@@ -14,26 +14,17 @@ public class MatrixCheck {
 
     public boolean mono(boolean[][] data) {
         boolean result = true;
-        boolean firstElement = data[0][0];
 
-        int columns = data[0].length;
-        int rows = data.length;
-            for (int i = 0; i != columns * rows;  i++) {
-
-                if (i /  columns == i % columns) { //main diagonal
-                    if (data[i /  columns][i % columns] != firstElement) {
-                        result = false;
-                        break;
-                    }
-                }
-                if (i /  columns + i % columns == data.length - 1) { //secondary diagonal
-                    if (data[i /  columns][i % columns] != firstElement) {
-                        result = false;
-                        break;
-                    }
-                }
+        for (int i = 1; i < data.length; i++) {
+            if (data [0][0] != data[i][i]) {
+                result = false;
+                break;
             }
-
+            if (data [0][0] != data[0][data.length - 1] || data [0][0] != data[i][data.length - 1 - i]) {
+                result = false;
+                break;
+            }
+        }
         return result;
     }
 }
