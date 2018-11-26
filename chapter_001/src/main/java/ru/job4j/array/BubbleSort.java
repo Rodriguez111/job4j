@@ -10,10 +10,10 @@ public class BubbleSort {
      * Sorting array ascending.
      * @param array - array to sort.
      * @return = sorted array.
+     * int count - после каждого перебора самый большой элемент оказывается наверху, поэтому каждый разз уменьшаеи кол-во переборов на 1
      */
     public int[] sort(int[] array) {
         boolean wasSwapped;
-        // после каждого перебора самый большой элемент оказывается наверху, поэтому каждый разз уменьшаеи кол-во переборов на 1
         int count = array.length;
         do {
                 wasSwapped = false;
