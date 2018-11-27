@@ -1,4 +1,4 @@
-package ru.job4j.puzzle.firuges;
+package ru.job4j.puzzle.figures;
 
 public class Block implements Figure {
     private final Cell position;
@@ -27,3 +27,4 @@ public class Block implements Figure {
         return false;
     }
 }
+

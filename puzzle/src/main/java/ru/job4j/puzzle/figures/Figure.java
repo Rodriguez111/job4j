@@ -1,4 +1,4 @@
-package ru.job4j.puzzle.firuges;
+package ru.job4j.puzzle.figures;
 
 public interface Figure {
     default boolean movable() {
@@ -19,3 +19,4 @@ public interface Figure {
     Figure copy(Cell dest);
 
 }
+

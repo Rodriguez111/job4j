@@ -1,7 +1,7 @@
 package ru.job4j.puzzle;
 
-import ru.job4j.puzzle.firuges.Cell;
-import ru.job4j.puzzle.firuges.Figure;
+import ru.job4j.puzzle.figures.Cell;
+import ru.job4j.puzzle.figures.Figure;
 
 /**
  * //TODO add comments.
@@ -41,8 +41,8 @@ public class Logic {
         boolean result = cells.length > 0;
         for (Cell cell : cells) {
             if (this.findBy(cell) != -1) {
-               result = false;
-               break;
+                result = false;
+                break;
             }
         }
         return result;
@@ -69,10 +69,31 @@ public class Logic {
     public boolean isWin() {
         int[][] table = this.convert();
         boolean result = false;
+        for(int i = 0; i < table.length; i++) {
+            int count = 0;
+            if(table[0][i] == 1) {
+                for (int j = 0; j < table[0].length; j++) {
+                    if(table[j][i] == 1){
+                        count++;
+                    }
+                }
+            }
+            else if (table[i][0] == 1){
+                for (int j = 0; j < table[0].length; j++) {
+                    if(table[i][j] == 1){
+                        count++;
+                    }
+                }
+            }
+            if(count == table.length) {
+                result = true;
+                break;
+            }
+        }
         return result;
     }
 
-    private int[][] convert() {
+    public int[][] convert() {
         int[][] table = new int[this.size][this.size];
         for (int row = 0; row != table.length; row++) {
             for (int cell = 0; cell != table.length; cell++) {

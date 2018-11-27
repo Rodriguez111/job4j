@@ -1,4 +1,4 @@
-package ru.job4j.puzzle.firuges;
+package ru.job4j.puzzle.figures;
 
 public class Checker implements Figure {
     private final Cell position;
