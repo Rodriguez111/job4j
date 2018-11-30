@@ -40,7 +40,8 @@ public class LogicTest {
                 };
             }
         };
-        assertThat(logic.isWin(), is(true));
+        boolean res = logic.isWin();
+        assertThat(res, is(true));
     }
 
     @Test
@@ -58,5 +59,41 @@ public class LogicTest {
             }
         };
         assertThat(logic.isWin(), is(false));
+    }
+
+    @Test
+    public void whenFirstRowWin() {
+        Logic logic = new Logic(5) {
+            @Override
+            public int[][] convert() {
+                return new int[][] {
+                        {1, 1, 1, 1, 1},
+                        {0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0},
+                };
+            }
+        };
+        boolean res = logic.isWin();
+        assertThat(res, is(true));
+    }
+
+    @Test
+    public void whenFirstColumnWin() {
+        Logic logic = new Logic(5) {
+            @Override
+            public int[][] convert() {
+                return new int[][] {
+                        {1, 0, 0, 0, 0},
+                        {1, 0, 0, 0, 0},
+                        {1, 0, 0, 0, 0},
+                        {1, 0, 0, 0, 0},
+                        {1, 0, 0, 0, 0},
+                };
+            }
+        };
+        boolean res = logic.isWin();
+        assertThat(res, is(true));
     }
 }
