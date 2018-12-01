@@ -28,32 +28,32 @@ public class Tracker {
      * @param id - id of the item we want to replace.
      * @param item - new item.
      */
-    public void replace(String id, Item item) {
-        for (int i = 0; i <= items.length; i++) {
-            if (items[i] == null) {
-                break;
-            }
+    public boolean replace(String id, Item item) {
+        boolean success = false;
+        for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
                 items[i] = item;
+                success = true;
             }
         }
+        return success;
     }
 
     /**
      *
      * @param id - id of the item we want to delete.
      */
-    public void delete(String id) {
-        for (int i = 0; i <= items.length; i++) {
-            if (items[i] == null) {
-                break;
-            }
+    public boolean delete(String id) {
+        boolean success = false;
+        for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
              System.arraycopy(items, i + 1, items, i, items.length - (i + 1));
              items[items.length - 1] = null;
              position--;
+             success = true;
             }
         }
+        return success;
     }
 
     /**
@@ -61,11 +61,7 @@ public class Tracker {
      * @return - all not-null items from the array.
      */
     public Item[] getAll() {
-    Item[] allItems = new Item[this.position];
-    for (int i = 0; i < this.position; i++) {
-        allItems[i] =  items[i];
-    }
-    return allItems;
+    return Arrays.copyOf(items, position);
     }
 
     /**
@@ -91,10 +87,7 @@ public class Tracker {
      * @return - found item.
      */
     public Item findById(String id) {
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] == null) {
-                break;
-            }
+        for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
              return  items[i];
             }
