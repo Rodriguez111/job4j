@@ -1,4 +1,4 @@
-package tracker;
+package ru.job4j.tracker;
 
 public class StartUI {
     private final Input input;
