@@ -3,7 +3,16 @@ package ru.job4j.tracker;
 public class StartUI {
     private final Input input;
     private final Tracker tracker;
-    private static final String[] MENU = new String[7];
+    private static final String[] MENU =
+    {"0 - Add new Item",
+     "1 - Show all items",
+     "2 - Edit item",
+     "3 - Delete item",
+     "4 - Find item by Id",
+     "5 - Find items by name",
+     "6 - Exit Program",
+    };
+
     private static final String ADD = "0";
     private static final String SHOW = "1";
     private static final String EDIT = "2";
@@ -17,14 +26,12 @@ public class StartUI {
     public StartUI() {
         this.input = new ConsoleInput();
         this.tracker = new Tracker();
+    }
 
-        MENU[0] = "0 - Add new Item";
-        MENU[1] = "1 - Show all items";
-        MENU[2] = "2 - Edit item";
-        MENU[3] = "3 - Delete item";
-        MENU[4] = "4 - Find item by Id";
-        MENU[5] = "5 - Find items by name";
-        MENU[6] = "6 - Exit Program";
+    public StartUI(Input input, Tracker tracker) {
+        this.input = input;
+        this.tracker = tracker;
+        init();
     }
 
     private void loop() {
@@ -76,7 +83,6 @@ public class StartUI {
      * initiating main logic.
      */
     public void init() {
-        Tracker tracker = new Tracker();
         loop();
     }
 
