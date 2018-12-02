@@ -34,6 +34,7 @@ public class Tracker {
             if (items[i].getId().equals(id)) {
                 items[i] = item;
                 success = true;
+                break;
             }
         }
         return success;
@@ -51,6 +52,7 @@ public class Tracker {
              items[items.length - 1] = null;
              position--;
              success = true;
+             break;
             }
         }
         return success;

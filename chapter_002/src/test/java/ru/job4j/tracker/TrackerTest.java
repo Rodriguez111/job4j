@@ -13,16 +13,16 @@ public class TrackerTest {
     @Test
     public void whenAddItemReturnsSameItem() {
         Tracker tracker = new Tracker();
-        Item item = new Item("Test1");
+        Item item = new Item("Test1", "Descr1");
         assertThat(tracker.add(item), is(item));
     }
 
     @Test
     public void whenReplaceNameThenReturnNewName() {
         Tracker tracker = new Tracker();
-        Item item = new Item("Test1");
+        Item item = new Item("Test1", "Descr1");
         tracker.add(item);
-        Item item2 = new Item("Test2");
+        Item item2 = new Item("Test2", "Descr2");
         item2.setId(item.getId());
         tracker.replace(item.getId(), item2);
         String actual = tracker.findById(item2.getId()).getName();
@@ -32,9 +32,9 @@ public class TrackerTest {
     @Test
     public void whenDeleteOneOfThreeRemainsTwo() {
         Tracker tracker = new Tracker();
-        Item item1 = new Item("Test1");
-        Item item2 = new Item("Test2");
-        Item item3 = new Item("Test3");
+        Item item1 = new Item("Test1", "Descr1");
+        Item item2 = new Item("Test2", "Descr2");
+        Item item3 = new Item("Test3", "Descr3");
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
@@ -49,9 +49,9 @@ public class TrackerTest {
     @Test
     public void whenGetAllThenReturnsThree() {
         Tracker tracker = new Tracker();
-        Item item1 = new Item("Test1");
-        Item item2 = new Item("Test2");
-        Item item3 = new Item("Test3");
+        Item item1 = new Item("Test1", "Descr");
+        Item item2 = new Item("Test2", "Descr");
+        Item item3 = new Item("Test3", "Descr");
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
@@ -66,10 +66,10 @@ public class TrackerTest {
     @Test
     public void whenSearchNameTest2ThenFindNameTest2() {
         Tracker tracker = new Tracker();
-        Item item1 = new Item("Test1");
-        Item item2 = new Item("Test2");
-        Item item3 = new Item("Test2");
-        Item item4 = new Item("Test3");
+        Item item1 = new Item("Test1", "Descr");
+        Item item2 = new Item("Test2", "Descr");
+        Item item3 = new Item("Test2", "Descr");
+        Item item4 = new Item("Test3", "Descr");
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
@@ -84,10 +84,10 @@ public class TrackerTest {
     @Test
     public void whenSearchByIDFindItemWithThisID() {
         Tracker tracker = new Tracker();
-        Item item1 = new Item("Test1");
-        Item item2 = new Item("Test2");
-        Item item3 = new Item("Test3");
-        Item item4 = new Item("Test4");
+        Item item1 = new Item("Test1", "Descr");
+        Item item2 = new Item("Test2", "Descr");
+        Item item3 = new Item("Test3", "Descr");
+        Item item4 = new Item("Test4", "Descr");
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
