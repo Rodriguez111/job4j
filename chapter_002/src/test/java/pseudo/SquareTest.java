@@ -11,16 +11,17 @@ public class SquareTest {
        @Test
         public void whenDrawSquare() {
             Square square = new Square();
+           String lineSeparator = System.lineSeparator();
             assertThat(
                     square.draw(),
                     is(
                         new StringBuilder()
                            .append("oooooooo")
-                           .append("\n")
+                           .append(lineSeparator)
                            .append("0      0")
-                           .append("\n")
+                           .append(lineSeparator)
                            .append("0      0")
-                           .append("\n")
+                           .append(lineSeparator)
                            .append("oooooooo").toString()
                     )
             );

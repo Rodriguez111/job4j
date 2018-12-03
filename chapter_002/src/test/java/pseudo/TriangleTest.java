@@ -11,20 +11,21 @@ public class TriangleTest {
     @Test
     public void whenDrawTriangle() {
         Triangle triangle = new Triangle();
+        String lineSeparator = System.lineSeparator();
         assertThat(
                 triangle.draw(),
                 is(
                         new StringBuilder()
                                 .append("     o     ")
-                                .append("\n")
+                                .append(lineSeparator)
                                 .append("    o o    ")
-                                .append("\n")
+                                .append(lineSeparator)
                                 .append("   o   o   ")
-                                .append("\n")
+                                .append(lineSeparator)
                                 .append("  o     o  ")
-                                .append("\n")
+                                .append(lineSeparator)
                                 .append(" o       o ")
-                                .append("\n")
+                                .append(lineSeparator)
                                 .append("ooooooooooo").toString()
                 )
         );

@@ -1,5 +1,7 @@
 package pseudo;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.pseudo.Paint;
 import ru.job4j.pseudo.Square;
@@ -11,26 +13,39 @@ import java.io.PrintStream;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 public class PaintTest {
+    private PrintStream original;
+    private ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+   @Before
+   public void loadOut() {
+       System.out.println("execute before method");
+        original =  System.out;
+    }
+
+    @After
+    public void backOutput() {
+        System.out.println("execute after method");
+        System.setOut(this.original);
+    }
+
     @Test
     public void whenDrawSquare() {
         Paint paint = new Paint();
         paint.setShape(new Square());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream original = System.out;
         PrintStream printStream = new PrintStream(baos);
         System.setOut(printStream);
         paint.executeShape();
-        System.setOut(original);
         String actual = baos.toString();
+        String lineSeparator = System.lineSeparator();
         String expected = new StringBuilder()
                 .append("oooooooo")
-                .append("\n")
+                .append(lineSeparator)
                 .append("0      0")
-                .append("\n")
+                .append(lineSeparator)
                 .append("0      0")
-                .append("\n")
+                .append(lineSeparator)
                 .append("oooooooo")
-                .append("\r\n").toString();
+                .append(lineSeparator).toString();
         assertThat(actual, is(expected));
     }
 
@@ -38,26 +53,24 @@ public class PaintTest {
     public void whenDrawTriangle() {
         Paint paint = new Paint();
         paint.setShape(new Triangle());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream original = System.out;
         PrintStream printStream = new PrintStream(baos);
         System.setOut(printStream);
         paint.executeShape();
-        System.setOut(original);
         String actual = baos.toString();
+        String luneSeparator = System.lineSeparator();
         String expected = new StringBuilder()
                 .append("     o     ")
-                .append("\n")
+                .append(luneSeparator)
                 .append("    o o    ")
-                .append("\n")
+                .append(luneSeparator)
                 .append("   o   o   ")
-                .append("\n")
+                .append(luneSeparator)
                 .append("  o     o  ")
-                .append("\n")
+                .append(luneSeparator)
                 .append(" o       o ")
-                .append("\n")
+                .append(luneSeparator)
                 .append("ooooooooooo")
-                .append("\r\n").toString();
+                .append(luneSeparator).toString();
         assertThat(actual, is(expected));
     }
 

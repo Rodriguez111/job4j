@@ -7,12 +7,13 @@ public class Square implements Shape {
     @Override
     public String draw() {
         StringBuilder pic = new StringBuilder();
+        String lineSeparator = System.lineSeparator();
         pic.append("oooooooo");
-        pic.append("\n");
+        pic.append(lineSeparator);
         pic.append("0      0");
-        pic.append("\n");
+        pic.append(lineSeparator);
         pic.append("0      0");
-        pic.append("\n");
+        pic.append(lineSeparator);
         pic.append("oooooooo");
         return pic.toString();
     }
