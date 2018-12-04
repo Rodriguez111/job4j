@@ -6,7 +6,7 @@ public class StartUI {
 
 
     public StartUI() {
-        this.input = new ConsoleInput();
+        this.input = new ValidateInput();
         this.tracker = new Tracker();
     }
 
@@ -24,7 +24,7 @@ public class StartUI {
         MenuTracker menuTracker = new MenuTracker(this.input, this.tracker);
         do {
             menuTracker.showMenu();
-            int key = Integer.parseInt(input.ask("Input menu item: "));
+            int key = input.ask("Input menu item: ", menuTracker.availableKeys());
             menuTracker.selectKey(key - 1);
         } while (menuTracker.isRunning());
     }

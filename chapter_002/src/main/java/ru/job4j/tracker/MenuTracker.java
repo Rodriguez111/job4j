@@ -10,6 +10,10 @@ public class MenuTracker  {
         return isRunning;
     }
 
+    public int availableKeys() {
+        return actions.length;
+    }
+
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
@@ -23,7 +27,7 @@ public class MenuTracker  {
         this.actions[3] = new DeleteItem();
         this.actions[4] = new FindItemById();
         this.actions[5] = new FindItemByName();
-        this.actions[6] = new ExitProgramm();
+        this.actions[6] = new ExitProgram();
 
     }
 
@@ -42,7 +46,9 @@ public class MenuTracker  {
      * @param key - passed key of the menu item.
      */
     public void selectKey(int key) {
-        this.actions[key].execute(input, tracker);
+        if (key >= 0 && key < actions.length) {
+            this.actions[key].execute(input, tracker);
+        }
     }
 
     /**
@@ -85,7 +91,7 @@ public class MenuTracker  {
             Item[] allItems = tracker.getAll();
             System.out.println("----- Список всех заявок: -----");
             for (Item eachItem : allItems) {
-                printItem(eachItem);
+                System.out.println(eachItem);
             }
             System.out.println("----- Конец списка -----");
         }
@@ -166,7 +172,7 @@ public class MenuTracker  {
             System.out.println("----- Поиск заявки по ID: -----");
             String idToFind = input.ask("Please, enter the id of the item You want to find: ");
             Item foundItem = tracker.findById(idToFind);
-            printItem(foundItem);
+            System.out.println(foundItem);
             System.out.println("----- Поиск завершен -----");
         }
 
@@ -191,7 +197,7 @@ public class MenuTracker  {
             String nameToFind = input.ask("Please, enter the name of the item You want to find: ");
             Item[] allItems = tracker.findByName(nameToFind);
             for (Item eachItem : allItems) {
-                printItem(eachItem);
+                System.out.println(eachItem);
             }
             System.out.println("----- Поиск завершен -----");
         }
@@ -205,7 +211,7 @@ public class MenuTracker  {
     /**
      * Exits program.
      */
-    class ExitProgramm implements UserAction {
+    class ExitProgram implements UserAction {
         @Override
         public int key() {
             return 7;
@@ -213,7 +219,7 @@ public class MenuTracker  {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            MenuTracker.this.isRunning = false;
+            isRunning = false;
             System.out.println("Program complete.");
         }
 
@@ -222,19 +228,5 @@ public class MenuTracker  {
             return String.format("%s %s", this.key(), " - Exit programm");
         }
     }
-
-
-
-
-    /**
-     * Printing item info.
-     * @param item - item which info to print.
-     */
-    private static void printItem(Item item) {
-        System.out.println(item.getId() + " " + item.getName() + " " + item.getDescription());
-    }
-
-
-
 
 }

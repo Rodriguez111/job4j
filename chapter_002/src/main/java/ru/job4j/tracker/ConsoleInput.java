@@ -7,6 +7,24 @@ public class ConsoleInput implements Input {
     @Override
     public String ask(String question) {
         System.out.println(question);
-        return scanner.next();
+        return scanner.nextLine();
     }
+
+    @Override
+    public int ask(String question, int range) throws MenuOutException {
+        boolean exists = false;
+        int key = Integer.parseInt(scanner.nextLine());
+        if (key > 0 && key <= range) {
+            exists = true;
+        }
+
+        if (exists) {
+            return key;
+        } else {
+            throw new MenuOutException("Out of menu range");
+        }
+
+    }
+
+
 }
