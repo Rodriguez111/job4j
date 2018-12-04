@@ -194,7 +194,7 @@ public class StartUITest {
                .append(lineSeparator)
                .append("5 - Find items by name")
                .append(lineSeparator)
-               .append("6 - Exit Program")
+               .append("6 - ExitProgramm Program")
                .append(lineSeparator);
        return sb.toString();
     }

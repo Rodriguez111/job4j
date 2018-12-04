@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class Tracker {
     private int position = 0;
+    private String id = "0000000";
     private static final Random RANDOM = new Random();
     private Item[] items = new Item[100];
 
@@ -102,7 +103,16 @@ public class Tracker {
      * @return - generated id.
      */
     private String generateID() {
-        return String.valueOf(System.currentTimeMillis() + RANDOM.nextInt(100));
+        //return String.valueOf(System.currentTimeMillis() + RANDOM.nextInt(100));
+        int intId = Integer.parseInt(this.id);
+        intId++;
+        String newId = String.valueOf(intId);
+        int length = newId.length();
+        for (int i = 0; i < 7 - length; i++) {
+            newId = "0" + newId;
+        }
+        this.id = newId;
+        return newId;
     }
 
 
