@@ -6,7 +6,7 @@ public class StartUI {
 
 
     public StartUI() {
-        this.input = new ValidateInput();
+        this.input = new ValidateInput(new ConsoleInput());
         this.tracker = new Tracker();
     }
 
