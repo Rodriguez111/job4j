@@ -1,4 +1,4 @@
-package pseudo;
+package ru.job4j.pseudo;
 
 import org.junit.Test;
 
