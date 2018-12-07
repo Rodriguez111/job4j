@@ -3,9 +3,7 @@ package ru.job4j.pseudo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.job4j.pseudo.Paint;
-import ru.job4j.pseudo.Square;
-import ru.job4j.pseudo.Triangle;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
