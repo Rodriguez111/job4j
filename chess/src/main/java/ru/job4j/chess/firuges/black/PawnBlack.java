@@ -24,6 +24,15 @@ public class PawnBlack implements Figure {
     @Override
     public Cell[] way(Cell source, Cell dest) {
         Cell[] steps = new Cell[0];
+        if (source.y == 6 && source.y == dest.y + 2 && source.x == dest.x) {
+            for (Cell eachCell : Cell.values()) {
+                if(eachCell.x == source.x && eachCell.y == dest.y + 1) {
+                    steps = new Cell[] {eachCell, dest};
+                    break;
+                }
+            }
+
+        }
         if (source.y == dest.y + 1 && source.x == dest.x) {
             steps = new Cell[] { dest };
         }

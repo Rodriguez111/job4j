@@ -35,7 +35,6 @@ public class BishopBlack implements Figure {
                     int yy = i;
                     if(deltaX < 0) {xx = -i;}
                     if(deltaY < 0) {yy = -i;}
-
                     if (eachCell.x == source.x + xx && eachCell.y == source.y + yy){
                         steps[i-1] = eachCell;
                         break;
