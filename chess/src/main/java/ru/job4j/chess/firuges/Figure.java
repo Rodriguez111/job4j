@@ -1,17 +1,90 @@
 package ru.job4j.chess.firuges;
 
-public interface Figure {
-    Cell position();
+import ru.job4j.chess.firuges.exceptions.ImpossibleMoveException;
 
-    Cell[] way(Cell source, Cell dest);
+public abstract class Figure {
+    public abstract Cell position();
 
-    default String icon() {
+    public  abstract  Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException;
+
+    public  String icon() {
         return String.format(
                 "%s.png", this.getClass().getSimpleName()
         );
 
     }
 
-    Figure copy(Cell dest);
+    public  abstract  Figure copy(Cell dest);
+
+    public boolean isDiagonal (Cell source, Cell dest) {
+        boolean isDiagonal = false;
+        int deltaX = dest.x - source.x;
+        int deltaY = dest.y - source.y;
+        if(Math.abs(deltaX) == Math.abs(deltaY)) {
+            isDiagonal = true;
+        }
+        return isDiagonal;
+    }
+
+    public boolean isRookWay (Cell source, Cell dest) {
+        boolean isRookWay = false;
+        if(dest.x == source.x) {
+            isRookWay = true;
+        }
+        if(dest.y == source.y) {
+            isRookWay = true;
+        }
+        return isRookWay;
+    }
+
+    public Cell[] diagonalsMove(Cell source, Cell dest) {
+        Cell[] steps = new Cell[0];
+        int deltaX = dest.x - source.x;
+        int deltaY = dest.y - source.y;
+
+        steps = new Cell[Math.abs(deltaX)];
+        for (int i = 1; i <= steps.length; i++) {
+            int xx = i;
+            int yy = i;
+            if(deltaX < 0) {xx = -i;}
+            if(deltaY < 0) {yy = -i;}
+            steps[i - 1] = Cell.findCellByXY(source.x + xx, source.y + yy);
+        }
+        return steps;
+    }
+
+    public Cell[] verticalAndHorizontalMove(Cell source, Cell dest) {
+        Cell[] steps = new Cell[0];
+        if(dest.x == source.x) {
+            int deltaY = dest.y - source.y;
+            steps = new Cell[Math.abs(deltaY)];
+            for(int i = 1; i <= steps.length; i++) {
+
+                if(deltaY < 0) {
+                    steps[i-1] = Cell.findCellByXY(source.x, source.y - i);
+                } else {
+                    steps[i-1] = Cell.findCellByXY(source.x, source.y + i);
+                }
+
+            }
+        }
+        if(dest.y == source.y) {
+            int deltaX = dest.x - source.x;
+            steps = new Cell[Math.abs(deltaX)];
+            for(int i = 1; i <= steps.length; i++) {
+
+                if(deltaX < 0) {
+                    steps[i-1] = Cell.findCellByXY(source.x - i, source.y);
+                } else {
+                    steps[i-1] = Cell.findCellByXY(source.x + i, source.y);
+                }
+            }
+        }
+        return steps;
+
+    }
+
+
+
 
 }

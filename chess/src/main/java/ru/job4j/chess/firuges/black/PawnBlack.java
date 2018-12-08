@@ -2,6 +2,7 @@ package ru.job4j.chess.firuges.black;
 
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
+import ru.job4j.chess.firuges.exceptions.ImpossibleMoveException;
 
 /**
  *
@@ -9,7 +10,7 @@ import ru.job4j.chess.firuges.Figure;
  * @version $Id$
  * @since 0.1
  */
-public class PawnBlack implements Figure {
+public class PawnBlack extends Figure {
     private final Cell position;
 
     public PawnBlack(final Cell position) {
@@ -22,20 +23,15 @@ public class PawnBlack implements Figure {
     }
 
     @Override
-    public Cell[] way(Cell source, Cell dest) {
-        Cell[] steps = new Cell[0];
-        if (source.y == 6 && source.y == dest.y + 2 && source.x == dest.x) {
-            for (Cell eachCell : Cell.values()) {
-                if(eachCell.x == source.x && eachCell.y == dest.y + 1) {
-                    steps = new Cell[] {eachCell, dest};
-                    break;
-                }
-            }
+    public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
+        if (!isBlackPawnWay(source, dest))
+            throw new ImpossibleMoveException();
 
-        }
-        if (source.y == dest.y + 1 && source.x == dest.x) {
-            steps = new Cell[] { dest };
-        }
+        int deltaY = source.y - dest.y;
+        Cell[] steps = new Cell[deltaY];
+            for (int i = 1; i <= steps.length; i++) {
+                  steps[i-1] = Cell.findCellByXY(source.x, source.y - i);
+                }
         return steps;
     }
 
@@ -43,4 +39,18 @@ public class PawnBlack implements Figure {
     public Figure copy(Cell dest) {
         return new PawnBlack(dest);
     }
+
+    private boolean isBlackPawnWay(Cell source, Cell dest) {
+        boolean isBlackPawnWay = false;
+        if (source.y == 6 && source.y == dest.y + 2 && source.x == dest.x) {
+            isBlackPawnWay = true;
+        }
+        if (source.y == dest.y + 1 && source.x == dest.x) {
+            isBlackPawnWay = true;
+        }
+        return isBlackPawnWay;
+    }
+
+
+
 }

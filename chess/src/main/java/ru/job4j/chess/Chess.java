@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 import ru.job4j.chess.firuges.black.*;
+import ru.job4j.chess.firuges.exceptions.FigureNotFoundException;
+import ru.job4j.chess.firuges.exceptions.ImpossibleMoveException;
+import ru.job4j.chess.firuges.exceptions.OccupiedWayException;
 import ru.job4j.chess.firuges.white.*;
 
 public class Chess extends Application {
@@ -60,12 +63,20 @@ public class Chess extends Application {
         );
         rect.setOnMouseReleased(
                 event -> {
-                    if (logic.move(this.findBy(momento.getX(), momento.getY()), this.findBy(event.getX(), event.getY()))) {
-                        rect.setX(((int) event.getX() / 40) * 40 + 5);
-                        rect.setY(((int) event.getY() / 40) * 40 + 5);
-                    } else {
-                        rect.setX(((int) momento.getX() / 40) * 40 + 5);
-                        rect.setY(((int) momento.getY() / 40) * 40 + 5);
+                    try {
+                        if (logic.move(this.findBy(momento.getX(), momento.getY()), this.findBy(event.getX(), event.getY()))) {
+                            rect.setX(((int) event.getX() / 40) * 40 + 5);
+                            rect.setY(((int) event.getY() / 40) * 40 + 5);
+                        } else {
+                            rect.setX(((int) momento.getX() / 40) * 40 + 5);
+                            rect.setY(((int) momento.getY() / 40) * 40 + 5);
+                        }
+                    } catch (FigureNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (ImpossibleMoveException e) {
+                        e.printStackTrace();
+                    } catch (OccupiedWayException e) {
+                        e.printStackTrace();
                     }
                 }
         );
@@ -125,7 +136,7 @@ public class Chess extends Application {
         this.add(new RookBlack(Cell.A8), grid);
         this.add(new KnightBlack(Cell.B8), grid);
         this.add(new BishopBlack(Cell.C8), grid);
-        this.add(new QeenBlack(Cell.D8), grid);
+        this.add(new QueenBlack(Cell.D8), grid);
         this.add(new KingBlack(Cell.E8), grid);
         this.add(new BishopBlack(Cell.F8), grid);
         this.add(new KnightBlack(Cell.G8), grid);
@@ -144,7 +155,7 @@ public class Chess extends Application {
         this.add(new RookWhite(Cell.A1), grid);
         this.add(new KnightWhite(Cell.B1), grid);
         this.add(new BishopWhite(Cell.C1), grid);
-        this.add(new QeenWhite(Cell.D1), grid);
+        this.add(new QueenWhite(Cell.D1), grid);
         this.add(new KingWhite(Cell.E1), grid);
         this.add(new BishopWhite(Cell.F1), grid);
         this.add(new KnightWhite(Cell.G1), grid);
