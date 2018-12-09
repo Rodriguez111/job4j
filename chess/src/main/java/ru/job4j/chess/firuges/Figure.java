@@ -43,12 +43,20 @@ public abstract class Figure {
         int deltaY = dest.y - source.y;
 
         steps = new Cell[Math.abs(deltaX)];
+        int newX = source.x;
+        int newY = source.y;
         for (int i = 1; i <= steps.length; i++) {
-            int xx = i;
-            int yy = i;
-            if(deltaX < 0) {xx = -i;}
-            if(deltaY < 0) {yy = -i;}
-            steps[i - 1] = Cell.findCellByXY(source.x + xx, source.y + yy);
+            if(deltaX < 0) {
+                newX = source.x - i;
+            } else {
+                newX = source.x + i;
+            }
+            if(deltaY < 0) {
+                newY = source.y - i;
+            } else {
+                newY = source.y + i;
+            }
+            steps[i - 1] = Cell.findCellByXY(newX, newY);
         }
         return steps;
     }
