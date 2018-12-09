@@ -26,13 +26,13 @@ public class PawnWhite extends Figure {
     @Override
     public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
 
-        if (!isWhitePawnWay(source, dest))
+        if (!isWhitePawnWay(source, dest)) {
             throw new ImpossibleMoveException();
-
+        }
         int deltaY = dest.y - source.y;
         Cell[] steps = new Cell[deltaY];
         for (int i = 1; i <= steps.length; i++) {
-            steps[i-1] = Cell.findCellByXY(source.x, source.y + i);
+            steps[i - 1] = Cell.findCellByXY(source.x, source.y + i);
         }
         return steps;
     }

@@ -14,7 +14,7 @@ public class PawnWhiteTest {
     public void whenPawnWayIsFromC2ToC4() throws ImpossibleMoveException {
         PawnWhite pawnWhite = new PawnWhite(Cell.C2);
         Cell[] actual = pawnWhite.way(Cell.C2, Cell.C4);
-        Cell[] expected ={Cell.C3, Cell.C4};
+        Cell[] expected = {Cell.C3, Cell.C4};
         assertThat(actual, is(expected));
     }
 
@@ -22,7 +22,7 @@ public class PawnWhiteTest {
     public void whenPawnWayIsFromC2ToC3() throws ImpossibleMoveException {
         PawnWhite pawnWhite = new PawnWhite(Cell.C2);
         Cell[] actual = pawnWhite.way(Cell.C2, Cell.C3);
-        Cell[] expected ={Cell.C3};
+        Cell[] expected = {Cell.C3};
         assertThat(actual, is(expected));
     }
 
@@ -30,7 +30,7 @@ public class PawnWhiteTest {
     public void whenPawnWayIsFromC6ToC7() throws ImpossibleMoveException {
         PawnWhite pawnWhite = new PawnWhite(Cell.C6);
         Cell[] actual = pawnWhite.way(Cell.C6, Cell.C7);
-        Cell[] expected ={Cell.C7};
+        Cell[] expected = {Cell.C7};
         assertThat(actual, is(expected));
     }
 

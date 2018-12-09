@@ -13,7 +13,7 @@ public class QueenBlackTest {
     public void whenQueenWayIsFromF8ToB4() throws ImpossibleMoveException {
         QueenBlack queenBlack = new QueenBlack(Cell.F8);
         Cell[] actual = queenBlack.way(Cell.F8, Cell.B4);
-        Cell[] expected ={Cell.E7, Cell.D6, Cell.C5, Cell.B4};
+        Cell[] expected = {Cell.E7, Cell.D6, Cell.C5, Cell.B4};
         assertThat(actual, is(expected));
     }
 
@@ -21,7 +21,7 @@ public class QueenBlackTest {
     public void whenQueenWayIsFromD3ToD7() throws ImpossibleMoveException {
         QueenBlack queenBlack = new QueenBlack(Cell.D3);
         Cell[] actual = queenBlack.way(Cell.D3, Cell.D7);
-        Cell[] expected ={Cell.D4, Cell.D5, Cell.D6, Cell.D7};
+        Cell[] expected = {Cell.D4, Cell.D5, Cell.D6, Cell.D7};
         assertThat(actual, is(expected));
     }
 
@@ -29,7 +29,7 @@ public class QueenBlackTest {
     public void whenQueenWayIsFromD7ToD3() throws ImpossibleMoveException {
         QueenBlack queenBlack = new QueenBlack(Cell.D7);
         Cell[] actual = queenBlack.way(Cell.D7, Cell.D3);
-        Cell[] expected ={Cell.D6, Cell.D5, Cell.D4, Cell.D3};
+        Cell[] expected = {Cell.D6, Cell.D5, Cell.D4, Cell.D3};
         assertThat(actual, is(expected));
     }
 
@@ -37,7 +37,7 @@ public class QueenBlackTest {
     public void whenQueenWayIsFromE8ToD7() throws ImpossibleMoveException {
         QueenBlack queenBlack = new QueenBlack(Cell.E8);
         Cell[] actual = queenBlack.way(Cell.E8, Cell.D7);
-        Cell[] expected ={Cell.D7};
+        Cell[] expected = {Cell.D7};
         assertThat(actual, is(expected));
     }
 

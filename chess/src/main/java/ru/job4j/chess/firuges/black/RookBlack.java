@@ -24,7 +24,7 @@ public class RookBlack extends Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
-        if(!isRookWay(source, dest)) {
+        if (!isRookWay(source, dest)) {
           throw new ImpossibleMoveException();
         }
       return verticalAndHorizontalMove(source, dest);

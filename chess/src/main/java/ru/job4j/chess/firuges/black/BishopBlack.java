@@ -25,7 +25,7 @@ public class BishopBlack extends Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
-        if(!isDiagonal(source, dest)) {
+        if (!isDiagonal(source, dest)) {
             throw new ImpossibleMoveException();
         }
         return diagonalsMove(source, dest);

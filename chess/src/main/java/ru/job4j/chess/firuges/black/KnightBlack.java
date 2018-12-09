@@ -24,7 +24,7 @@ public class KnightBlack extends Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
-        if(!isKnightWay(source, dest)) {
+        if (!isKnightWay(source, dest)) {
             throw new ImpossibleMoveException();
         }
         return new Cell[]{Cell.findCellByXY(dest.x, dest.y)};
@@ -38,15 +38,15 @@ public class KnightBlack extends Figure {
     private boolean isKnightWay(Cell source, Cell dest) {
         boolean isKnightWay = false;
         if (
-                (dest.x == source.x+1 && dest.y == source.y+2)
-                        || (dest.x == source.x+1 && dest.y == source.y-2)
-                        || (dest.x == source.x-1 && dest.y == source.y+2)
-                        || (dest.x == source.x-1 && dest.y == source.y-2)
+                (dest.x == source.x + 1 && dest.y == source.y + 2)
+                        || (dest.x == source.x + 1 && dest.y == source.y - 2)
+                        || (dest.x == source.x - 1 && dest.y == source.y + 2)
+                        || (dest.x == source.x - 1 && dest.y == source.y - 2)
 
-                        || (dest.x == source.x+2 && dest.y == source.y+1)
-                        || (dest.x == source.x+2 && dest.y == source.y-1)
-                        || (dest.x == source.x-2 && dest.y == source.y+1)
-                        || (dest.x == source.x-2 && dest.y == source.y-1)
+                        || (dest.x == source.x + 2 && dest.y == source.y + 1)
+                        || (dest.x == source.x + 2 && dest.y == source.y - 1)
+                        || (dest.x == source.x - 2 && dest.y == source.y + 1)
+                        || (dest.x == source.x - 2 && dest.y == source.y - 1)
         ) {
             isKnightWay = true;
         }

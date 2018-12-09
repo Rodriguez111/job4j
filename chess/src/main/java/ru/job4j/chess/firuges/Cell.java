@@ -14,7 +14,7 @@ public enum Cell {
     public final int y;
 
     public static Cell findCellByXY(int x, int y) {
-        return Cell.values()[8*x+y];
+        return Cell.values()[8 * x + y];
     }
 
   Cell(int x, int y) {

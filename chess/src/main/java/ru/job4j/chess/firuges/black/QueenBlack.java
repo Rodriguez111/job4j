@@ -28,10 +28,10 @@ public class QueenBlack extends Figure {
             throw new ImpossibleMoveException();
         }
         Cell[] steps = new Cell[0];
-        if(isDiagonal(source, dest)) {
+        if (isDiagonal(source, dest)) {
             steps = diagonalsMove(source, dest);
         }
-        if(isRookWay(source, dest)) {
+        if (isRookWay(source, dest)) {
             steps = verticalAndHorizontalMove(source, dest);
         }
 
@@ -43,9 +43,9 @@ public class QueenBlack extends Figure {
         return new QueenBlack(dest);
     }
 
-    private boolean isQueenWay (Cell source, Cell dest) {
+    private boolean isQueenWay(Cell source, Cell dest) {
         boolean isQueenWay = false;
-        if(isDiagonal(source, dest) || isRookWay(source, dest)) {
+        if (isDiagonal(source, dest) || isRookWay(source, dest)) {
             isQueenWay = true;
         }
         return isQueenWay;

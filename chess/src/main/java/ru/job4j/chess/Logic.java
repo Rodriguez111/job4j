@@ -28,13 +28,13 @@ public class Logic {
     public boolean move(Cell source, Cell dest) throws FigureNotFoundException, ImpossibleMoveException, OccupiedWayException {
         boolean rst = false;
         int index = findBy(source);
-        if(index == -1) {
+        if (index == -1) {
             throw new FigureNotFoundException();
         }
             Cell[] steps = this.figures[index].way(source, dest);
-        if(steps.length > 0 && !(this.figures[index] instanceof KnightBlack) && !(this.figures[index] instanceof KnightWhite)) {
+        if (steps.length > 0 && !(this.figures[index] instanceof KnightBlack) && !(this.figures[index] instanceof KnightWhite)) {
             for (Cell eachCell : steps) {
-                if(findBy(eachCell) != -1) {
+                if (findBy(eachCell) != -1) {
                     throw new OccupiedWayException();
                 }
             }

@@ -11,7 +11,7 @@ public class KnightBlackTest {
     public void whenKnightWayIsFromF8ToD7() throws ImpossibleMoveException {
         KnightBlack knightBlack = new KnightBlack(Cell.F8);
         Cell[] actual = knightBlack.way(Cell.F8, Cell.D7);
-        Cell[] expected ={Cell.D7};
+        Cell[] expected = {Cell.D7};
         assertThat(actual, is(expected));
     }
 
@@ -19,7 +19,7 @@ public class KnightBlackTest {
     public void whenKnightWayIsFromD5ToB4() throws ImpossibleMoveException {
         KnightBlack knightBlack = new KnightBlack(Cell.D5);
         Cell[] actual = knightBlack.way(Cell.D5, Cell.B4);
-        Cell[] expected ={Cell.B4};
+        Cell[] expected = {Cell.B4};
         assertThat(actual, is(expected));
     }
 
@@ -27,7 +27,7 @@ public class KnightBlackTest {
     public void whenKnightWayIsFromD5ToC3() throws ImpossibleMoveException {
         KnightBlack knightBlack = new KnightBlack(Cell.D5);
         Cell[] actual = knightBlack.way(Cell.D5, Cell.C3);
-        Cell[] expected ={Cell.C3};
+        Cell[] expected = {Cell.C3};
         assertThat(actual, is(expected));
     }
 
@@ -35,7 +35,7 @@ public class KnightBlackTest {
     public void whenKnightWayIsFromD5ToE3() throws ImpossibleMoveException {
         KnightBlack knightBlack = new KnightBlack(Cell.D5);
         Cell[] actual = knightBlack.way(Cell.D5, Cell.E3);
-        Cell[] expected ={Cell.E3};
+        Cell[] expected = {Cell.E3};
         assertThat(actual, is(expected));
     }
 
@@ -43,7 +43,7 @@ public class KnightBlackTest {
     public void whenKnightWayIsFromD5ToE4ThenException() throws ImpossibleMoveException {
         KnightBlack knightBlack = new KnightBlack(Cell.D5);
         Cell[] actual = knightBlack.way(Cell.D5, Cell.E4);
-        Cell[] expected ={};
+        Cell[] expected = {};
         assertThat(actual, is(expected));
     }
 }

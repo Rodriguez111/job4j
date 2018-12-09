@@ -24,7 +24,7 @@ public class KingBlack extends Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
-        if(!isKingWay(source, dest)) {
+        if (!isKingWay(source, dest)) {
             throw new ImpossibleMoveException();
         }
         Cell[] steps = new Cell[1];
