@@ -16,13 +16,20 @@ public class PriorityQueue {
             tasks.add(task);
         } else {
             for (int i = 0; i != tasks.size(); i++) {
-                if (tasks.get(i).getPriority() >= task.getPriority()) {
+                if (task.getPriority() >= tasks.get(i).getPriority() && i == tasks.size() - 1) {
+                    tasks.add(task);
+                    break;
+                } else if (task.getPriority() >= tasks.get(i).getPriority() && task.getPriority() < tasks.get(i + 1).getPriority()) {
+                    tasks.add(i + 1, task);
+                    break;
+                } else if (task.getPriority() < tasks.get(i).getPriority()) {
                     tasks.add(i, task);
                     break;
                 }
             }
 
         }
+
 
     }
 
