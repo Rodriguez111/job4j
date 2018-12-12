@@ -8,8 +8,8 @@ public class FindLoop {
 
     /**
      *
-     * @param data - array to search in.
-     * @param el - index of element to search.
+     * @param data - array to ru.job4j.search in.
+     * @param el - index of element to ru.job4j.search.
      * @return - found index.
      */
     public int indexOf(int[] data, int el) {
