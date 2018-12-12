@@ -14,7 +14,7 @@ public abstract class Figure {
 
     }
 
-    public  abstract  Figure copy(Cell dest);
+    public abstract  Figure copy(Cell dest);
 
     public boolean isDiagonal(Cell source, Cell dest) {
         boolean isDiagonal = false;

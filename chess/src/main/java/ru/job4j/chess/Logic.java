@@ -32,7 +32,7 @@ public class Logic {
             throw new FigureNotFoundException();
         }
             Cell[] steps = this.figures[index].way(source, dest);
-        if (steps.length > 0 && !(this.figures[index] instanceof KnightBlack) && !(this.figures[index] instanceof KnightWhite)) {
+        if (steps.length > 0) {
             for (Cell eachCell : steps) {
                 if (findBy(eachCell) != -1) {
                     throw new OccupiedWayException();
