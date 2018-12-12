@@ -23,7 +23,6 @@ public class PhoneDictionary {
             || eachPerson.getAddress().contains(key)
             || eachPerson.getPhone().contains(key)) {
                 result.add(eachPerson);
-                continue;
             }
         }
         return result;

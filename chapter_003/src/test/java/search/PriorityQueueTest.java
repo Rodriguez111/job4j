@@ -29,6 +29,8 @@ public class PriorityQueueTest {
         Task task0 = new Task("0", 0);
         Task task4 = new Task("4", 4);
 
+
+
         PriorityQueue queue = new PriorityQueue();
         queue.put(task5);
         queue.put(task1);
@@ -36,6 +38,8 @@ public class PriorityQueueTest {
         queue.put(task8);
         queue.put(task0);
         queue.put(task4);
+
+
 
         List<Task> actual = new ArrayList<>();
         actual.add(queue.take());
