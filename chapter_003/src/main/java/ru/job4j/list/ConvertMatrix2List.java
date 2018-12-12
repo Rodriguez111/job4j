@@ -1,10 +1,11 @@
 package ru.job4j.list;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
-public class ConvertMatrix2List {
+public class ConvertMatrix2List<T> {
 
     /**
      *
@@ -20,4 +21,7 @@ public class ConvertMatrix2List {
         }
         return list;
     }
+
+
+
 }
