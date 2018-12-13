@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -32,11 +34,11 @@ public class StartUITest {
 
     @Test
     public void addTest() {
-        String[] answers = new String[]{"0", "Name1", "Description1", "6"};
+        String[] answers = new String[]{"1", "Name1", "Description1", "7"};
         Input input = new StubInput(answers);
         Tracker tracker = new Tracker();
         StartUI startUI = new StartUI(input, tracker);
-        String actual = tracker.getAll()[0].getName();
+        String actual = tracker.getAll().get(0).getName();
         assertThat(actual, is("Name1"));
     }
 
@@ -47,7 +49,7 @@ public class StartUITest {
         tracker.add(item);
         Item item2 = new Item("Test2", "Descr2");
         item2.setId(item.getId());
-        String[] answers = new String[]{"2", item.getId(), "Test2", "Descr2", "6"};
+        String[] answers = new String[]{"3", item.getId(), "Test2", "Descr2", "7"};
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input, tracker);
         String actual = tracker.findById(item2.getId()).getName();
@@ -64,13 +66,13 @@ public class StartUITest {
         tracker.add(item2);
         tracker.add(item3);
 
-        String[] answers = new String[]{"3", item2.getId(), "6"};
+        String[] answers = new String[]{"4", item2.getId(), "7"};
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input, tracker);
-        Item[] actual = tracker.getAll();
-        Item[] expected = new Item[2];
-        expected[0] = item1;
-        expected[1] = item3;
+        List<Item> actual = tracker.getAll();
+        List<Item> expected = new ArrayList<>();
+        expected.add(item1);
+        expected.add(item3);
         assertThat(actual, is(expected));
     }
 
@@ -87,7 +89,7 @@ public class StartUITest {
         String info2 = item2.getId() + " Test2 " + "Descr2";
         String info3 = item3.getId() + " Test3 " + "Descr3";
         String lineSeparator = System.lineSeparator();
-        String[] answers = new String[]{"1", "6"};
+        String[] answers = new String[]{"2", "7"};
         Input input = new StubInput(answers);
 
         StartUI startUI = new StartUI(input, tracker);
@@ -105,7 +107,7 @@ public class StartUITest {
                 .append("----- Конец списка -----")
                 .append(lineSeparator)
                 .append(menuEmulator())
-                .append("Программа завершена.")
+                .append("Program complete.")
                 .append(lineSeparator)
                 .toString();
         String actual = baos.toString();
@@ -124,7 +126,7 @@ public class StartUITest {
 
         String lineSeparator = System.lineSeparator();
         String info = item2.getId() + " Test2 " + "Descr2";
-        String[] answers = new String[]{"4", item2.getId(),  "6"};
+        String[] answers = new String[]{"5", item2.getId(),  "7"};
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input, tracker);
         String expected = new StringBuilder()
@@ -136,7 +138,7 @@ public class StartUITest {
                 .append("----- Поиск завершен -----")
                 .append(lineSeparator)
                 .append(menuEmulator())
-                .append("Программа завершена.")
+                .append("Program complete.")
                 .append(lineSeparator)
                 .toString();
         String actual = baos.toString();
@@ -157,7 +159,7 @@ public class StartUITest {
         String info1 = item2.getId() + " Test2 " + "Descr2";
         String info2 = item3.getId() + " Test2 " + "Descr3";
 
-        String[] answers = new String[] {"5", "Test2",  "6"};
+        String[] answers = new String[] {"6", "Test2",  "7"};
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input, tracker);
         String expected = new StringBuilder()
@@ -171,7 +173,7 @@ public class StartUITest {
                 .append("----- Поиск завершен -----")
                 .append(lineSeparator)
                 .append(menuEmulator())
-                .append("Программа завершена.")
+                .append("Program complete.")
                 .append(lineSeparator)
                 .toString();
         String actual = baos.toString();
@@ -182,19 +184,19 @@ public class StartUITest {
     private String menuEmulator() {
        StringBuilder sb = new StringBuilder();
         String lineSeparator = System.lineSeparator();
-       sb.append("0 - Add new Item")
+       sb.append("1 Add new item")
                .append(lineSeparator)
-               .append("1 - Show all items")
+               .append("2 Show all items")
                .append(lineSeparator)
-               .append("2 - Edit item")
+               .append("3 Edit item by ID")
                .append(lineSeparator)
-               .append("3 - Delete item")
+               .append("4 Delete item by ID")
                .append(lineSeparator)
-               .append("4 - Find item by Id")
+               .append("5 Find item by ID")
                .append(lineSeparator)
-               .append("5 - Find items by name")
+               .append("6 Find item by name")
                .append(lineSeparator)
-               .append("6 - ExitProgram Program")
+               .append("7 Exit program")
                .append(lineSeparator);
        return sb.toString();
     }

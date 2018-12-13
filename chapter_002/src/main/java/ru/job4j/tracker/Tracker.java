@@ -1,6 +1,8 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -8,10 +10,10 @@ import java.util.Random;
  */
 
 public class Tracker {
-    private int position = 0;
+    //private int position = 0;
     private String id = "0000000";
     private static final Random RANDOM = new Random();
-    private Item[] items = new Item[100];
+    private List<Item> items = new ArrayList<>();
 
     /**
      *
@@ -20,7 +22,7 @@ public class Tracker {
      */
     public Item add(Item item) {
         item.setId(generateID());
-        items[position++] = item;
+        items.add(item);
         return item;
     }
 
@@ -31,9 +33,10 @@ public class Tracker {
      */
     public boolean replace(String id, Item item) {
         boolean success = false;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getId().equals(id)) {
-                items[i] = item;
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId().equals(id)) {
+                items.remove(i);
+                items.add(i, item);
                 success = true;
                 break;
             }
@@ -47,11 +50,9 @@ public class Tracker {
      */
     public boolean delete(String id) {
         boolean success = false;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getId().equals(id)) {
-             System.arraycopy(items, i + 1, items, i, items.length - (i + 1));
-             items[items.length - 1] = null;
-             position--;
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId().equals(id)) {
+             items.remove(i);
              success = true;
              break;
             }
@@ -63,8 +64,8 @@ public class Tracker {
      *
      * @return - all not-null items from the array.
      */
-    public Item[] getAll() {
-    return Arrays.copyOf(items, position);
+    public List<Item> getAll() {
+    return this.items;
     }
 
     /**
@@ -72,16 +73,15 @@ public class Tracker {
      * @param key - name we are looking for.
      * @return - array weth found items.
      */
-    public Item[] findByName(String key) {
-        Item[] foundNames = new Item[this.position];
+    public List<Item> findByName(String key) {
+        List<Item> foundNames = new ArrayList<>();
         int count = 0;
-        for (int i = 0; i < this.position; i++) {
-            if (items[i].getName().equals(key)) {
-                foundNames[count]  = items[i];
-                count++;
+        for (int i = 0; i < this.items.size(); i++) {
+            if (items.get(i).getName().equals(key)) {
+                foundNames.add(items.get(i));
             }
         }
-        return Arrays.copyOf(foundNames, count);
+        return foundNames;
     }
 
     /**
@@ -90,9 +90,9 @@ public class Tracker {
      * @return - found item.
      */
     public Item findById(String id) {
-        for (int i = 0; i < position; i++) {
-            if (items[i].getId().equals(id)) {
-             return  items[i];
+        for (int i = 0; i < this.items.size(); i++) {
+            if (items.get(i).getId().equals(id)) {
+             return  items.get(i);
             }
         }
         return null;

@@ -2,6 +2,10 @@ package ru.job4j.tracker;
 
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -35,11 +39,11 @@ public class TrackerTest {
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
-        Item[] expected = new Item[2];
-        expected[0] = item1;
-        expected[1] = item3;
+        List<Item> expected = new ArrayList<>();
+        expected.add(item1);
+        expected.add(item3);
         tracker.delete(item2.getId());
-        Item[] actual = tracker.getAll();
+        List<Item> actual = tracker.getAll();
         assertThat(actual, is(expected));
     }
 
@@ -52,11 +56,11 @@ public class TrackerTest {
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
-        Item[] expected = new Item[3];
-        expected[0] = item1;
-        expected[1] = item2;
-        expected[2] = item3;
-        Item[] actual = tracker.getAll();
+        List<Item> expected = new ArrayList<>();
+        expected.add(item1);
+        expected.add(item2);
+        expected.add(item3);;
+        List<Item> actual = tracker.getAll();
         assertThat(actual, is(expected));
     }
 
@@ -71,10 +75,10 @@ public class TrackerTest {
         tracker.add(item2);
         tracker.add(item3);
         tracker.add(item4);
-        Item[] expected = new Item[2];
-        expected[0] = item2;
-        expected[1] = item3;
-        Item[] actual = tracker.findByName("Test2");
+        List<Item> expected = new ArrayList<>();
+        expected.add(item2);
+        expected.add(item3);
+        List<Item> actual = tracker.findByName("Test2");
         assertThat(actual, is(expected));
     }
 

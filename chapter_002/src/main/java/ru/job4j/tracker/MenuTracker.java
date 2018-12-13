@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 public class MenuTracker  {
     private Input input;
     private int position;
@@ -93,7 +95,7 @@ public class MenuTracker  {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            Item[] allItems = tracker.getAll();
+            List<Item> allItems = tracker.getAll();
             System.out.println("----- Список всех заявок: -----");
             for (Item eachItem : allItems) {
                 System.out.println(eachItem);
@@ -176,7 +178,7 @@ public class MenuTracker  {
         public void execute(Input input, Tracker tracker) {
             System.out.println("----- Поиск заявок по названию: -----");
             String nameToFind = input.ask("Please, enter the name of the item You want to find: ");
-            Item[] allItems = tracker.findByName(nameToFind);
+            List<Item> allItems = tracker.findByName(nameToFind);
             for (Item eachItem : allItems) {
                 System.out.println(eachItem);
             }

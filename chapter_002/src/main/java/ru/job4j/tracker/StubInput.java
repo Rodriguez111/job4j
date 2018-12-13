@@ -23,7 +23,7 @@ public class StubInput implements Input {
     public int ask(String question, int range) {
         boolean exists = false;
         int key = Integer.parseInt(answers[position++]);
-        if (key > 0 && key <= range) {
+        if (key >= 0 && key <= range) {
             exists = true;
         }
         if (!exists) {
