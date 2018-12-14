@@ -47,16 +47,4 @@ public class CoffeeMachine {
         return result;
     }
 
-
-    public static void main(String[] args) {
-        CoffeeMachine coffeeMachine = new CoffeeMachine();
-        int[] result = coffeeMachine.changes(45, 35);
-
-        for (int i = 0; i < result.length; i++) {
-            System.out.println(result[i]);
-        }
-
-    }
-
-
 }
