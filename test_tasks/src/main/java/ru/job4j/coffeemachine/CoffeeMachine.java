@@ -31,9 +31,6 @@ public class CoffeeMachine {
                 if (change - coins[count].getCoinValues() >= 0) {
                     listOfCoins.add(coins[count].getCoinValues());
                     change = change - coins[count].getCoinValues();
-                }
-                if (change - coins[count].getCoinValues() >= 0) {
-                    continue;
                 } else {
                     count++;
                 }
