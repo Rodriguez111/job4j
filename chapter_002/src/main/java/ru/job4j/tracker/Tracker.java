@@ -35,8 +35,7 @@ public class Tracker {
         boolean success = false;
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getId().equals(id)) {
-                items.remove(i);
-                items.add(i, item);
+                items.set(i, item);
                 success = true;
                 break;
             }

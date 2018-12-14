@@ -59,7 +59,7 @@ public class TrackerTest {
         List<Item> expected = new ArrayList<>();
         expected.add(item1);
         expected.add(item2);
-        expected.add(item3);;
+        expected.add(item3);
         List<Item> actual = tracker.getAll();
         assertThat(actual, is(expected));
     }
