@@ -11,8 +11,8 @@ public class SortUser {
      */
 
     public Set<User> sort (List<User> listOfUsers) {
-        Set<User> sortedSet = new TreeSet(listOfUsers);
-       return sortedSet;
+
+       return new TreeSet(listOfUsers);
     }
 
 
