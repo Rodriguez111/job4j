@@ -18,10 +18,8 @@ public class StringsCompare implements Comparator<String> {
                 break;
             }
         }
-        if (result == 0) {
-           result =   o1.length() == o2.length() ? 0 : o1.length() < o2.length() ? -1 : 1;
-        }
-        return result;
+        return result == 0 ? Integer.compare(o1.length(), o2.length()) : result;
+
     }
 
 
