@@ -86,8 +86,8 @@ public class BankTest {
     }
 
 
-    @Test (expected = UserNotFoundException.class)
-    public void whenUserNotFoundThenException() throws InsufficientFundsException, AccountNotFoundException, UserNotFoundException {
+    @Test
+    public void whenUserNotFoundThenFalse() {
         User user1 = new User("Ivan", "001");
         User user2 = new User("Vasili", "002");
 
@@ -110,8 +110,7 @@ public class BankTest {
         bank.addAccountToUser(user2.getPassport(), account2User2);
 
         boolean actual = bank.transferMoney("099", "001001", "002", "001010", 150);
-        Exception expected = new UserNotFoundException();
-        assertThat(actual, is(expected));
+        assertThat(actual, is(false));
     }
 
 
@@ -119,8 +118,8 @@ public class BankTest {
 
 
 
-    @Test (expected = AccountNotFoundException.class)
-    public void whenSourceAccountNotFoundThenException() throws InsufficientFundsException, AccountNotFoundException, UserNotFoundException {
+    @Test
+    public void whenSourceAccountNotFoundThenFalse() {
         User user1 = new User("Ivan", "001");
         User user2 = new User("Vasili", "002");
 
@@ -144,13 +143,12 @@ public class BankTest {
         bank.addAccountToUser(user2.getPassport(), account2User2);
 
         boolean actual = bank.transferMoney("001", "001003", "002", "001010", 150);
-        Exception expected = new AccountNotFoundException();
-        assertThat(actual, is(expected));
+        assertThat(actual, is(false));
     }
 
 
-    @Test (expected = AccountNotFoundException.class)
-    public void whenDestinationAccountNotFoundThenException() throws InsufficientFundsException, AccountNotFoundException, UserNotFoundException {
+    @Test
+    public void whenDestinationAccountNotFoundThenFalse() {
         User user1 = new User("Ivan", "001");
         User user2 = new User("Vasili", "002");
 
@@ -174,14 +172,13 @@ public class BankTest {
         bank.addAccountToUser(user2.getPassport(), account2User2);
 
         boolean actual = bank.transferMoney("001", "001001", "002", "001003", 150);
-        Exception expected = new InsufficientFundsException();
-        assertThat(actual, is(expected));
+        assertThat(actual, is(false));
     }
 
 
 
-    @Test (expected = InsufficientFundsException.class)
-    public void whenInsufficientFundsThenException() throws InsufficientFundsException, AccountNotFoundException, UserNotFoundException {
+    @Test
+    public void whenInsufficientFundsThenFalse() {
         User user1 = new User("Ivan", "001");
         User user2 = new User("Vasili", "002");
         Account account1User1 = new Account(100, "001001");
@@ -201,13 +198,12 @@ public class BankTest {
         bank.addAccountToUser(user2.getPassport(), account2User2);
 
       boolean actual = bank.transferMoney("001", "001001", "002", "001010", 150);
-      Exception expected = new InsufficientFundsException();
-       assertThat(actual, is(expected));
+       assertThat(actual, is(false));
     }
 
 
     @Test
-    public void whenTransferSuccessfulThenTrue() throws InsufficientFundsException, AccountNotFoundException, UserNotFoundException {
+    public void whenTransferSuccessfulThenTrue() {
         User user1 = new User("Ivan", "001");
         User user2 = new User("Vasili", "002");
         Account account1User1 = new Account(100, "001001");

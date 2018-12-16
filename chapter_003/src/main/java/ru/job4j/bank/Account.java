@@ -26,14 +26,16 @@ public class Account {
      *
      * @param amount - amount of money to transfer.
      * @param destinationAccount - destination account to which we transfer to.
-     * @throws InsufficientFundsException
      */
-    public void transfer(double amount, Account destinationAccount) throws InsufficientFundsException {
-        if (this.value < amount) {
-            throw new InsufficientFundsException();
+    public boolean transfer(double amount, Account destinationAccount){
+        boolean transferSuccess = true;
+        if (this.value >= amount) {
+            this.value -= amount;
+            destinationAccount.setValue(destinationAccount.getValue() + amount);
+        } else {
+            transferSuccess = false;
         }
-        this.value -= amount;
-        destinationAccount.setValue(destinationAccount.getValue() + amount);
+        return transferSuccess;
     }
 
 

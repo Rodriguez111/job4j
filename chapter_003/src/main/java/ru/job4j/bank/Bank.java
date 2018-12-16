@@ -1,9 +1,6 @@
 package ru.job4j.bank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Bank {
 
@@ -93,17 +90,22 @@ public class Bank {
      * @param dstRequisite - requisites of the account where we want to transfer funds.
      * @param amount - amount of money to transfer.
      * @return
-     * @throws InsufficientFundsException
-     * @throws AccountNotFoundException
-     * @throws UserNotFoundException
      */
-    public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport, String dstRequisite, double amount) throws InsufficientFundsException, AccountNotFoundException, UserNotFoundException {
+    public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport, String dstRequisite, double amount) {
         boolean moneyTransfered = true;
 
-        Account sourceAccount = selectAccount(srcPassport, srcRequisite);
-        Account destinationAccount =  selectAccount(destPassport, dstRequisite);
+        Optional<Account> sourceAccount = Optional.ofNullable(selectAccount(srcPassport, srcRequisite));
+        Optional<Account> destinationAccount = Optional.ofNullable(selectAccount(destPassport, dstRequisite));
 
-       sourceAccount.transfer(amount, destinationAccount);
+        Account source;
+        Account destination;
+        if(sourceAccount.isPresent() && destinationAccount.isPresent()) {
+            source = sourceAccount.get();
+            destination = destinationAccount.get();
+            moneyTransfered = source.transfer(amount, destination);
+        } else {
+            moneyTransfered = false;
+        }
 
             return moneyTransfered;
     }
@@ -113,20 +115,19 @@ public class Bank {
      * @param passport - passport of user whose account we are looking for.
      * @param requisite - requisites of user whose account we are looking for.
      * @return - found account.
-     * @throws AccountNotFoundException
-     * @throws UserNotFoundException
      */
-    private Account selectAccount(String passport, String requisite) throws AccountNotFoundException, UserNotFoundException {
+    private Account selectAccount(String passport, String requisite) {
         Account account = null;
+
         User user = selectUser(passport);
-        List<Account> listOfUserAccounts = usersInfo.get(user);
-           for (Account eachAccount : listOfUserAccounts) {
-              if (eachAccount.getRequisites().equals(requisite)) {
-                    account =  eachAccount;
-              }
+        if(!user.equals(new User("User not found", ""))) {
+
+            List<Account> listOfUserAccounts = usersInfo.get(user);
+            for (Account eachAccount : listOfUserAccounts) {
+                if (eachAccount.getRequisites().equals(requisite)) {
+                    account = eachAccount;
+                }
             }
-        if (account == null) {
-            throw new AccountNotFoundException();
         }
         return account;
     }
@@ -135,19 +136,16 @@ public class Bank {
      *
      * @param passport  - passport of the user we are looking for.
      * @return - found user.
-     * @throws UserNotFoundException
      */
-    private User selectUser(String passport) throws UserNotFoundException {
-        User user = null;
+    private User selectUser(String passport) {
+        Optional<User> user = Optional.ofNullable(new User("User not found", ""));
+
         for (Map.Entry<User, List<Account>> eachEntry : usersInfo.entrySet()) {
             if (eachEntry.getKey().getPassport().equals(passport)) {
-                user = eachEntry.getKey();
+                user = Optional.of(eachEntry.getKey());
             }
         }
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
-        return user;
+        return user.get();
     }
 
 
