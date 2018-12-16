@@ -103,16 +103,19 @@ public class Bank {
         Account sourceAccount = selectAccount(srcPassport, srcRequisite);
         Account destinationAccount =  selectAccount(destPassport, dstRequisite);
 
-        if (sourceAccount.getValue() < amount) {
-            throw new InsufficientFundsException();
-        }
-
-        sourceAccount.setValue(sourceAccount.getValue() - amount);
-        destinationAccount.setValue(destinationAccount.getValue() + amount);
+       sourceAccount.transfer(amount, destinationAccount);
 
             return moneyTransfered;
     }
 
+    /**
+     *
+     * @param passport - passport of user whose account we are looking for.
+     * @param requisite - requisites of user whose account we are looking for.
+     * @return - found account.
+     * @throws AccountNotFoundException
+     * @throws UserNotFoundException
+     */
     private Account selectAccount(String passport, String requisite) throws AccountNotFoundException, UserNotFoundException {
         Account account = null;
         User user = selectUser(passport);
@@ -128,6 +131,12 @@ public class Bank {
         return account;
     }
 
+    /**
+     *
+     * @param passport  - passport of the user we are looking for.
+     * @return - found user.
+     * @throws UserNotFoundException
+     */
     private User selectUser(String passport) throws UserNotFoundException {
         User user = null;
         for (Map.Entry<User, List<Account>> eachEntry : usersInfo.entrySet()) {
