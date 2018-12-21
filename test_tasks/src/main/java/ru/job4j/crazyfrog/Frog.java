@@ -11,10 +11,28 @@ public class Frog {
     private Random random = new Random();
     private int[] field = new int[SECTORS * SEGMENTS];
 
-    private int frogIndex = setUnit(-2);
-    private int barrier1Index = setUnit(-1);
-    private int barrier2Index = setUnit(-1);
-    private int finishIndex = setUnit(-3);
+    private int frogIndex;
+    private int barrier1Index;
+    private int barrier2Index;
+    private int finishIndex;
+
+    public  Frog() {
+        this.frogIndex = setUnit(-2);
+        this.barrier1Index = setUnit(-1);
+        this.barrier2Index = setUnit(-1);
+        this.finishIndex = setUnit(-3);
+    }
+
+    public Frog(int frogIndex, int barrier1Index, int barrier2Index, int finishIndex) {
+        this.frogIndex = frogIndex;
+        this.barrier1Index = barrier1Index;
+        this.barrier2Index = barrier2Index;
+        this.finishIndex = finishIndex;
+    }
+
+    public int[] getField() {
+        return field;
+    }
 
     public static void main(String[] args) {
         Frog frog = new Frog();
@@ -45,11 +63,14 @@ public class Frog {
     }
 
 
+    /**
+     *
+     * @return array of points of the frog's shortest way to finish.
+     */
     public int[] findAnyWays() {
         listOfIndex.add(frogIndex);
         segments.add(listOfIndex); //добавляем первый элемент с начальной позицией лягушки
         int countOfSteps = 0;
-        boolean finishReached = false;
 
         while (!segments.isEmpty()) {
             countOfSteps++;
@@ -82,9 +103,6 @@ public class Frog {
 
             }
 
-            if (finishReached) {
-                break;
-            }
             if (!listOfIndex.isEmpty()) {
                 segments.add(listOfIndex);
             }
