@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MenuTracker  {
     private Input input;
@@ -49,9 +50,10 @@ public class MenuTracker  {
     /**
      * Shows main menu of the program.
      */
-    public void showMenu() {
+    public void showMenu(Consumer<String> consumer) {
         for (UserAction eachAction : this.actions) {
-            System.out.println(eachAction.info());
+            consumer.accept(eachAction.info());
+            //System.out.println(eachAction.info());
         }
     }
 

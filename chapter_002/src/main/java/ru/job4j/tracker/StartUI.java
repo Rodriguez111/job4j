@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.function.Consumer;
+
 public class StartUI {
     private final Input input;
     private final Tracker tracker;
@@ -23,7 +25,8 @@ public class StartUI {
     public void init() {
         MenuTracker menuTracker = new MenuTracker(this.input, this.tracker);
         do {
-            menuTracker.showMenu();
+            Consumer<String> consumer = System.out::println;
+            menuTracker.showMenu(consumer);
             int key = input.ask("Input menu item: ", menuTracker.availableKeys());
             menuTracker.selectKey(key - 1);
         } while (menuTracker.isRunning());

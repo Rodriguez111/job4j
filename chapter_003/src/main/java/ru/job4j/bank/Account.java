@@ -27,7 +27,7 @@ public class Account {
      * @param amount - amount of money to transfer.
      * @param destinationAccount - destination account to which we transfer to.
      */
-    public boolean transfer(double amount, Account destinationAccount){
+    public boolean transfer(double amount, Account destinationAccount) {
         boolean transferSuccess = true;
         if (this.value >= amount) {
             this.value -= amount;
