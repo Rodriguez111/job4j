@@ -72,11 +72,11 @@ public class Bank {
      * @param passport - passport of the user.
      * @return - list of accounts of this user.
      */
-    public Optional<List<Account>> getUserAccounts(String passport) {
-        Optional<List<Account>> listOfAccounts = Optional.empty();
+    public List<Account> getUserAccounts(String passport) {
+        List<Account> listOfAccounts = new ArrayList<>();
         for (Map.Entry<User, List<Account>> eachEntry : usersInfo.entrySet()) {
             if (eachEntry.getKey().getPassport().equals(passport)) {
-                listOfAccounts = Optional.of(eachEntry.getValue());
+                listOfAccounts = eachEntry.getValue();
             }
         }
     return listOfAccounts;
@@ -94,14 +94,19 @@ public class Bank {
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport, String dstRequisite, double amount) {
         boolean moneyTransfered = true;
 
-        Optional<Account> sourceAccount = selectAccount(srcPassport, srcRequisite);
-        Optional<Account> destinationAccount = selectAccount(destPassport, dstRequisite);
+        Optional<Account> sourceAccount = Optional.ofNullable(selectAccount(srcPassport, srcRequisite));
+        Optional<Account> destinationAccount = Optional.ofNullable(selectAccount(destPassport, dstRequisite));
 
-        if(sourceAccount.isPresent() && destinationAccount.isPresent()) {
-            moneyTransfered = sourceAccount.get().transfer(amount, destinationAccount.get());
+        Account source;
+        Account destination;
+        if (sourceAccount.isPresent() && destinationAccount.isPresent()) {
+            source = sourceAccount.get();
+            destination = destinationAccount.get();
+            moneyTransfered = source.transfer(amount, destination);
         } else {
             moneyTransfered = false;
         }
+
             return moneyTransfered;
     }
 
@@ -111,19 +116,19 @@ public class Bank {
      * @param requisite - requisites of user whose account we are looking for.
      * @return - found account.
      */
-    private Optional<Account> selectAccount(String passport, String requisite) {
-        Optional<Account> account = Optional.empty();
+    private Account selectAccount(String passport, String requisite) {
+        Account account = null;
 
-        Optional<User> user = selectUser(passport);
-        if (user.isPresent()){
-            List<Account> listOfUserAccounts = usersInfo.get(user.get());
-        for (Account eachAccount : listOfUserAccounts) {
-            if (eachAccount.getRequisites().equals(requisite)) {
-                account = Optional.of(eachAccount);
-                break;
+        User user = selectUser(passport);
+        if (!user.equals(new User("User not found", ""))) {
+
+            List<Account> listOfUserAccounts = usersInfo.get(user);
+            for (Account eachAccount : listOfUserAccounts) {
+                if (eachAccount.getRequisites().equals(requisite)) {
+                    account = eachAccount;
+                }
             }
         }
-    }
         return account;
     }
 
@@ -132,16 +137,15 @@ public class Bank {
      * @param passport  - passport of the user we are looking for.
      * @return - found user.
      */
-    private Optional<User> selectUser(String passport) {
-        Optional<User> user = Optional.empty();
+    private User selectUser(String passport) {
+        Optional<User> user = Optional.ofNullable(new User("User not found", ""));
 
         for (Map.Entry<User, List<Account>> eachEntry : usersInfo.entrySet()) {
             if (eachEntry.getKey().getPassport().equals(passport)) {
                 user = Optional.of(eachEntry.getKey());
-                break;
             }
         }
-        return user;
+        return user.get();
     }
 
 
