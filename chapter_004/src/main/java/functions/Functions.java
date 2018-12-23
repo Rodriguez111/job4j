@@ -12,7 +12,7 @@ public class Functions {
 
     public List<Double> diapason(int start, int finish, java.util.function.Function<Double, Double> function) {
         List<Double> list = new ArrayList<>();
-        for(double i = start; i <= finish; i++) {
+        for (double i = start; i <= finish; i++) {
             list.add(function.apply(i));
         }
         return list;

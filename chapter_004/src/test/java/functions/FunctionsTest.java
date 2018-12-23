@@ -36,7 +36,7 @@ public class FunctionsTest {
         Functions functions = new Functions();
         List<Double> actual =   functions.diapason(0, 3, (value) -> {
             Double  result = null;
-            if(value > 0) {
+            if (value > 0) {
                 result = Math.log(value);
             }
             return result;

@@ -15,7 +15,7 @@ public class UserConvert {
 
         @Override
         public String toString() {
-            return "User name = "+ this.name;
+            return "User name = " + this.name;
         }
     }
 

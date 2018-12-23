@@ -10,12 +10,12 @@ import static org.junit.Assert.*;
 public class CalculatorTest {
 
    @Test
-    public void CalculatorTest() {
+    public void calculatorTest1() {
         Calculator calculator = new Calculator();
         List<Double> actual = new ArrayList<>();
         calculator.multiply(0, 5, 2,
                 (value, index) -> {
-            return (double)value * index;
+            return (double) value * index;
                 }, result -> actual.add(result));
 
         List<Double> expected = new ArrayList<>();
@@ -29,7 +29,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void CalculatorTest2() {
+    public void calculatorTest2() {
         Calculator calculator = new Calculator();
         List<Double> actual = new ArrayList<>();
         calculator.multiply(0, 5, 2,

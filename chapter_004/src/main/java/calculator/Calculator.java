@@ -8,7 +8,7 @@ public class Calculator {
     public void multiply(int start, int finish, int value,
                          BiFunction<Integer, Integer, Double> biFunction,
                          Consumer<Double> consumer) {
-        for(int i = start; i != finish; i++) {
+        for (int i = start; i != finish; i++) {
             consumer.accept(biFunction.apply(value, i));
         }
     }
@@ -20,6 +20,6 @@ public class Calculator {
                 (value, index) -> {
            double result = value * index;
            return result;
-                }, result -> System.out.println(result) );
+                }, result -> System.out.println(result));
     }
 }
