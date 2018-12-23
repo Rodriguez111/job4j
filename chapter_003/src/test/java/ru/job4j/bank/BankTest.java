@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -79,10 +78,10 @@ public class BankTest {
         bank.addUser(user);
         bank.addAccountToUser(user.getPassport(), account1);
         bank.addAccountToUser(user.getPassport(), account2);
-        Optional<List<Account>> actual = bank.getUserAccounts("001");
-        Optional<List<Account>> expected = Optional.of(new ArrayList<>());
-        expected.get().add(account1);
-        expected.get().add(account2);
+        List<Account> actual = bank.getUserAccounts("001");
+        List<Account> expected = new ArrayList<>();
+        expected.add(account1);
+        expected.add(account2);
         assertThat(actual, is(expected));
     }
 
