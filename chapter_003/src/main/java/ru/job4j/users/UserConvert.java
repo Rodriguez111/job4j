@@ -1,7 +1,10 @@
 package ru.job4j.users;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class UserConvert {
@@ -12,10 +15,10 @@ public class UserConvert {
      * @return = result HashMap of users.
      */
     public HashMap<Integer, User> process(List<User> list) {
-        HashMap<Integer, User> users = new HashMap<>();
-        for (User eachUser : list) {
-            users.put(eachUser.getId(), eachUser);
-        }
-        return users;
+        Map<Integer, User> users = list
+                .stream()
+                .collect(Collectors.toMap(User::getId, user -> user));
+
+        return null;
     }
 }

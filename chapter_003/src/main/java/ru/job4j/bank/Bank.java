@@ -109,7 +109,7 @@ public class Bank {
      *
      * @param passport - passport of user whose account we are looking for.
      * @param requisite - requisites of user whose account we are looking for.
-     * @return - found account.
+     * @return - found account..
      */
     private Optional<Account> selectAccount(String passport, String requisite) {
         Optional<Account> account = Optional.empty();
