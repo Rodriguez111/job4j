@@ -15,10 +15,11 @@ public class UserConvert {
      * @return = result HashMap of users.
      */
     public HashMap<Integer, User> process(List<User> list) {
-        Map<Integer, User> users = list
+        HashMap<Integer, User> users =
+         list
                 .stream()
-                .collect(Collectors.toMap(User::getId, user -> user));
+                .collect(Collectors.toMap(User::getId, user -> user, (a, b) -> a, HashMap::new));
 
-        return null;
+        return users;
     }
 }
