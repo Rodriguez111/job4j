@@ -14,12 +14,14 @@ public class UserConvert {
      * @param list = list of users to convert.
      * @return = result HashMap of users.
      */
-    public HashMap<Integer, User> process(List<User> list) {
-        HashMap<Integer, User> users =
-         list
-                .stream()
-                .collect(Collectors.toMap(User::getId, user -> user, (a, b) -> a, HashMap::new));
-
+    public Map<Integer, User> process(List<User> list) {
+//        HashMap<Integer, User> users =
+//         list
+//                .stream()
+//                .collect(Collectors.toMap(User::getId, user -> user, (a, b) -> a, HashMap::new));
+        Map<Integer, User> users =
+                list.stream()
+                        .collect(Collectors.toMap(User::getId, user -> user));
         return users;
     }
 }
