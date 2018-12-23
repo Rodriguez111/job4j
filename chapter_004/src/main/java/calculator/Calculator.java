@@ -14,12 +14,12 @@ public class Calculator {
     }
 
 
-    public static void main(String[] args) {
-        Calculator calculator = new Calculator();
-        calculator.multiply(0, 10, 2,
-                (value, index) -> {
-           double result = value * index;
-           return result;
-                }, result -> System.out.println(result));
-    }
+//    public static void main(String[] args) {
+//        Calculator calculator = new Calculator();
+//        calculator.multiply(0, 10, 2,
+//                (value, index) -> {
+//           double result = value * index;
+//           return result;
+//                }, result -> System.out.println(result));
+//    }
 }
