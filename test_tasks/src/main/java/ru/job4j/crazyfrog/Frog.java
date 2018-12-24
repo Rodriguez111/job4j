@@ -8,26 +8,8 @@ public class Frog {
 
     private Queue<TreeSet<Integer>> segments = new LinkedList<>();
     private TreeSet<Integer> listOfIndex = new TreeSet<>();
-    private Random random = new Random();
-    private int[] field = new int[SECTORS * SEGMENTS];
 
-    /**
-     *
-     * @param value - value to assign to element.
-     * @return - index of the element
-     */
-    private int setUnit(int value) {
-        boolean isNotSet = true;
-        int index = 0;
-        while (isNotSet) {
-            index =  random.nextInt(SECTORS * SEGMENTS);
-            if (field[index] == 0) {
-                field[index] = value;
-                isNotSet = false;
-            }
-        }
-        return index;
-    }
+    private int[] field = new int[SECTORS * SEGMENTS];
 
 
     /**

@@ -8,6 +8,6 @@ public class TreeEntry {
 
     public TreeEntry(int value) {
         this.value = value;
-        left = right = null;
+        //left = right = null;
     }
 }

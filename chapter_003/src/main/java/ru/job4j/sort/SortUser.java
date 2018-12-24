@@ -36,7 +36,7 @@ public class SortUser {
         return listOfUsers.stream()
                 .sorted((user1, user2) -> {
                     int result = user1.getName().compareTo(user2.getName());
-                    result =  result !=0 ?  result : Integer.compare(user1.getAge(), user2.getAge());
+                    result =  result != 0 ?  result : Integer.compare(user1.getAge(), user2.getAge());
                     return result;
                 }).collect(Collectors.toList());
     }
