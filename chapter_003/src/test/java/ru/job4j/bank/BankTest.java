@@ -70,6 +70,19 @@ public class BankTest {
     }
 
     @Test
+    public void whenDeleteAccountThenTrue() {
+        User user = new User("Ivan", "001");
+        Account account = new Account(100, "001001");
+        Account accountToDelete = new Account(100, "001001");
+        Bank bank = new Bank();
+        bank.addUser(user);
+        bank.addAccountToUser(user.getPassport(), account);
+        boolean actual = bank.deleteAccountFromUser("001", account);
+        assertThat(actual, is(true));
+    }
+
+
+    @Test
     public void whenGetAccountsThenReturnListOfAccounts() {
         User user = new User("Ivan", "001");
         Account account1 = new Account(100, "001001");

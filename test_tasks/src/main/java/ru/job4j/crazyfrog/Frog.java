@@ -11,39 +11,6 @@ public class Frog {
     private Random random = new Random();
     private int[] field = new int[SECTORS * SEGMENTS];
 
-    private int frogIndex;
-    private int barrier1Index;
-    private int barrier2Index;
-    private int finishIndex;
-
-    public  Frog() {
-        this.frogIndex = setUnit(-2);
-        this.barrier1Index = setUnit(-1);
-        this.barrier2Index = setUnit(-1);
-        this.finishIndex = setUnit(-3);
-    }
-
-    public Frog(int frogIndex, int barrier1Index, int barrier2Index, int finishIndex) {
-        this.frogIndex = frogIndex;
-        this.barrier1Index = barrier1Index;
-        this.barrier2Index = barrier2Index;
-        this.finishIndex = finishIndex;
-    }
-
-    public int[] getField() {
-        return field;
-    }
-
-    public static void main(String[] args) {
-        Frog frog = new Frog();
-        System.out.printf("Старт: %d, Финиш: %d, Препятствия: %d, %d. \n", frog.frogIndex, frog.finishIndex, frog.barrier1Index, frog.barrier2Index);
-       int[] result = frog.findAnyWays();
-
-        for (int eachSegment : result) {
-            System.out.println(eachSegment);
-        }
-    }
-
     /**
      *
      * @param value - value to assign to element.
@@ -67,8 +34,13 @@ public class Frog {
      *
      * @return array of points of the frog's shortest way to finish.
      */
-    public int[] findAnyWays() {
-        listOfIndex.add(frogIndex);
+    public int[] findAnyWays(int startIndex, int finishIndex, List<Integer> barriers) {
+        field[finishIndex] = -3;
+       for (Integer eachBarrier : barriers) {
+           field[eachBarrier] = -1;
+       }
+
+        listOfIndex.add(startIndex);
         segments.add(listOfIndex); //добавляем первый элемент с начальной позицией лягушки
         int countOfSteps = 0;
 
@@ -93,11 +65,11 @@ public class Frog {
                 indexFarAway = outOfFieldLengthCheck(indexFarAway);
 
                 //проверяем, можно ли прыгнуть и не финиш ли.
-                if (checkStep(indexNearLeft, countOfSteps)
-                || checkStep(indexNearRight, countOfSteps)
-                || checkStep(indexMiddleLeft, countOfSteps)
-                || checkStep(indexMiddleRight, countOfSteps)
-                || checkStep(indexFarAway, countOfSteps)) {
+                if (checkStep(indexNearLeft, countOfSteps, finishIndex)
+                || checkStep(indexNearRight, countOfSteps, finishIndex)
+                || checkStep(indexMiddleLeft, countOfSteps, finishIndex)
+                || checkStep(indexMiddleRight, countOfSteps, finishIndex)
+                || checkStep(indexFarAway, countOfSteps, finishIndex)) {
                     break;
                 }
 
@@ -108,7 +80,7 @@ public class Frog {
             }
         }
         System.out.println("Шагов: " + field[finishIndex]);
-        return findShortWay();
+        return findShortWay(startIndex, finishIndex);
     }
 
 
@@ -120,12 +92,12 @@ public class Frog {
         return result;
     }
 
-    private boolean checkStep(int stepIndex, int stepCount) {
+    private boolean checkStep(int stepIndex, int stepCount, int finish) {
         boolean result = false;
         if (stepIndex != -1 && (field[stepIndex] == 0 || field[stepIndex] == -3)) {
             field[stepIndex] = stepCount;
             listOfIndex.add(stepIndex);
-            if (stepIndex == finishIndex) {
+            if (stepIndex == finish) {
                 result = true;
             }
         }
@@ -142,7 +114,7 @@ public class Frog {
     }
 
 
-    private int[] findShortWay() {
+    private int[] findShortWay(int startIndex, int finishIndex) {
         int stepsAmount = field[finishIndex];
         int[] steps = new int[stepsAmount + 1];
         steps[0] = finishIndex;
@@ -155,7 +127,7 @@ public class Frog {
                 }
             }
         }
-        steps[stepsAmount] = frogIndex;
+        steps[stepsAmount] = startIndex;
         return invertArray(steps);
     }
 
