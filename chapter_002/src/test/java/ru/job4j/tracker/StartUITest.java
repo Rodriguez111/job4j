@@ -46,7 +46,7 @@ public class StartUITest {
         String[] answers = new String[]{"1", "Name1", "Description1", "7"};
         Input input = new StubInput(answers);
         Tracker tracker = new Tracker();
-        StartUI startUI = new StartUI(input, tracker,output);
+        StartUI startUI = new StartUI(input, tracker, output);
         String actual = tracker.getAll().get(0).getName();
         assertThat(actual, is("Name1"));
     }
