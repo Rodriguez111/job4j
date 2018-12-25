@@ -17,10 +17,7 @@ public class StartUITest {
 
     PrintStream original;
     Consumer<String> output;
-
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-
    @Before
     public void saveDefaultStream() {
         this.original = System.out;
@@ -28,8 +25,12 @@ public class StartUITest {
            PrintStream newPrintStream = new PrintStream(baos);
            @Override
            public void accept(String s) {
+              newPrintStream.println(s);
+           }
 
-               newPrintStream.println(s);
+           @Override
+           public String toString() {
+               return baos.toString();
            }
        };
     }
@@ -122,8 +123,7 @@ public class StartUITest {
                         .toString();
 
        String actual = output.toString();
-       output.accept(expected);
-        assertThat(actual, is(output.toString()));
+        assertThat(actual, is(expected));
     }
 
     @Test
@@ -154,8 +154,8 @@ public class StartUITest {
                 .append(lineSeparator)
                 .toString();
         String actual = output.toString();
-        output.accept(expected);
-        assertThat(actual, is(output.toString()));
+
+        assertThat(actual, is(expected));
     }
 
     @Test
@@ -190,8 +190,7 @@ public class StartUITest {
                 .append(lineSeparator)
                 .toString();
         String actual = output.toString();
-        output.accept(expected);
-        assertThat(actual, is(output.toString()));
+        assertThat(actual, is(expected));
     }
 
 
