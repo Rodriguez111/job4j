@@ -5,16 +5,24 @@ import java.util.function.Consumer;
 public class StartUI {
     private final Input input;
     private final Tracker tracker;
+    private final Consumer<String> output;
 
 
     public StartUI() {
         this.input = new ValidateInput(new ConsoleInput());
         this.tracker = new Tracker();
+        this.output = new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+
+            }
+        };
     }
 
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(Input input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
         init();
     }
 
@@ -23,10 +31,9 @@ public class StartUI {
      * initiating main logic.
      */
     public void init() {
-        MenuTracker menuTracker = new MenuTracker(this.input, this.tracker);
+        MenuTracker menuTracker = new MenuTracker(this.input, this.tracker, this.output);
         do {
-            Consumer<String> consumer = System.out::println;
-            menuTracker.showMenu(consumer);
+            menuTracker.showMenu(output);
             int key = input.ask("Input menu item: ", menuTracker.availableKeys());
             menuTracker.selectKey(key - 1);
         } while (menuTracker.isRunning());

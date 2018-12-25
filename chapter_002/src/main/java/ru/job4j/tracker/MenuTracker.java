@@ -9,6 +9,7 @@ public class MenuTracker  {
     private Tracker tracker;
     private UserAction[] actions = new UserAction[7];
     private boolean isRunning = true;
+    private final Consumer<String> output;
 
     public boolean isRunning() {
         return isRunning;
@@ -18,9 +19,10 @@ public class MenuTracker  {
         return actions.length;
     }
 
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
        fillActions();
     }
 
@@ -63,7 +65,7 @@ public class MenuTracker  {
      */
     public void selectKey(int key) {
         if (key >= 0 && key < actions.length) {
-            this.actions[key].execute(input, tracker);
+            this.actions[key].execute(input, tracker, output);
         }
     }
 
@@ -78,12 +80,13 @@ public class MenuTracker  {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Tracker tracker, Consumer<String> output) {
             String itemName = input.ask("Please, enter the name of new item: ");
             String itemDescr = input.ask("Please, enter the description of new item: ");
             Item newItem = new Item(itemName, itemDescr);
             tracker.add(newItem);
-            System.out.printf("----- Новая заявка ID:%s добавлена -----\n", newItem.getId());
+            output.accept(String.format("----- Новая заявка ID:%s добавлена -----\n", newItem.getId()));
+
         }
     }
 
@@ -95,14 +98,15 @@ public class MenuTracker  {
             super(key, name);
         }
 
+
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Tracker tracker, Consumer<String> output) {
             List<Item> allItems = tracker.getAll();
-            System.out.println("----- Список всех заявок: -----");
+            output.accept(String.format("----- Список всех заявок: -----\n"));
             for (Item eachItem : allItems) {
                 System.out.println(eachItem);
             }
-            System.out.println("----- Конец списка -----");
+            output.accept(String.format("----- Конец списка -----\n"));
         }
     }
 
@@ -115,16 +119,16 @@ public class MenuTracker  {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Tracker tracker, Consumer<String> output) {
             String idToReplace = input.ask("Please, enter the id of the item You want to edit: ");
             String itemName = input.ask("Please, enter the name of new item: ");
             String itemDescr = input.ask("Please, enter the description of new item: ");
             Item newItem = new Item(itemName, itemDescr);
             newItem.setId(idToReplace);
             if (tracker.replace(idToReplace, newItem)) {
-                System.out.printf("----- Заявка ID:%s отредактирована -----\n", idToReplace);
+                output.accept(String.format("----- Заявка ID:%s отредактирована -----\n", idToReplace));
             } else {
-                System.out.printf("----- Не удалось отредактировать заявку ID:%s -----\n", idToReplace);
+                output.accept(String.format("----- Не удалось отредактировать заявку ID:%s -----\n", idToReplace));
             }
         }
 
@@ -139,13 +143,13 @@ public class MenuTracker  {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
-            System.out.println("----- Удаление заявки -----");
+        public void execute(Input input, Tracker tracker, Consumer<String> output) {
+            output.accept(String.format("----- Удаление заявки -----\n"));
             String idToDelete = input.ask("Please, enter the id of the item You want to delete: ");
             if (tracker.delete(idToDelete)) {
-                System.out.printf("----- Заявка ID:%s удалена -----\n", idToDelete);
+                output.accept(String.format("----- Заявка ID:%s удалена -----\n", idToDelete));
             } else {
-                System.out.printf("----- Не удалось удалить заявку ID:%s -----\n", idToDelete);
+                output.accept(String.format("----- Не удалось удалить заявку ID:%s -----\n", idToDelete));
             }
         }
 
@@ -159,12 +163,12 @@ public class MenuTracker  {
             super(key, name);
         }
         @Override
-        public void execute(Input input, Tracker tracker) {
-            System.out.println("----- Поиск заявки по ID: -----");
+        public void execute(Input input, Tracker tracker, Consumer<String> output) {
+            output.accept(String.format("----- Поиск заявки по ID: -----\n"));
             String idToFind = input.ask("Please, enter the id of the item You want to find: ");
             Item foundItem = tracker.findById(idToFind);
-            System.out.println(foundItem);
-            System.out.println("----- Поиск завершен -----");
+            output.accept(String.format(foundItem.toString() + "\n"));
+            output.accept(String.format("----- Поиск завершен -----\n"));
         }
     }
 
@@ -177,14 +181,14 @@ public class MenuTracker  {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
-            System.out.println("----- Поиск заявок по названию: -----");
+        public void execute(Input input, Tracker tracker, Consumer<String> output) {
+            output.accept(String.format("----- Поиск заявок по названию: -----\n"));
             String nameToFind = input.ask("Please, enter the name of the item You want to find: ");
             List<Item> allItems = tracker.findByName(nameToFind);
             for (Item eachItem : allItems) {
                 System.out.println(eachItem);
             }
-            System.out.println("----- Поиск завершен -----");
+            output.accept(String.format("----- Поиск завершен -----\n"));
         }
 
     }
@@ -198,9 +202,9 @@ public class MenuTracker  {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Tracker tracker, Consumer<String> output) {
             isRunning = false;
-            System.out.println("Program complete.");
+            output.accept(String.format("Program complete.\n"));
         }
 
     }

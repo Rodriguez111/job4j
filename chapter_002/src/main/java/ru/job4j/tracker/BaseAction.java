@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.function.Consumer;
+
 public abstract class BaseAction implements UserAction {
     private int key;
     private String name;
@@ -15,7 +17,7 @@ public abstract class BaseAction implements UserAction {
     }
 
     @Override
-    public abstract void execute(Input input, Tracker tracker);
+    public abstract void execute(Input input, Tracker tracker, Consumer<String> output);
 
     @Override
     public String info() {
