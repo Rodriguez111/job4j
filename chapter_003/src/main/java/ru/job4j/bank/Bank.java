@@ -115,10 +115,10 @@ public class Bank {
 
         Account account = null;
 
-        if(accounts.isPresent()) {
+        if (accounts.isPresent()) {
           Optional<Account> optionalAccount = accounts.get().stream().filter(acc -> acc.getRequisites().equals(requisite)).findFirst();
             if (optionalAccount.isPresent()) {
-                account = optionalAccount.get() ;
+                account = optionalAccount.get();
             }
         }
 
