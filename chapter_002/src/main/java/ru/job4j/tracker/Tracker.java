@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Accounting claims.
@@ -73,14 +74,7 @@ public class Tracker {
      * @return - array weth found items.
      */
     public List<Item> findByName(String key) {
-        List<Item> foundNames = new ArrayList<>();
-        int count = 0;
-        for (int i = 0; i < this.items.size(); i++) {
-            if (items.get(i).getName().equals(key)) {
-                foundNames.add(items.get(i));
-            }
-        }
-        return foundNames;
+       return items.stream().filter(item -> item.getName().equals(key)).collect(Collectors.toList());
     }
 
     /**
@@ -89,12 +83,7 @@ public class Tracker {
      * @return - found item.
      */
     public Item findById(String id) {
-        for (int i = 0; i < this.items.size(); i++) {
-            if (items.get(i).getId().equals(id)) {
-             return  items.get(i);
-            }
-        }
-        return null;
+      return items.stream().filter(item -> item.getId().equals(id)).findFirst().get();
     }
 
     /**
