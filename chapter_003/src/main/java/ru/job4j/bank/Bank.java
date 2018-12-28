@@ -73,13 +73,8 @@ public class Bank {
      * @return - list of accounts of this user.
      */
     public List<Account> getUserAccounts(String passport) {
-        List<Account> listOfAccounts = new ArrayList<>();
-        for (Map.Entry<User, List<Account>> eachEntry : usersInfo.entrySet()) {
-            if (eachEntry.getKey().getPassport().equals(passport)) {
-                listOfAccounts = eachEntry.getValue();
-            }
-        }
-        return listOfAccounts;
+        User user = selectUser(passport);
+        return usersInfo.get(user);
     }
 
     /**
@@ -106,7 +101,6 @@ public class Bank {
         } else {
             moneyTransfered = false;
         }
-
         return moneyTransfered;
     }
 
@@ -117,19 +111,19 @@ public class Bank {
      * @return - found account.
      */
     private Account selectAccount(String passport, String requisite) {
+        Optional<List<Account>> accounts = Optional.ofNullable(getUserAccounts(passport));
+
         Account account = null;
 
-        User user = selectUser(passport);
-        if (!user.equals(new User("User not found", ""))) {
-
-            List<Account> listOfUserAccounts = usersInfo.get(user);
-            for (Account eachAccount : listOfUserAccounts) {
-                if (eachAccount.getRequisites().equals(requisite)) {
-                    account = eachAccount;
-                }
+        if(accounts.isPresent()) {
+          Optional<Account> optionalAccount = accounts.get().stream().filter(acc -> acc.getRequisites().equals(requisite)).findFirst();
+            if (optionalAccount.isPresent()) {
+                account = optionalAccount.get() ;
             }
         }
-        return account;
+
+
+       return account;
     }
 
     /**
@@ -138,8 +132,7 @@ public class Bank {
      * @return - found user.
      */
     private User selectUser(String passport) {
-        Optional<User> user = Optional.ofNullable(new User("User not found", ""));
-
+        Optional<User> user = Optional.of(new User("User not found", ""));
         for (Map.Entry<User, List<Account>> eachEntry : usersInfo.entrySet()) {
             if (eachEntry.getKey().getPassport().equals(passport)) {
                 user = Optional.of(eachEntry.getKey());
@@ -147,7 +140,5 @@ public class Bank {
         }
         return user.get();
     }
-
-
 
 }
