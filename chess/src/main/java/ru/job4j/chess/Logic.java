@@ -8,7 +8,9 @@ import ru.job4j.chess.firuges.exceptions.ImpossibleMoveException;
 import ru.job4j.chess.firuges.exceptions.OccupiedWayException;
 import ru.job4j.chess.firuges.white.KnightWhite;
 
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * //TODO add comments.
@@ -54,13 +56,16 @@ public class Logic {
     }
 
     private int findBy(Cell cell) {
-        int rst = -1;
-        for (int index = 0; index != this.figures.length; index++) {
-            if (this.figures[index] != null && this.figures[index].position().equals(cell)) {
-                rst = index;
-                break;
+        final int[] result = new int[2];
+        result[0] = 0;
+        result[1] = -1;
+        Arrays.stream(figures).forEach(figure -> {
+            if (figure != null && figure.position().equals(cell)) {
+                result[1] = result[0];
             }
-        }
-        return rst;
+            result[0]++;
+        });
+        return result[1];
     }
+
 }
