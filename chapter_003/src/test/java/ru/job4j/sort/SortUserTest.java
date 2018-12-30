@@ -18,10 +18,7 @@ public class SortUserTest {
         User user2 = new User("Ян", 40);
         User user3 = new User("Василий", 45);
 
-        List<User> users = new ArrayList<>();
-        users.add(user1);
-        users.add(user2);
-        users.add(user3);
+        List<User> users = List.of(user1, user2, user3);
 
         Set<User> test = sortUser.sort(users);
         Iterator iter = test.iterator();
@@ -38,10 +35,7 @@ public class SortUserTest {
         User user2 = new User("Ян", 40);
         User user3 = new User("Василий", 45);
 
-        List<User> users = new ArrayList<>();
-        users.add(user1);
-        users.add(user2);
-        users.add(user3);
+        List<User> users = List.of(user1, user2, user3);
 
         List<User> test = sortUser.sortNameLength(users);
         User actual = test.get(test.size() - 1);
@@ -58,18 +52,12 @@ public class SortUserTest {
         User user3 = new User("Сергей", 20);
         User user4 = new User("Иван", 25);
 
-        List<User> users = new ArrayList<>();
-        users.add(user1);
-        users.add(user2);
-        users.add(user3);
-        users.add(user4);
+        List<User> users = List.of(user1, user2, user3, user4);
+
 
         List<User> actual = sortUser.sortByAllFields(users);
-        List<User> expected = new ArrayList<>();
-        expected.add(user4);
-        expected.add(user2);
-        expected.add(user3);
-        expected.add(user1);
+        List<User> expected = List.of(user4, user2, user3, user1);
+
         assertThat(actual, is(expected));
     }
 

@@ -10,9 +10,9 @@ public class PhoneDictionaryTest {
     private List<Person> test = new ArrayList<>();
 
     private void fillPersons() {
-        test.add(new Person("Иван", "Иванов", "Весенняя 15 кв. 60", "+15246325874"));
-        test.add(new Person("Петр", "Петров", "Летняя 18 кв. 21", "+15246325458"));
-        test.add(new Person("Василий", "Васильев", "Зимняя 5 кв. 48", "+15240025974"));
+        test = List.of(new Person("Иван", "Иванов", "Весенняя 15 кв. 60", "+15246325874"),
+                new Person("Петр", "Петров", "Летняя 18 кв. 21", "+15246325458"),
+                new Person("Василий", "Васильев", "Зимняя 5 кв. 48", "+15240025974"));
     }
 
     {
@@ -29,9 +29,7 @@ public class PhoneDictionaryTest {
         PhoneDictionary phoneDictionary = new PhoneDictionary();
         addPersons(phoneDictionary);
         List<Person> actual = phoneDictionary.find("ов");
-        List<Person> expected = new ArrayList<>();
-        expected.add(test.get(0));
-        expected.add(test.get(1));
+        List<Person> expected = List.of(test.get(0), test.get(1));
         assertThat(actual, is(expected));
     }
 
@@ -39,8 +37,7 @@ public class PhoneDictionaryTest {
         PhoneDictionary phoneDictionary = new PhoneDictionary();
         addPersons(phoneDictionary);
         List<Person> actual = phoneDictionary.find("Иван");
-        List<Person> expected = new ArrayList<>();
-        expected.add(test.get(0));
+        List<Person> expected = List.of(test.get(0));
         assertThat(actual, is(expected));
     }
 
@@ -48,10 +45,7 @@ public class PhoneDictionaryTest {
         PhoneDictionary phoneDictionary = new PhoneDictionary();
         addPersons(phoneDictionary);
         List<Person> actual = phoneDictionary.find("+1");
-        List<Person> expected = new ArrayList<>();
-        expected.add(test.get(0));
-        expected.add(test.get(1));
-        expected.add(test.get(2));
+        List<Person> expected = List.of(test.get(0), test.get(1), test.get(2));
         assertThat(actual, is(expected));
     }
 

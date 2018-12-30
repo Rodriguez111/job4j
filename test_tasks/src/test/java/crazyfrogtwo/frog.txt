@@ -1,0 +1,98 @@
+По порядку.
+
+1.
+
+private void initField(int start, int finish, List<Integer> barriers) {
+    for (int i = 0; i < SECTORS; i++) {
+        for (int j = 0; j < SEGMENTS; j++) {
+            int counter = i * SEGMENTS + j;
+            Cell cell = new Cell(i, j);
+            if (!barriers.stream().filter(barrier -> barrier == counter).findFirst().equals(Optional.empty())) {
+                cell.setValue(-1);
+            }
+            field.put(counter, cell);
+        }
+    }
+    setField();
+}
+
+Здесь не нужен цикл. В качестве ключа в HashMap нужно использовать Cell, Cell
+
+установка элементов
+
+field.put(start, start);
+field.put(end, end);
+field.putAll(blocks); -- так нельзя. но смысл понятен.
+
+Cell -> Cell так мы можем получить путь
+
+2.
+if (currentCell.hasNearLeft() && currentCell.getNearLeft().getValue() == 0) {
+    currentCell.getNearLeft().setValue(currentCell.getValue() + 1);
+    segments.add(currentCell.getNearLeft());
+}
+if (currentCell.hasNearRight() && currentCell.getNearRight().getValue() == 0) {
+    currentCell.getNearRight().setValue(currentCell.getValue() + 1);
+    segments.add(currentCell.getNearRight());
+}
+if (currentCell.hasMiddleLeft() && currentCell.getMiddleLeft().getValue() == 0) {
+    currentCell.getMiddleLeft().setValue(currentCell.getValue() + 1);
+    segments.add(currentCell.getMiddleLeft());
+}
+if (currentCell.hasMiddleRight() && currentCell.getMiddleRight().getValue() == 0) {
+    currentCell.getMiddleRight().setValue(currentCell.getValue() + 1);
+    segments.add(currentCell.getMiddleRight());
+}
+if (currentCell.hasFarAway() && currentCell.getFarAway().getValue() == 0) {
+    currentCell.getFarAway().setValue(currentCell.getValue() + 1);
+    segments.add(currentCell.getFarAway());
+}
+
+Все это нужно переписать за счет enum
+enum должен указывать куда можно прыгнуть
+
+Cell step = cell.jump(Step.LEFT_1_FORWARD_2)
+
+Записать это можно как
+for (Step step : Steps.values()) {
+    Cell step = cell.jump(step);
+      if (map.get(step).isBlock() || map.get(step).isFinish()) {
+
+
+
+3. не пойму что это за метод.
+
+private Cell[] indexesToCells(int[] indexes) {
+    Cell[] result = new Cell[indexes.length];
+    for (int i = indexes.length - 1; i >= 0; i--) {
+        result[indexes.length - 1 - i] = field.get(indexes[i]);
+    }
+    return result;
+}
+
+дальше мы нашли клетку с выходом.
+чтобы найти путь нам нужно создать дублирующую карту. где значение будет записаны в обратном порядке. значение и ключ.
+по нему мы можем найти путь весь.
+
+4. private boolean stepValidate(int previousPosition, int currentPosition) {
+    boolean result = false;
+    int diff = previousPosition - currentPosition;
+    diff = Math.abs(diff);
+    if (diff ==  SEGMENTS - 2
+            || diff ==  SEGMENTS + 2
+            || diff ==  SEGMENTS * 2 - 1
+            || diff ==  SEGMENTS * 2 + 1
+            || diff == SEGMENTS * 3
+            || field.size() - diff ==  SEGMENTS - 2
+            || field.size() - diff ==  SEGMENTS + 2
+            || field.size() - diff ==  SEGMENTS * 2 - 1
+            || field.size() - diff ==  SEGMENTS * 2 + 1
+            || field.size() - diff == SEGMENTS * 3) {
+        result = true;
+    }
+    return result;
+}
+
+тебе нужно проверить одну клетку. а ты проверявешь все шаги.
+
+boolean canJumpTo(Cell cell) = cell.y >= 0 && cell.y < 16; И все метод в одну строчку.
