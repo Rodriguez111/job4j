@@ -26,26 +26,26 @@ public class PhoneDictionaryTest {
     }
 
     @Test public void whenFindBySirnameSuffix() {
-        PhoneDictionary phoneDictionary = new PhoneDictionary();
+        var phoneDictionary = new PhoneDictionary();
         addPersons(phoneDictionary);
-        List<Person> actual = phoneDictionary.find("ов");
-        List<Person> expected = List.of(test.get(0), test.get(1));
+        var actual = phoneDictionary.find("ов");
+        var expected = List.of(test.get(0), test.get(1));
         assertThat(actual, is(expected));
     }
 
     @Test public void whenFindByName() {
-        PhoneDictionary phoneDictionary = new PhoneDictionary();
+        var phoneDictionary = new PhoneDictionary();
         addPersons(phoneDictionary);
-        List<Person> actual = phoneDictionary.find("Иван");
-        List<Person> expected = List.of(test.get(0));
+        var actual = phoneDictionary.find("Иван");
+        var expected = List.of(test.get(0));
         assertThat(actual, is(expected));
     }
 
     @Test public void whenFindPhonePart() {
-        PhoneDictionary phoneDictionary = new PhoneDictionary();
+        var phoneDictionary = new PhoneDictionary();
         addPersons(phoneDictionary);
-        List<Person> actual = phoneDictionary.find("+1");
-        List<Person> expected = List.of(test.get(0), test.get(1), test.get(2));
+        var actual = phoneDictionary.find("+1");
+        var expected = List.of(test.get(0), test.get(1), test.get(2));
         assertThat(actual, is(expected));
     }
 

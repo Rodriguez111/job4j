@@ -8,26 +8,26 @@ import static org.junit.Assert.assertThat;
 public class PriorityQueueTest {
     @Test
     public void whenHigherPriority() {
-        PriorityQueue queue = new PriorityQueue();
+        var queue = new PriorityQueue();
         queue.put(new Task("low", 5));
         queue.put(new Task("urgent", 1));
         queue.put(new Task("middle", 3));
-        Task result = queue.take();
+        var result = queue.take();
         assertThat(result.getDescription(), is("urgent"));
     }
 
     @Test
     public void checkHoleQueue() {
-        Task task5 = new Task("5", 5);
-        Task task1 = new Task("1", 1);
-        Task task3 = new Task("3", 3);
-        Task task8 = new Task("8", 8);
-        Task task0 = new Task("0", 0);
-        Task task4 = new Task("4", 4);
+        var task5 = new Task("5", 5);
+        var task1 = new Task("1", 1);
+        var task3 = new Task("3", 3);
+        var task8 = new Task("8", 8);
+        var task0 = new Task("0", 0);
+        var task4 = new Task("4", 4);
 
 
 
-        PriorityQueue queue = new PriorityQueue();
+        var queue = new PriorityQueue();
         queue.put(task5);
         queue.put(task1);
         queue.put(task3);
@@ -37,7 +37,7 @@ public class PriorityQueueTest {
 
 
 
-        List<Task> actual = new ArrayList<>();
+        var actual = new ArrayList<>();
         actual.add(queue.take());
         actual.add(queue.take());
         actual.add(queue.take());
@@ -45,7 +45,7 @@ public class PriorityQueueTest {
         actual.add(queue.take());
         actual.add(queue.take());
 
-        List<Task> expected = new ArrayList<>();
+        var expected = new ArrayList<>();
         expected.add(task0);
         expected.add(task1);
         expected.add(task3);
