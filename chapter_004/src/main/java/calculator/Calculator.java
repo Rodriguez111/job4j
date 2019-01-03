@@ -19,7 +19,7 @@ public class Calculator {
 //        calculator.multiply(0, 10, 2,
 //                (value, index) -> {
 //           double result = value * index;
-//           return result;
+//           return result ;
 //                }, result -> System.out.println(result));
 //    }
 }
