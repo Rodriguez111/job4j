@@ -2,14 +2,10 @@ package ru.job4j.chess;
 
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
-import ru.job4j.chess.firuges.black.KnightBlack;
 import ru.job4j.chess.firuges.exceptions.FigureNotFoundException;
 import ru.job4j.chess.firuges.exceptions.ImpossibleMoveException;
 import ru.job4j.chess.firuges.exceptions.OccupiedWayException;
-import ru.job4j.chess.firuges.white.KnightWhite;
 
-import java.util.Arrays;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
@@ -56,16 +52,10 @@ public class Logic {
     }
 
     private int findBy(Cell cell) {
-        final int[] result = new int[2];
-        result[0] = 0;
-        result[1] = -1;
-        Arrays.stream(figures).forEach(figure -> {
-            if (figure != null && figure.position().equals(cell)) {
-                result[1] = result[0];
-            }
-            result[0]++;
-        });
-        return result[1];
+        return IntStream.range(0, figures.length)
+                .filter(ind -> figures[ind] != null && figures[ind].position().equals(cell))
+                .findFirst()
+                .orElse(-1);
     }
 
 }

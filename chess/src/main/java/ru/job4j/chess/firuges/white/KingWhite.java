@@ -3,7 +3,6 @@ package ru.job4j.chess.firuges.white;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 import ru.job4j.chess.firuges.black.KingBlack;
-import ru.job4j.chess.firuges.black.KnightBlack;
 
 /**
  *
