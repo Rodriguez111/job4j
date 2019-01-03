@@ -15,7 +15,7 @@ public class UserConvertTest {
         User user1 = new User(1, "Имя1", "Город1");
         User user2 = new User(2, "Имя2", "Город2");
         User user3 = new User(3, "Имя3", "Город3");
-        List<User> listOfUsers = List.of(user1,user2, user3);
+        List<User> listOfUsers = List.of(user1, user2, user3);
 
        UserConvert userConvert = new UserConvert();
        Map<Integer, User> actual =  userConvert.process(listOfUsers);

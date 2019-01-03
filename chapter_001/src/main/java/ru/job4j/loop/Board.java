@@ -1,7 +1,7 @@
 package ru.job4j.loop;
 
 /**
- * Painting chess board
+ * Painting ru.job4j.chess board
  */
 
 public class Board {
