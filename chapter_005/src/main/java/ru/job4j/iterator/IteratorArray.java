@@ -9,13 +9,12 @@ public class IteratorArray implements Iterator {
         this.array = array;
     }
 
-    private int generalIndex = 0;
     private int heightIndex = 0;
     private int widthIndex = 0;
 
     @Override
     public boolean hasNext() {
-        return generalIndex < arraySize();
+        return widthIndex < array[heightIndex].length || heightIndex < array.length - 1;
     }
 
     @Override
@@ -23,16 +22,8 @@ public class IteratorArray implements Iterator {
         int result = 0;
         checkOneDimensionalArrayBound();
         result = array[heightIndex][widthIndex++];
-        generalIndex++;
-        return result;
-    }
 
-    int arraySize() {
-        int arraySize = 0;
-        for (int i = 0; i < array.length; i++) {
-            arraySize = arraySize + array[i].length;
-        }
-        return arraySize;
+        return result;
     }
 
     void checkOneDimensionalArrayBound() {

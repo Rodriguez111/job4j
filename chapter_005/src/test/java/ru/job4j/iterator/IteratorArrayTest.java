@@ -45,16 +45,6 @@ public class IteratorArrayTest {
         assertThat(it.hasNext(), is(false));
     }
 
-    @Test
-    public void shouldReturnJaggedArraySize() {
-        int[][] jaggedArray = {{1}, {2, 3, 4, 5}, {6, 7}, {8, 9, 10, 11, 12, 13, 14}};
-        IteratorArray iteratorArray = new IteratorArray(jaggedArray);
-
-        int actual = iteratorArray.arraySize();
-        int expected = 14;
-
-        assertThat(actual, is(expected));
-    }
 
     @Test
     public void shouldReturn3() {
