@@ -2,6 +2,7 @@ package ru.job4j.iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Function;
 
 public class EvenIterator implements Iterator {
 
@@ -41,6 +42,5 @@ public class EvenIterator implements Iterator {
         }
         return result;
     }
-
 
 }
