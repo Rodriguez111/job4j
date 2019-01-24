@@ -21,6 +21,7 @@ public class EvenIterator implements Iterator {
         for (int i = index; i < array.length; i++) {
            if (array[i] % 2 == 0)  {
                result = true;
+               index = i;
                break;
            }
         }
@@ -32,15 +33,7 @@ public class EvenIterator implements Iterator {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        Object result = null;
-        for (int i = index; i < array.length; i++) {
-            if (array[i] % 2 == 0)  {
-                index = i;
-                result = array[index++];
-                break;
-            }
-        }
-        return result;
+        return array[index++];
     }
 
 }
