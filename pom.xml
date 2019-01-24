@@ -19,6 +19,7 @@
         <module>chapter_003</module>
         <module>test_tasks</module>
         <module>chapter_004</module>
+        <module>chapter_005</module>
         <module>chess</module>
         <module>tictactoe</module>
         <module>puzzle</module>
@@ -86,11 +87,8 @@
                     </execution>
                 </executions>
             </plugin>
-
-
         </plugins>
     </build>
-
     <dependencies>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -124,18 +122,11 @@
             <artifactId>javafx-base</artifactId>
             <version>11</version>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>11</version>
         </dependency>
-
-
     </dependencies>
-
-
-
-
 </project>

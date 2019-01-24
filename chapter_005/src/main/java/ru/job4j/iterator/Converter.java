@@ -5,29 +5,33 @@ import java.util.*;
 public class Converter {
     Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
         return new Iterator<Integer>() {
-            Iterator<Integer> current = it.next();
+        Iterator<Integer> currentIteratorOfIterators = it.next();
+        int currentInteger;
+
+
             @Override
             public boolean hasNext() {
                 boolean hasNext = false;
-                if (current.hasNext()) {
-                    hasNext = true;
-                } else if (it.hasNext()) {
-                    current = it.next();
-                    if (current.hasNext()) {
-                        hasNext = true;
-                    }
+                while (it.hasNext() && !currentIteratorOfIterators.hasNext()) {
+                    currentIteratorOfIterators = it.next();
                 }
-               return hasNext;
+                if(currentIteratorOfIterators.hasNext()) {
+                    hasNext = true;
+                }
+
+                return hasNext;
+
+
             }
 
             @Override
             public Integer next() {
 
-                if (current.hasNext()) {
-                    return current.next();
+                if (currentIteratorOfIterators.hasNext()) {
+                    return currentIteratorOfIterators.next();
                 } else if (it.hasNext()) {
-                    current = it.next();
-                    return current.next();
+                    currentIteratorOfIterators = it.next();
+                    return currentIteratorOfIterators.next();
                 }
                    throw new NoSuchElementException();
             }
