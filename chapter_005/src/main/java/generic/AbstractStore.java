@@ -1,17 +1,22 @@
 package generic;
 
-public class AbstractStore<T> implements Store {
-    SimpleArray<? extends Base> baseArray;
+import java.util.Iterator;
 
+public abstract class AbstractStore<T extends Base> implements Store<T>, Iterable<T> {
+    SimpleArray<T> baseArray;
 
-    @Override
-    public void add(Base model) {
-
+    public AbstractStore(int size) {
+        this.baseArray = new SimpleArray(size);
     }
 
     @Override
-    public boolean replace(String id, Base model) {
-        return false;
+    public void add(T model) {
+        baseArray.add(model);
+    }
+
+    @Override
+    public  boolean replace(String id, T model) {
+       return baseArray.set(Integer.parseInt(id), model);
     }
 
     @Override
@@ -20,7 +25,13 @@ public class AbstractStore<T> implements Store {
     }
 
     @Override
-    public Base findById(String id) {
-        return null;
+    public  T findById(String id) {
+        return baseArray.get(Integer.parseInt(id));
+
+    };
+
+    @Override
+    public Iterator<T> iterator() {
+        return baseArray.iterator();
     }
 }

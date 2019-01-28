@@ -14,7 +14,7 @@ public class Converter {
                 while (it.hasNext() && !currentIteratorOfIterators.hasNext()) {
                     currentIteratorOfIterators = it.next();
                 }
-                if(currentIteratorOfIterators.hasNext()) {
+                if (currentIteratorOfIterators.hasNext()) {
                     hasNext = true;
                 }
 
@@ -26,7 +26,7 @@ public class Converter {
             @Override
             public Integer next() {
 
-                if(!hasNext()) {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 return currentIteratorOfIterators.next();

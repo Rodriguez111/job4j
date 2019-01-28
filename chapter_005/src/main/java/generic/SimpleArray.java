@@ -2,7 +2,7 @@ package generic;
 
 import java.util.Iterator;
 
-public class SimpleArray<T>  implements Iterable<T>{
+public class SimpleArray<T> implements Iterable<T> {
    private int amountOfElements;
    private int globalIndex = 0;
 
@@ -17,7 +17,7 @@ public class SimpleArray<T>  implements Iterable<T>{
     public SimpleArray(int amountOfElements) {
         this.amountOfElements = amountOfElements;
         objectArray = new Object[amountOfElements];
-        array = (T[])objectArray;
+        array = (T[]) objectArray;
     }
 
     /**
@@ -27,7 +27,7 @@ public class SimpleArray<T>  implements Iterable<T>{
      */
     public boolean add(T model) {
         boolean isSuccessful = false;
-            if(globalIndex < array.length ) {
+            if (globalIndex < array.length) {
                 array[globalIndex++] = model;
                 isSuccessful = true;
             }
@@ -42,7 +42,7 @@ public class SimpleArray<T>  implements Iterable<T>{
      */
      boolean set(int index, T model) {
         boolean isSuccessful = false;
-        if(index < globalIndex) {
+        if (index < globalIndex) {
             array[index] = model;
             isSuccessful = true;
         }
@@ -52,7 +52,7 @@ public class SimpleArray<T>  implements Iterable<T>{
 
      boolean remove(int index) {
         boolean isSuccessful = false;
-        if(index >=0 && index < globalIndex) {
+        if (index >= 0 && index < globalIndex) {
             array[index] = null;
             System.arraycopy(array, index + 1, array, index, amountOfElements - index - 1);
             isSuccessful = true;
@@ -60,7 +60,7 @@ public class SimpleArray<T>  implements Iterable<T>{
         return isSuccessful;
     }
 
-     T get (int index) {
+     T get(int index) {
         return array[index];
     }
 
@@ -81,5 +81,7 @@ public class SimpleArray<T>  implements Iterable<T>{
             }
         };
     }
+
+
 
 }

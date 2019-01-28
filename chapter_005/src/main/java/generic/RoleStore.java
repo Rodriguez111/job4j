@@ -1,15 +1,10 @@
 package generic;
 
-public class RoleStore extends AbstractStore {
+
+public class RoleStore extends AbstractStore<Role> {
+
     public RoleStore(int size) {
-        baseArray = new SimpleArray<>(size);
+        super(size);
     }
-
-    @Override
-    public void add(Base model) {
-        Role role = (Role) model;
-        baseArray.add(role) ;
-    }
-
 
 }
