@@ -3,21 +3,16 @@ package generic;
 import java.util.Iterator;
 
 public class SimpleArray<T> implements Iterable<T> {
-   private int amountOfElements;
    private int globalIndex = 0;
-
 
     public int getGlobalIndex() {
         return globalIndex;
     }
 
-    private Object[] objectArray;
-    T[] array;
+   private T[] array;
 
     public SimpleArray(int amountOfElements) {
-        this.amountOfElements = amountOfElements;
-        objectArray = new Object[amountOfElements];
-        array = (T[]) objectArray;
+        array = ( T[]) new Object[amountOfElements];
     }
 
     /**
@@ -54,7 +49,7 @@ public class SimpleArray<T> implements Iterable<T> {
         boolean isSuccessful = false;
         if (index >= 0 && index < globalIndex) {
             array[index] = null;
-            System.arraycopy(array, index + 1, array, index, amountOfElements - index - 1);
+            System.arraycopy(array, index + 1, array, index, array.length - index - 1);
             isSuccessful = true;
         }
         return isSuccessful;
