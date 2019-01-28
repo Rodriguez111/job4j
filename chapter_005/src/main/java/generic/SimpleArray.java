@@ -4,7 +4,12 @@ import java.util.Iterator;
 
 public class SimpleArray<T>  implements Iterable<T>{
    private int amountOfElements;
+   private int globalIndex = 0;
 
+
+    public int getGlobalIndex() {
+        return globalIndex;
+    }
 
     private Object[] objectArray;
     T[] array;
@@ -22,13 +27,10 @@ public class SimpleArray<T>  implements Iterable<T>{
      */
     public boolean add(T model) {
         boolean isSuccessful = false;
-        for(int i = 0; i < amountOfElements; i++) {
-            if(array[i] == null) {
-                array[i] = model;
+            if(globalIndex < array.length ) {
+                array[globalIndex++] = model;
                 isSuccessful = true;
-                break;
             }
-        }
         return isSuccessful;
     }
 
@@ -40,7 +42,7 @@ public class SimpleArray<T>  implements Iterable<T>{
      */
      boolean set(int index, T model) {
         boolean isSuccessful = false;
-        if(index < amountOfElements) {
+        if(index < globalIndex) {
             array[index] = model;
             isSuccessful = true;
         }
@@ -50,7 +52,7 @@ public class SimpleArray<T>  implements Iterable<T>{
 
      boolean remove(int index) {
         boolean isSuccessful = false;
-        if(index < amountOfElements && array[index] != null) {
+        if(index >=0 && index < globalIndex) {
             array[index] = null;
             System.arraycopy(array, index + 1, array, index, amountOfElements - index - 1);
             isSuccessful = true;
@@ -62,13 +64,15 @@ public class SimpleArray<T>  implements Iterable<T>{
         return array[index];
     }
 
+
+
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private int index = 0;
             @Override
             public boolean hasNext() {
-                return index < array.length;
+                return index >= 0 && index < globalIndex;
             }
 
             @Override
@@ -77,4 +81,5 @@ public class SimpleArray<T>  implements Iterable<T>{
             }
         };
     }
+
 }

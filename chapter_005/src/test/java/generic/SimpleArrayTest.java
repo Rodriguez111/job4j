@@ -58,14 +58,8 @@ public class SimpleArrayTest {
     }
 
     @Test
-    public void shouldReturnFalseAfterThirdOfThreeElements() {
+    public void shouldReturnFalseWhenEmpty() {
         Iterator<Integer>  iterator = simpleArrayOfIntegers.iterator() ;
-        assertThat(iterator.hasNext(), is(true));
-        iterator.next();
-        assertThat(iterator.hasNext(), is(true));
-        iterator.next();
-        assertThat(iterator.hasNext(), is(true));
-        iterator.next();
         assertThat(iterator.hasNext(), is(false));
     }
 
@@ -79,5 +73,7 @@ public class SimpleArrayTest {
         iterator.next();
         String actual = iterator.next();
         assertThat(actual, is(expected));
+
+        for(String each : simpleArrayOfStrings) {}
     }
 }
