@@ -1,7 +1,10 @@
 package generic;
 
+import generic.exceptions.ElementNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -20,7 +23,7 @@ public class RoleStoreTest {
     public void shouldReturnOneWhenAddOne() {
         Role role1 = new Role("One");
         roleStore.add(role1);
-        Role actual = roleStore.findById("0");
+        Role actual = roleStore.findById("One");
         Role expected = role1;
 
         assertThat(actual, is(expected));
@@ -32,24 +35,28 @@ public class RoleStoreTest {
         Role role1 = new Role("One");
         Role role2 = new Role("Two");
         roleStore.add(role1);
-        roleStore.replace("0", role2);
-        Role actual = roleStore.findById("0");
+        roleStore.replace("One", role2);
+        Role actual = roleStore.findById("Two");
         Role expected = role2;
 
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldReturnTwoWhenFindElementWithId0() {
+
+    public void shouldThrowElementNotFoundExceptionWhenElementIsNotFound() {
         Role role1 = new Role("One");
         Role role2 = new Role("Two");
         roleStore.add(role1);
         roleStore.add(role2);
-        roleStore.delete("0");
-        Role actual = roleStore.findById("0");
-        Role expected = role2;
+        roleStore.delete("One");
 
-        assertThat(actual, is(expected));
+        Throwable exception = assertThrows(ElementNotFoundException.class, () -> {
+            roleStore.findById("One");
+        });
+        assertEquals("Element not found", exception.getMessage());
+
+
     }
 
 
@@ -63,7 +70,7 @@ public class RoleStoreTest {
         roleStore.add(role2);
         roleStore.add(role3);
 
-        Role actual = roleStore.findById("1");
+        Role actual = roleStore.findById("Two");
         Role expected = role2;
 
         assertThat(actual, is(expected));

@@ -12,7 +12,7 @@ public class SimpleArray<T> implements Iterable<T> {
    private T[] array;
 
     public SimpleArray(int amountOfElements) {
-        array = ( T[]) new Object[amountOfElements];
+        array = (T[]) new Object[amountOfElements];
     }
 
     /**
@@ -50,6 +50,7 @@ public class SimpleArray<T> implements Iterable<T> {
         if (index >= 0 && index < globalIndex) {
             array[index] = null;
             System.arraycopy(array, index + 1, array, index, array.length - index - 1);
+            globalIndex--;
             isSuccessful = true;
         }
         return isSuccessful;

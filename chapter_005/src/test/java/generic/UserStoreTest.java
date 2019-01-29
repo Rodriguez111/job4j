@@ -1,10 +1,12 @@
 package generic;
 
+import generic.exceptions.ElementNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserStoreTest {
 
@@ -20,36 +22,38 @@ public class UserStoreTest {
     public void shouldReturnOneWhenAddOne() {
         User user1 = new User("One");
         userStore.add(user1);
-        User actual = userStore.findById("0");
+        User actual = userStore.findById("One");
         User expected = user1;
 
         assertThat(actual, is(expected));
     }
-
 
     @Test
     public void shouldReturnTwoWhenReplaceOneWithTwo() {
         User user1 = new User("One");
         User user2 = new User("Two");
         userStore.add(user1);
-        userStore.replace("0", user2);
-        User actual = userStore.findById("0");
+        userStore.replace("One", user2);
+        User actual = userStore.findById("Two");
         User expected = user2;
 
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldReturnTwoWhenFindElementWithId0() {
+    public void shouldThrowElementNotFoundExceptionWhenElementIsNotFound() {
         User user1 = new User("One");
         User user2 = new User("Two");
         userStore.add(user1);
         userStore.add(user2);
-        userStore.delete("0");
-        User actual = userStore.findById("0");
-        User expected = user2;
+        userStore.delete("One");
 
-        assertThat(actual, is(expected));
+        Throwable exception = assertThrows(ElementNotFoundException.class, () -> {
+            userStore.findById("One");
+        });
+        assertEquals("Element not found", exception.getMessage());
+
+
     }
 
 
@@ -63,7 +67,7 @@ public class UserStoreTest {
         userStore.add(user2);
         userStore.add(user3);
 
-        User actual = userStore.findById("1");
+        User actual = userStore.findById("Two");
         User expected = user2;
 
         assertThat(actual, is(expected));
