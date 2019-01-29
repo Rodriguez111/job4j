@@ -1,39 +1,41 @@
 package list;
 
+import generic.SimpleArray;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ConcurrentModificationException;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SimpleArrayListTest {
-
-    private SimpleArrayList<Integer> list;
+   private SimpleArrayList<Integer> listOfIntegers;
 
     @Before
-    public void beforeTest() {
-        list = new SimpleArrayList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
+    public void init() {
+        listOfIntegers = new SimpleArrayList<>();
+        listOfIntegers.add(1);
+        listOfIntegers.add(2);
+    }
+    @Test
+    public void shouldReturnThreeElementsWhenAddOneElement() {
+        listOfIntegers.add(3);
+        assertThat(listOfIntegers.get(0), is(1));
+        assertThat(listOfIntegers.get(1), is(2));
+        assertThat(listOfIntegers.get(2), is(3));
     }
 
     @Test
-    public void whenAddThreeElementsThenUseGetOneResultTwo() {
-        assertThat(list.get(1), is(2));
-    }
-
-    @Test
-    public void whenAddThreeElementsThenUseGetSizeResultThree() {
-        assertThat(list.getSize(), is(3));
-    }
-
-    @Test
-    public void whenDeleteFirstElementThenFirstElementBecomeTwoAndReturnThree() {
-      int actual = list.delete();
-
-        assertThat(actual, is(3));
-        assertThat(list.get(0), is(2));
+    public void shouldThrowConcurrentModificationExceptionWhenGrowArrayDuringIteration() {
+        Throwable exception = assertThrows(ConcurrentModificationException.class, ()-> {
+            for (Integer each : listOfIntegers) {
+                if (each == 1) {
+                    listOfIntegers.add(3);
+                }
+            }
+        });
     }
 
 

@@ -1,58 +1,53 @@
 package list;
 
-public class SimpleArrayList<E> {
-    private int size;
-    private Node<E> first;
+import java.util.Arrays;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 
-    /**
-     * method add data to the beginning of the list
-     * @param date
-     */
-    public void add(E date) {
-        Node<E>  firstElement = new Node<>(date);
-        firstElement.next = first;
-        first = firstElement;
-        size++;
+public class SimpleArrayList<E> implements Iterable<E> {
+private final static int INITIAL_SIZE = 2;
+E[] array = (E[]) new Object[INITIAL_SIZE];
+
+private int size;
+private int currentCapacity = array.length;
+private int modCount;
+
+public boolean add(E value) {
+    if (size == array.length) {
+       growUp();
     }
+    array[size++] = value;
+    return true;
+}
 
-    /**
-     * Get element by index.
-     * @param index
-     * @return
-     */
-    public E get(int index) {
-        Node<E> result = this.first;
-        for (int i = 0; i < index; i++) {
-            result = result.next;
-        }
-        return result.item;
+public E get(int index) {
+    return array[index];
+}
+
+
+private void growUp() {
+    currentCapacity = currentCapacity + currentCapacity / 2;
+    array = Arrays.copyOf(array, currentCapacity);
+    modCount++;
+}
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            int index;
+            int expectedModCount = modCount;
+            @Override
+            public boolean hasNext() {
+                return index < size;
+            }
+
+            @Override
+            public E next() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                return array[index++];
+            }
+        };
     }
-
-    /**
-     * Get collection size.
-     */
-    public int getSize() {
-        return this.size;
-    }
-
-    /**
-     * Delete first element.
-     */
-    public E delete() {
-        E firstElement = first.item;
-        first = first.next;
-        size--;
-        return firstElement;
-    }
-
-    private static class Node<E> {
-        private E item;
-        private Node<E> next;
-
-        public Node(E item) {
-            this.item = item;
-        }
-    }
-
-
 }
