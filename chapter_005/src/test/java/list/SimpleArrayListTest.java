@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -34,6 +36,16 @@ public class SimpleArrayListTest {
                     listOfIntegers.add(3);
                 }
             }
+        });
+    }
+
+    @Test
+    public void shouldThrowNoSuchElementExceptionWhenNextInvokedAndNoElementsMore() {
+        Iterator iterator = listOfIntegers.iterator();
+        Throwable exception = assertThrows(NoSuchElementException.class, ()-> {
+            iterator.next();
+            iterator.next();
+            iterator.next();
         });
     }
 

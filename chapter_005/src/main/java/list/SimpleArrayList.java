@@ -3,6 +3,7 @@ package list;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SimpleArrayList<E> implements Iterable<E> {
 private final static int INITIAL_SIZE = 2;
@@ -17,6 +18,7 @@ public boolean add(E value) {
        growUp();
     }
     array[size++] = value;
+    modCount++;
     return true;
 }
 
@@ -28,7 +30,6 @@ public E get(int index) {
 private void growUp() {
     currentCapacity = currentCapacity + currentCapacity / 2;
     array = Arrays.copyOf(array, currentCapacity);
-    modCount++;
 }
 
     @Override
@@ -45,6 +46,9 @@ private void growUp() {
             public E next() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
+                }
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
                 }
                 return array[index++];
             }
