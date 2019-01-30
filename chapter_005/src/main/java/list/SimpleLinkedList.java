@@ -32,11 +32,6 @@ public class SimpleLinkedList<E> implements Iterable<E> {
     }
 
 
-
-
-
-
-
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
@@ -68,26 +63,5 @@ public class SimpleLinkedList<E> implements Iterable<E> {
             this.data = data;
         }
     }
-
-//    public static void main(String[] args) {
-//        SimpleLinkedList<Integer> list = new SimpleLinkedList<>();
-//        list.add(1);
-//        list.add(2);
-//        list.add(3);
-//        list.add(4);
-//        list.add(5);
-//
-//
-//
-//        for (Integer e : list ) {
-//            if(e == 2) {
-//                list.add(15);
-//            }
-//            System.out.println(e);
-//        }
-//
-//
-//    }
-
 
 }
