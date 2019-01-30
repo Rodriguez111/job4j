@@ -1,5 +1,7 @@
 package list;
 
+import java.util.NoSuchElementException;
+
 public class SimpleUnidirectionalList<E> {
     private int size;
     private Node<E> first;
@@ -39,6 +41,9 @@ public class SimpleUnidirectionalList<E> {
      * Delete first element.
      */
     public E delete() {
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
         E firstElement = first.item;
         first = first.next;
         size--;
