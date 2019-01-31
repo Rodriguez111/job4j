@@ -18,37 +18,4 @@ public class SimpleQueue<T> {
        return output.poll();
     }
 
-    public static void main(String[] args) {
-
-        SimpleQueue<Integer> queue = new SimpleQueue<>();
-        queue.push(1);
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-
-
-        queue.push(2);
-        queue.push(3);
-        queue.push(4);
-
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-
-
-        queue.push(5);
-        queue.push(6);
-        queue.push(7);
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-
-
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-        System.out.println(queue.poll());
-
-
-    }
-
-
 }

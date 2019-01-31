@@ -32,6 +32,32 @@ private void growUp() {
     array = Arrays.copyOf(array, currentCapacity);
 }
 
+    public boolean contains(E item) {
+        return indexOf(item) >= 0;
+    }
+
+
+    public int indexOf(E item) {
+      int indexOf = -1;
+    if (item == null) {
+        for (int i = 0; i < size; i++) {
+            if (array[i] == null) {
+                indexOf = i;
+                break;
+            }
+        }
+    } else {
+        for (int i = 0; i < size; i++) {
+            if (array[i].equals(item)) {
+                indexOf = i;
+                break;
+            }
+        }
+    }
+    return indexOf;
+    }
+
+
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
