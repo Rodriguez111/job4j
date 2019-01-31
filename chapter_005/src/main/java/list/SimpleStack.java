@@ -20,5 +20,4 @@ public class SimpleStack<E> {
       return simpleLinkedList.getSize() > 0 ? simpleLinkedList.get(0) : null;
     }
 
-
 }

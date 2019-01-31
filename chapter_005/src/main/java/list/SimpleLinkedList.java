@@ -73,8 +73,6 @@ public class SimpleLinkedList<E> implements Iterable<E> {
     public void deleteSingle() {
         first = null;
         last = null;
-        size--;
-        modCount--;
     }
 
 
