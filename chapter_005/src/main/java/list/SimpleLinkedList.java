@@ -139,6 +139,8 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return new Iterator<E>() {
             int index;
             int currentModCount = modCount;
+            Node<E> currentElement = first;
+            Node<E> result;
             @Override
             public boolean hasNext() {
                 return index < size;
@@ -149,7 +151,10 @@ public class SimpleLinkedList<E> implements Iterable<E> {
                 if (currentModCount != modCount) {
                    throw new ConcurrentModificationException();
                 }
-                return get(index++);
+                index++;
+                result = currentElement;
+                currentElement = currentElement.next;
+                return result.data;
             }
         };
     }
