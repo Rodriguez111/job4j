@@ -1,26 +1,46 @@
 package list;
 
 public class SimpleQueue<T> {
-    SimpleStack<T> stack1 = new SimpleStack<>();
-    SimpleStack<T> stack2 = new SimpleStack<>();
+   private SimpleStack<T> input = new SimpleStack<>();
+   private SimpleStack<T> output = new SimpleStack<>();
 
 
     public void push(T item) {
-        stack1.push(item);
-        stack2.push(stack1.poll());
+        input.push(item);
     }
 
     public T poll() {
-       return stack2.poll();
+        if (output.isEmpty()) {
+            while (!input.isEmpty()) {
+                output.push(input.poll());
+            }
+        }
+       return output.poll();
     }
-
 
     public static void main(String[] args) {
 
         SimpleQueue<Integer> queue = new SimpleQueue<>();
         queue.push(1);
+        System.out.println(queue.poll());
+        System.out.println(queue.poll());
+
+
         queue.push(2);
         queue.push(3);
+        queue.push(4);
+
+        System.out.println(queue.poll());
+        System.out.println(queue.poll());
+        System.out.println(queue.poll());
+
+
+        queue.push(5);
+        queue.push(6);
+        queue.push(7);
+        System.out.println(queue.poll());
+        System.out.println(queue.poll());
+        System.out.println(queue.poll());
 
 
         System.out.println(queue.poll());
