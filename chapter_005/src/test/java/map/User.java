@@ -1,9 +1,6 @@
 package map;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class User {
    private String name;
@@ -16,6 +13,11 @@ public class User {
         this.birthday = birthday;
     }
 
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
+    }
 
     public static void main(String[] args) {
         User user1 = new User("Ivan", 2, new GregorianCalendar(1980,0,31));
