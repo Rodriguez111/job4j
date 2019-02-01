@@ -1,8 +1,8 @@
 package generic.set;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -17,7 +17,7 @@ public class SimpleSetTest {
     PrintStream newStream;
     String lineSeparator = System.lineSeparator();
 
-    @BeforeEach
+    @Before
     public void setStream() {
         original = System.out;
         newStream = new PrintStream(baos);
