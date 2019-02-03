@@ -8,7 +8,7 @@ public class Bank {
 
     /**
      *
-     * @param user - user to add to the map.
+     * @param user - user to add to the ru.job4j.map.
      */
 
     public void addUser(User user) {
@@ -17,7 +17,7 @@ public class Bank {
 
     /**
      *
-     * @param user - user we want to delete from the map.
+     * @param user - user we want to delete from the ru.job4j.map.
      * @return - result of the operation (true or false).
      */
     public boolean deleteUser(User user) {
@@ -70,7 +70,7 @@ public class Bank {
     /**
      *
      * @param passport - passport of the user.
-     * @return - list of accounts of this user.
+     * @return - ru.job4j.list of accounts of this user.
      */
     public List<Account> getUserAccounts(String passport) {
         User user = selectUser(passport);

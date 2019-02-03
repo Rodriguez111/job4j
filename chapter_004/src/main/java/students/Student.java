@@ -21,7 +21,7 @@ public class Student implements Comparator<Student> {
 
     /**
      *
-     * @param students unsorted nullable list of students.
+     * @param students unsorted nullable ru.job4j.list of students.
      * @param bound - threshold above which students are filtered.
      * @return - filtered students with scope more then bound.
      */

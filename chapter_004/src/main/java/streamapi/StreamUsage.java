@@ -49,7 +49,7 @@ Stream API работает совместно с лямбда.
         bugs.forEach(System.out::println);
 
         //2. Преобразование.
-        //Допустим, что бы сходим получить только имена задач. Для этого нужно применить метод map:
+        //Допустим, что бы сходим получить только имена задач. Для этого нужно применить метод ru.job4j.map:
         List<String> names = tasks.stream().map(
                 task -> task.name
         ).collect(Collectors.toList());

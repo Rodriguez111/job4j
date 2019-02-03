@@ -10,7 +10,7 @@ public class ConvertList2Array {
 
     /**
      *
-     * @param list - list which converts to array.
+     * @param list - ru.job4j.list which converts to array.
      * @param rows - amount of rows in array.
      * @return - result array
      */

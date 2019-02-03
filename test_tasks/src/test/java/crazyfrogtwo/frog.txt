@@ -56,7 +56,7 @@ Cell step = cell.jump(Step.LEFT_1_FORWARD_2)
 Записать это можно как
 for (Step step : Steps.values()) {
     Cell step = cell.jump(step);
-      if (map.get(step).isBlock() || map.get(step).isFinish()) {
+      if (ru.job4j.map.get(step).isBlock() || ru.job4j.map.get(step).isFinish()) {
 
 
 

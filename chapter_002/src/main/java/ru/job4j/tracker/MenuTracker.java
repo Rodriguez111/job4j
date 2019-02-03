@@ -174,7 +174,7 @@ public class MenuTracker  {
     }
 
     /**
-     * Finds ru.job4j.list of items by name
+     * Finds ru.job4j.ru.job4j.list of items by name
      */
     class FindItemByName extends BaseAction {
         public FindItemByName(int key, String name) {

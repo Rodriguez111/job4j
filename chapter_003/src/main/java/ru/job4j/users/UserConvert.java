@@ -11,12 +11,12 @@ public class UserConvert {
 
     /**
      *
-     * @param list = list of users to convert.
+     * @param list = ru.job4j.list of users to convert.
      * @return = result HashMap of users.
      */
     public Map<Integer, User> process(List<User> list) {
 //        HashMap<Integer, User> users =
-//         list
+//         ru.job4j.list
 //                .stream()
 //                .collect(Collectors.toMap(User::getId, user -> user, (a, b) -> a, HashMap::new));
         Map<Integer, User> users =

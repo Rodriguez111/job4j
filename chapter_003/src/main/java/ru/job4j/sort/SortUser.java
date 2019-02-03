@@ -7,7 +7,7 @@ public class SortUser {
 
     /**
      *
-     * @param listOfUsers - list of users to sort.
+     * @param listOfUsers - ru.job4j.list of users to sort.
      * @return sorted set of users.
      */
 
@@ -17,9 +17,9 @@ public class SortUser {
 
 
     /**
-     * Sort list of users by name length
-     * @param listOfUsers - list of users to sort.
-     * @return - sorted list of users.
+     * Sort ru.job4j.list of users by name length
+     * @param listOfUsers - ru.job4j.list of users to sort.
+     * @return - sorted ru.job4j.list of users.
      */
     public List<User> sortNameLength(List<User> listOfUsers) {
         return  listOfUsers.stream()
@@ -28,9 +28,9 @@ public class SortUser {
     }
 
     /**
-     * Sort list of users by name then by age.
-     * @param listOfUsers - list of users to sort.
-     * @return - sorted list of users.
+     * Sort ru.job4j.list of users by name then by age.
+     * @param listOfUsers - ru.job4j.list of users to sort.
+     * @return - sorted ru.job4j.list of users.
      */
     public List<User> sortByAllFields(List<User> listOfUsers) {
         return listOfUsers.stream()

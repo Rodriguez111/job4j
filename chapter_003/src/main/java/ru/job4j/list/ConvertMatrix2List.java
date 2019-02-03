@@ -11,17 +11,17 @@ public class ConvertMatrix2List<T> {
 
     /**
      *
-     * @param array - array which we convert to list.
-     * @return - result list.
+     * @param array - array which we convert to ru.job4j.list.
+     * @return - result ru.job4j.list.
      */
     public List<Integer> toList(int[][] array) {
-//        List<Integer> list = new ArrayList<>();
+//        List<Integer> ru.job4j.list = new ArrayList<>();
 //        for (int[] eachRow : array) {
 //            for (int eachColumn : eachRow) {
-//                list.add(eachColumn);
+//                ru.job4j.list.add(eachColumn);
 //            }
 //        }
-//        return list;
+//        return ru.job4j.list;
         return Arrays.stream(array).flatMapToInt(Arrays::stream).boxed().collect(Collectors.toList());
     }
 
