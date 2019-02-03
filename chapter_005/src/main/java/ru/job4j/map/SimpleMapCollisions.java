@@ -138,6 +138,9 @@ public class SimpleMapCollisions<K, V>  implements Iterable<SimpleMapCollisions.
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 if (currentBucket != null) {
                     currentEntry = currentBucket.get(indexOfEntryInCurrentBucket++);
                     checkIfNoMoreEntriesInTheBucket();

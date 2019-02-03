@@ -22,7 +22,7 @@ public class SimpleMapCollisionsTest {
     public void before() {
         original = System.out;
         newStream = new PrintStream(baos);
-       // System.setOut(newStream);
+        System.setOut(newStream);
     }
 
     @After

@@ -8,14 +8,12 @@ import java.util.*;
 
 public class SimpleMap<K, V> implements Iterable<SimpleMap.Entry<K, V>> {
     private static final int DEFAULT_CAPACITY = 4;
-    private int previousCapacity;
     private int currentCapacity = DEFAULT_CAPACITY;
     private static final float DEFAULT_LOAD_FACTOR = 0.75F;
     private int size;
     private int modCount;
 
-    private Entry[] array = new Entry[DEFAULT_CAPACITY];
-
+    private Entry<K, V>[] array = new Entry[DEFAULT_CAPACITY];
 
     /**
      *
@@ -50,52 +48,26 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Entry<K, V>> {
      * Increase ru.job4j.map size (array size) and invokes redistribute method.
      */
     private void growUp() {
-      previousCapacity = currentCapacity;
       currentCapacity = currentCapacity + currentCapacity / 2;
-      array = Arrays.copyOf(array, currentCapacity);
-      redistribute();
-    }
-
-    /**
-     * Updates hash-based indexes and reallocate entries based to new indexes.
-     * Loses elements if collisions occur.
-     */
-    void redistribute() {
-        Entry<K, V> buffer;
-      for (int i = 0; i < previousCapacity; i++) {
-          if (array[i] != null) {
-              Entry<K, V> current = array[i];
-
-              int newIndex = defineBucket(current.key);
-             if (newIndex == i) {
-                 continue;
-             }
-              if (array[newIndex] == null) {
-                  array[newIndex] = current;
-                  array[i] = null;
-              } else  {
-                  buffer = array[newIndex];
-                  array[newIndex] = current;
-                  array[i] = null;
-                  while (buffer != null) {
-                      newIndex = defineBucket(buffer.key);
-                      if (array[newIndex] == null) {
-                          array[newIndex] = buffer;
-                          buffer = null;
-                      } else {
-                          Entry<K, V> temp = array[newIndex];
-                          if (defineBucket(temp.key) == newIndex) {
-                              size--;
-                              break;
-                          }
-                          array[newIndex] = buffer;
-                          buffer = temp;
-                      }
-                  }
-              }
+      final Entry<K, V>[] oldArray = array;
+      array = new Entry[currentCapacity];
+      for (int i = 0; i < oldArray.length; i++) {
+          if (oldArray[i] != null) {
+              addEntry(oldArray[i]);
           }
       }
       modCount++;
+    }
+
+    /**
+     * Add entry while array resize.
+     * @param entry
+     */
+    private void addEntry(Entry<K, V> entry) {
+        int index = defineBucket(entry.key);
+        if (array[index] == null) {
+            array[index] = entry;
+        }
     }
 
 
@@ -124,6 +96,9 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Entry<K, V>> {
             public Entry<K, V> next() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
+                }
+                if(!hasNext()) {
+                    throw new NoSuchElementException();
                 }
                 result = array[indexOfArray++];
                 if (result == null) {
