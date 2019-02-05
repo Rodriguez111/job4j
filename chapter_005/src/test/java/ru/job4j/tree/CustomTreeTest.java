@@ -31,5 +31,31 @@ public class CustomTreeTest {
         );
     }
 
+    @Test
+    public void shouldReturnTrueWhenCheckIsBinary() {
+        CustomTree<String> tree = new CustomTree<>("Zero");
+        tree.add("Zero", "One");
+        tree.add("Zero", "Two");
+        tree.add("One", "Three");
+        tree.add("One", "Four");
+        tree.add("Two", "Five");
+
+        assertThat(tree.isBinary(), is(true));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenCheckIsBinary() {
+        CustomTree<String> tree = new CustomTree<>("Zero");
+        tree.add("Zero", "One");
+        tree.add("Zero", "Two");
+        tree.add("One", "Three");
+        tree.add("One", "Four");
+        tree.add("One", "Five");
+        tree.add("Two", "Six");
+
+        assertThat(tree.isBinary(), is(false));
+    }
+
+
 
 }

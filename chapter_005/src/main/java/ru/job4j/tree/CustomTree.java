@@ -83,4 +83,17 @@ public class CustomTree<E extends Comparable<E>> implements SimpleTree<E> {
         };
     }
 
+    public boolean isBinary() {
+        boolean result = true;
+        Iterator<E> iterator = iterator();
+        while (iterator.hasNext()) {
+            Node<E> element = findBy(iterator.next()).get();
+            if (element.leaves().size() > 2) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
 }
