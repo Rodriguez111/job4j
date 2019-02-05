@@ -97,7 +97,7 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Entry<K, V>> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                if(!hasNext()) {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 result = array[indexOfArray++];
