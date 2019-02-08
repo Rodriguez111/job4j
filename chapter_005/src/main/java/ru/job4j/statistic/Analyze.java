@@ -1,7 +1,7 @@
 package ru.job4j.statistic;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Это задание сводиться к определению разницы между начальным состояние массива и измененным. *
@@ -42,16 +42,23 @@ public class Analyze {
 
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
-        //int[] parameters = new int[2];
+        Set<Integer> setOfPreviousId = previous.stream().map(e -> e.id).collect(Collectors.toSet());
+        current.stream().forEach(each -> {if (!previous.contains(each)){
+            if (!setOfPreviousId.add(each.id)) {
+                info.changed++;
+            } else {
+                info.added++;
+            }
+        }});
 
-       // previous.stream().filter()
+        Set<Integer> setOfCurrentId = current.stream().map(e -> e.id).collect(Collectors.toSet());
+        previous.stream().forEach(each -> {if (!current.contains(each)){
+            if (setOfCurrentId.add(each.id)) {
+                info.deleted++;
+            }
 
-       // previous.stream().forEach(each -> {if (!current.contains(each)){parameters[1]++;}});
-      //  current.stream().forEach(each -> {if (!previous.contains(each)){parameters[0]++;}});
-
-
-
-         return null;
+        }});
+         return info;
      }
 
     public static class User {
@@ -62,12 +69,42 @@ public class Analyze {
 
         int id;
         String name;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            User user = (User) o;
+            return id == user.id &&
+                    Objects.equals(name, user.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, name);
+        }
     }
 
     public static class Info {
         int added;
         int changed;
         int deleted;
+
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Info info = (Info) o;
+            return added == info.added &&
+                    changed == info.changed &&
+                    deleted == info.deleted;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(added, changed, deleted);
+        }
 
         @Override
         public String toString() {
@@ -79,37 +116,4 @@ public class Analyze {
         }
     }
 
-
-    public static void main(String[] args) {
-        User user1 = new User(1, "Ivan");
-        User user2 = new User(2, "Vasya");
-        User user3 = new User(3, "Petya");
-        User user4 = new User(4, "Kolya");
-        User user5 = new User(5, "Sasha");
-
-        List<User> list1 = new ArrayList<>() ;
-        list1.add(user1);
-        list1.add(user2);
-        list1.add(user3);
-        list1.add(user4);
-        list1.add(user5);
-
-
-      User user6 = new User(3, "Anton");
-        List<User> list2 = new ArrayList<>() ;
-        list1.add(user1);
-        list1.add(user2);
-        list1.add(user6);
-        list1.add(user4);
-        list1.add(user5);
-
-        Analyze analyze = new Analyze();
-     Info info = analyze.diff(list1, list2);
-
-        System.out.println(info);
-
-
-
-
-    }
 }
