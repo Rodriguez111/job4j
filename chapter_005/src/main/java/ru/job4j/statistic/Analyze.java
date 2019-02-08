@@ -42,21 +42,20 @@ public class Analyze {
 
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
-        Set<Integer> setOfPreviousId = previous.stream().map(e -> e.id).collect(Collectors.toSet());
-        current.stream().forEach(each -> {if (!previous.contains(each)){
-            if (!setOfPreviousId.add(each.id)) {
+        Map<Integer, String> previousMap = previous.stream().collect(Collectors.toMap(each -> each.id, each ->each.name));
+        Map<Integer, String> currentMap = current.stream().collect(Collectors.toMap(each -> each.id, each ->each.name));
+
+        current.stream().forEach(each -> {if (previousMap.containsKey(each.id)){
+            if (!previousMap.get(each.id).equals(each.name)) {
                 info.changed++;
-            } else {
-                info.added++;
             }
+
+        } else {
+            info.added++;
         }});
 
-        Set<Integer> setOfCurrentId = current.stream().map(e -> e.id).collect(Collectors.toSet());
-        previous.stream().forEach(each -> {if (!current.contains(each)){
-            if (setOfCurrentId.add(each.id)) {
-                info.deleted++;
-            }
-
+        previous.stream().forEach(each -> {if (!currentMap.containsKey(each.id)){
+         info.deleted++;
         }});
          return info;
      }
