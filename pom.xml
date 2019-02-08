@@ -20,6 +20,7 @@
         <module>test_tasks</module>
         <module>chapter_004</module>
         <module>chapter_005</module>
+        <module>chapter_006</module>
         <module>chess</module>
         <module>tictactoe</module>
         <module>puzzle</module>
