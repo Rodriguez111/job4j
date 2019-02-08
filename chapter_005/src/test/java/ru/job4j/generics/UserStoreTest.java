@@ -1,6 +1,6 @@
 package ru.job4j.generics;
 
-import ru.job4j.generic.exceptions.ElementNotFoundException;
+import ru.job4j.generics.exceptions.ElementNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package ru.job4j.generic.exceptions;
+package ru.job4j.generics.exceptions;
 
 public class ElementNotFoundException extends RuntimeException {
 

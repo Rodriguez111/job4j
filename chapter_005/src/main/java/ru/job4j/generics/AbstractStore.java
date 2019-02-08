@@ -1,6 +1,6 @@
-package ru.job4j.generic;
+package ru.job4j.generics;
 
-import ru.job4j.generic.exceptions.ElementNotFoundException;
+import ru.job4j.generics.exceptions.ElementNotFoundException;
 
 import java.util.Iterator;
 import java.util.Optional;
