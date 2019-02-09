@@ -42,21 +42,19 @@ public class Analyze {
 
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
-        Map<Integer, String> previousMap = previous.stream().collect(Collectors.toMap(each -> each.id, each ->each.name));
         Map<Integer, String> currentMap = current.stream().collect(Collectors.toMap(each -> each.id, each ->each.name));
-
-        current.stream().forEach(each -> {if (previousMap.containsKey(each.id)){
-            if (!previousMap.get(each.id).equals(each.name)) {
-                info.changed++;
-            }
-
-        } else {
-            info.added++;
-        }});
-
-        previous.stream().forEach(each -> {if (!currentMap.containsKey(each.id)){
-         info.deleted++;
-        }});
+        previous.stream().forEach(e ->
+                {
+                    String deleted = currentMap.remove(e.id);
+                    if (deleted == null) {
+                        info.deleted++;
+                    } else {
+                        if (!deleted.equals(e.name)) {
+                            info.changed++;
+                        }
+                    }
+                });
+        info.added = currentMap.size();
          return info;
      }
 
@@ -71,11 +69,15 @@ public class Analyze {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             User user = (User) o;
-            return id == user.id &&
-                    Objects.equals(name, user.name);
+            return id == user.id
+                    && Objects.equals(name, user.name);
         }
 
         @Override
@@ -92,12 +94,16 @@ public class Analyze {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
             Info info = (Info) o;
-            return added == info.added &&
-                    changed == info.changed &&
-                    deleted == info.deleted;
+            return added == info.added
+                    && changed == info.changed
+                   && deleted == info.deleted;
         }
 
         @Override
@@ -107,11 +113,11 @@ public class Analyze {
 
         @Override
         public String toString() {
-            return "Info{" +
-                    "added=" + added +
-                    ", changed=" + changed +
-                    ", deleted=" + deleted +
-                    '}';
+            return "Info{"
+                    + "added=" + added
+                    + ", changed=" + changed
+                    + ", deleted=" + deleted
+                    + '}';
         }
     }
 
