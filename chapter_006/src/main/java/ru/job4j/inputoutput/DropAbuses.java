@@ -1,47 +1,32 @@
 package ru.job4j.inputoutput;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DropAbuses {
 
-    void dropAbuses(InputStream in, OutputStream out, String[] abuse) throws UnsupportedEncodingException {
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "Cp1251"));
-
-        try {
+    void dropAbuses(InputStream in, OutputStream out, String[] abuse) {
+        Set<String> abuseSet = new HashSet<>(Arrays.asList(abuse));
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out))) {
             while (reader.ready()) {
-                String read = reader.readLine();
-                read
-                System.out.println(read);
-
+                String[] line = reader.readLine().split(" ");
+                for (int i = 0; i <  line.length; i++) {
+                    String strippedInput = line[i].replaceAll("[^А-яA-z0-9]", "");
+                    if (abuseSet.contains(strippedInput)) {
+                        line[i] = line[i].replaceAll("[А-яA-z]", "");
+                    }
+                    if (!reader.ready() && i == line.length - 1) {
+                        writer.write(line[i]);
+                    } else {
+                        writer.write(line[i] + " ");
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
-    public static void main(String[] args) throws FileNotFoundException {
-        DropAbuses dropAbuses = new DropAbuses() ;
-
-        FileInputStream fr = new FileInputStream("d:/1.txt");
-        FileOutputStream fw = null;
-
-        String[] abused = {"принадлежала", "попросил", "недоволен"};
-
-        try {
-            fw = new FileOutputStream("d:/2.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            dropAbuses.dropAbuses(fr, fw, abused);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 }
