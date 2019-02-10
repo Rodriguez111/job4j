@@ -26,7 +26,7 @@ public class SearchTest {
         extensions.add("txt");
 
         Search search = new Search();
-        List<File> actual =  search.files(parent, extensions);
+        List<File> actual =  search.files(parent, extensions, true);
         File file1 = new File(parent + "/Новый текстовый документ.exe");
         File file2 = new File(parent + "/Папка01\\Новый текстовый документ.txt");
         File file3 = new File(parent + "/Папка02\\Новый текстовый документ.exe");
