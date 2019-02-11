@@ -27,4 +27,31 @@ public class WordEqualityTest {
         assertThat(actual, is(expected));
     }
 
+    @Test
+    public void shouldReturnFalseWhenNumberOfCharsIsDifferent() {
+        String word1 = "Good";
+        String word2 = "Gooday";
+        boolean actual = wordsCompare.checkForSymbolsEquality(word1, word2);
+        boolean expected = false;
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenCharsAreDifferent() {
+        String word1 = "Good";
+        String word2 = "Godd";
+        boolean actual = wordsCompare.checkForSymbolsEquality(word1, word2);
+        boolean expected = false;
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnTrueWhenCharsAreMatches() {
+        String word1 = "Good";
+        String word2 = "Godo";
+        boolean actual = wordsCompare.checkForSymbolsEquality(word1, word2);
+        boolean expected = true;
+        assertThat(actual, is(expected));
+    }
+
 }
