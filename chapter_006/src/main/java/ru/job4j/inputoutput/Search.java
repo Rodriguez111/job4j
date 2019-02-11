@@ -27,11 +27,11 @@ public class Search {
                     queue.offer(eachFile);
                 } else {
                     if (include) {
-                        if (extensionsSet.contains(eachFile.getName().substring(eachFile.getName().lastIndexOf(".") + 1))) {
+                        if (extensionPresent(extensionsSet, eachFile)) {
                             listOfFiles.add(eachFile);
                         }
                     } else {
-                        if (!extensionsSet.contains(eachFile.getName().substring(eachFile.getName().lastIndexOf(".") + 1))) {
+                        if (!extensionPresent(extensionsSet, eachFile)) {
                             listOfFiles.add(eachFile);
                         }
 
@@ -41,5 +41,11 @@ public class Search {
         }
         return listOfFiles;
     }
+
+private boolean extensionPresent(Set<String> extensionsSet, File file) {
+   return extensionsSet.contains(file.getName().substring(file.getName().lastIndexOf(".") + 1));
+}
+
+
 
 }

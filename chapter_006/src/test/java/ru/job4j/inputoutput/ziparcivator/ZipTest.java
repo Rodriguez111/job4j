@@ -19,8 +19,16 @@ import static org.junit.Assert.*;
 
 public class ZipTest {
   private String source = "c:/projects/job4j/";
-    private String destination = "d:/project.zip";
+  private String destination = "d:/project.zip";
   private Zip zip;
+
+  private List<File> sourceFiles;
+  private List<String> extensions;
+  private List<File> actual;
+  private List<File> expected;
+  private Search search;
+  private ZipInputStream zipInputStream;
+  private  ZipEntry zipEntry;
 
   @Before
   public void init() {
@@ -39,32 +47,23 @@ public class ZipTest {
 
 
     @Test
-    public void shouldReturnTheSameListOfFiles() {
-        List<File> actual = new ArrayList<>();
+    public void shouldReturnTheSameListOfFiles() throws IOException {
+       actual = new ArrayList<>();
         zip.zip();
-        try {
-            ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(destination));
-            ZipEntry zipEntry = null;
+           zipInputStream = new ZipInputStream(new FileInputStream(destination));
             while ((zipEntry = zipInputStream.getNextEntry()) != null) {
                 actual.add(new File(zipEntry.getName()));
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Search search = new Search();
-        List<String> extensions = new ArrayList<>();
+        search = new Search();
+        extensions = new ArrayList<>();
         extensions.add("java");
         extensions.add("xml");
-        List<File> sourceFiles = search.files(source, extensions, false);
-        List<File> expected = new ArrayList<>();
+        sourceFiles = search.files(source, extensions, false);
+        expected = new ArrayList<>();
         for (File eachFile : sourceFiles) {
             expected.add(new File(Paths.get(source).relativize(Paths.get(eachFile.getPath())).toString()));
         }
         assertThat(actual, is(expected));
-
     }
 
 }

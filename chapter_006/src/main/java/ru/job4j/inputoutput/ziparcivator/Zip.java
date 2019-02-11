@@ -36,10 +36,10 @@ public class Zip {
 
 
     public static void main(String[] args) {
-        Args arguments = new Args();
-        source = arguments.directory(args);
-        outputZip = arguments.output(args);
-        extensions = arguments.extensions(args);
+        Args arguments = new Args(args);
+        source = arguments.directory();
+        outputZip = arguments.output();
+        extensions = arguments.extensions();
     }
 
 

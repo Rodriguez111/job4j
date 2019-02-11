@@ -4,24 +4,30 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Args {
+  private String[] args;
+
+    public Args(String[] args) {
+        this.args = args;
+    }
+
     private final String sourceDirectory = "-d";
     private final String output = "-o";
     private final String extensions = "-e";
 
 
-    public String directory(String[] args) {
-        return parseArguments(args, sourceDirectory);
+    public String directory() {
+        return parseArguments(sourceDirectory);
    }
-    public List<String> extensions(String[] args) {
-        String result = parseArguments(args, extensions);
+    public List<String> extensions() {
+        String result = parseArguments(extensions);
         return Arrays.asList(result.split(" "));
     }
 
-    public String output(String[] args) {
-        return parseArguments(args, output);
+    public String output() {
+        return parseArguments(output);
     }
 
-    private String parseArguments(String[] args, String parameter) {
+    private String parseArguments(String parameter) {
         String result = "";
         for (int i = 0; i <  args.length; i++) {
             if (args[i].equals(parameter)) {
@@ -36,11 +42,4 @@ public class Args {
         }
         return result.trim();
     }
-
-
-
-
-
-
-
 }
