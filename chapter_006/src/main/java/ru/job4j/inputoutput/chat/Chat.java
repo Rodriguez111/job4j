@@ -3,6 +3,7 @@ package ru.job4j.inputoutput.chat;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+
 public class Chat {
   InputStreamReader isr;
   OutputStream os;
@@ -11,12 +12,8 @@ public class Chat {
     public Chat(Input input) {
         this.input = input;
     }
-
-    //private String logFile = "chapter_006/target/classes/ru/job4j/inputoutput/chat/textlog.txt";
-    private String logFile =  "C:\\projects\\job4j\\chapter_006\\target\\classes\\ru\\job4j\\inputoutput\\chat/textlog.txt";
-
-
-    private String phrases = "C:\\projects\\job4j\\chapter_006\\target\\classes\\ru\\job4j\\inputoutput\\chat/phrases.txt";
+   private String logFile = getClass().getClassLoader().getResource("ru/job4j/inputoutput/chat/textlog.txt").getFile();
+   private String phrases = getClass().getClassLoader().getResource("ru/job4j/inputoutput/chat/phrases.txt").getFile();
 
     private String pause = "пауза";
     private String resume = "продолжить";
@@ -120,6 +117,9 @@ public class Chat {
 
 
     public static void main(String[] args) {
+
+
+
         Chat chat = new Chat(new ConsoleInput());
         chat.chat();
     }

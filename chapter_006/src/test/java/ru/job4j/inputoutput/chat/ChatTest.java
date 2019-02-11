@@ -18,7 +18,8 @@ public class ChatTest {
     private PrintStream newStream = new PrintStream(baos);
     private Chat chat;
 
-    private String logFile = "C:\\projects\\job4j\\chapter_006\\target\\classes\\ru\\job4j\\inputoutput\\chat/textlog.txt";
+    //private String logFile = "C:\\projects\\job4j\\chapter_006\\target\\classes\\ru\\job4j\\inputoutput\\chat/textlog.txt";
+    private String logFile = getClass().getClassLoader().getResource("ru/job4j/inputoutput/chat/textlog.txt").getFile();
     private String lineSeparator = System.lineSeparator();
 
     @Before
@@ -33,6 +34,7 @@ public class ChatTest {
 
     @Test
     public void shouldChat() {
+
         List<String> listOfMessages = new ArrayList<>();
         listOfMessages.add("Сообщение1");
         listOfMessages.add("Сообщение2");
