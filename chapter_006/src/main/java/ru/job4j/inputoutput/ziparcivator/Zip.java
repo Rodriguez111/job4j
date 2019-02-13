@@ -59,8 +59,6 @@ public class Zip {
       }
     }
 
-
-
   private void write(InputStream is, OutputStream os) {
             try {
                 byte[] buffer = new byte[1024];
