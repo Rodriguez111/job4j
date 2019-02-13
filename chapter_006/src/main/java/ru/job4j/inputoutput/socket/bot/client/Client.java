@@ -6,43 +6,46 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-    private final int port = 5001;
-    private final String ip = "127.0.0.1";
+
 
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
+    private final String ls = System.lineSeparator();
+
+
+    public Client(Socket socket) {
+        this.socket = socket;
+    }
 
     private void negotiate() throws IOException {
-        socket = new Socket(InetAddress.getByName(ip), port);
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         Scanner console = new Scanner(System.in);
-        String str;
-        do {
+        String str = "";
+
+        while (!str.equals("exit")) {
             str = console.nextLine();
             out.println(str);
-
-            while (!(str = in.readLine()).isEmpty()) {
-                System.out.println(str);
+            String answer = "";
+            while (answer.isEmpty()) {
+                while (in.ready()) {
+                    answer = in.readLine();
+                    System.out.println(answer);
+                }
             }
-        } while (str.equals("exit"));
-
-
-
+        }
     }
 
-    public void handleNegotiation() {
+    public void startClient() {
         handleException(this::negotiate);
     }
 
-
-    private void handleException(ExceptionHandler handler ) {
+    private void handleException(ExceptionHandler handler) {
         try {
             handler.handleException();
         } catch (Exception e) {
@@ -51,9 +54,15 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        Client client = new Client();
-        client.handleNegotiation();
-    }
+         final int port = 5001;
+         final String ip = "127.0.0.1";
+        try (Socket socket = new Socket(ip, port)) {
+            Client client = new Client(socket);
+            client.startClient();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
 
 }
