@@ -25,7 +25,7 @@ public class WordEquality {
         return result;
     }
 
-  private boolean charactersCheck (String word1, String word2)   {
+  private boolean charactersCheck(String word1, String word2) {
         boolean result = true;
       Map<Character, Integer> mapOfCharacters = new HashMap<>();
       for (int i = 0; i < word1.length(); i++) {
@@ -42,7 +42,7 @@ public class WordEquality {
           if (!mapOfCharacters.containsKey(currentChar)) {
               break;
           } else {
-              if(mapOfCharacters.get(currentChar) > 1) {
+              if (mapOfCharacters.get(currentChar) > 1) {
                   mapOfCharacters.put(currentChar, mapOfCharacters.get(currentChar) - 1);
               } else {
                   mapOfCharacters.remove(currentChar);
