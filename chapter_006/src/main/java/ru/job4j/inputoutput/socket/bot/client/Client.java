@@ -15,7 +15,7 @@ public class Client {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    private final String ls = System.lineSeparator();
+    private final String exitCommand = "exit";
 
 
     public Client(Socket socket) {
@@ -28,7 +28,7 @@ public class Client {
         Scanner console = new Scanner(System.in);
         String str = "";
 
-        while (!str.equals("exit")) {
+        while (!str.equals(exitCommand)) {
             str = console.nextLine();
             out.println(str);
             String answer = "";
@@ -62,7 +62,5 @@ public class Client {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
 }

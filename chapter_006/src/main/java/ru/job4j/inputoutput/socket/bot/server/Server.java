@@ -15,6 +15,7 @@ public class Server {
     private PrintWriter out;
     private BufferedReader in;
     private final String defaultAnswer = "Sorry, I don't understand U.";
+    private final String exitCommand = "exit";
     private Map<String, String> mapOfAnswers = new HashMap<>();
 
 
@@ -43,7 +44,7 @@ public class Server {
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String ask = "";
-        while (!"exit".equals(ask)) {
+        while (!exitCommand.equals(ask)) {
             System.out.println("wait command ...");
             ask = in.readLine();
             out.println(chooseAnswer(ask));
@@ -63,23 +64,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        File file = new File("D:\\Flash");
-        System.out.println(file.getParent() != null);
-
-        FileBrowser fileBrowser = new FileBrowser();
-        List<File> lf = fileBrowser.goDown(file);
-        //lf = fileBrowser.goUp(file);
-        for (File e:
-                lf) {
-            System.out.println(e);
-        }
-
         try (Socket socket = new ServerSocket(5001).accept()) {
-
-
-
-
-
             Server server = new Server(socket);
             server.start();
         } catch (IOException e) {
