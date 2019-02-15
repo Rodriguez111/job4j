@@ -1,14 +1,13 @@
 package ru.job4j.inputoutput.socket.bot.server;
 
+import ru.job4j.inputoutput.filemanager.FileBrowser;
 import ru.job4j.inputoutput.socket.bot.exceptions.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Server {
@@ -64,7 +63,23 @@ public class Server {
     }
 
     public static void main(String[] args) {
+        File file = new File("D:\\Flash");
+        System.out.println(file.getParent() != null);
+
+        FileBrowser fileBrowser = new FileBrowser();
+        List<File> lf = fileBrowser.goDown(file);
+        //lf = fileBrowser.goUp(file);
+        for (File e:
+                lf) {
+            System.out.println(e);
+        }
+
         try (Socket socket = new ServerSocket(5001).accept()) {
+
+
+
+
+
             Server server = new Server(socket);
             server.start();
         } catch (IOException e) {

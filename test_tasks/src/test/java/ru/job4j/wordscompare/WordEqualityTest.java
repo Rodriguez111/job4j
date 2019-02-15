@@ -28,28 +28,55 @@ public class WordEqualityTest {
     }
 
     @Test
-    public void shouldReturnFalseWhenNumberOfCharsIsDifferent() {
+    public void shouldReturnFalseWhenNumberOfCharsIsDifferentCheckByMap() {
         String word1 = "Good";
         String word2 = "Gooday";
-        boolean actual = wordsCompare.checkForSymbolsEquality(word1, word2);
+        boolean actual = wordsCompare.checkForSymbolsEqualityByMap(word1, word2);
         boolean expected = false;
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldReturnFalseWhenCharsAreDifferent() {
+    public void shouldReturnFalseWhenCharsAreDifferentCheckByMap() {
         String word1 = "Good";
         String word2 = "Godd";
-        boolean actual = wordsCompare.checkForSymbolsEquality(word1, word2);
+        boolean actual = wordsCompare.checkForSymbolsEqualityByMap(word1, word2);
         boolean expected = false;
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void shouldReturnTrueWhenCharsAreMatches() {
+    public void shouldReturnTrueWhenCharsAreMatchesCheckByMap() {
         String word1 = "Good";
         String word2 = "Godo";
-        boolean actual = wordsCompare.checkForSymbolsEquality(word1, word2);
+        boolean actual = wordsCompare.checkForSymbolsEqualityByMap(word1, word2);
+        boolean expected = true;
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenNumberOfCharsIsDifferentCheckBySort() {
+        String word1 = "Good";
+        String word2 = "Gooday";
+        boolean actual = wordsCompare.checkForSymbolsEqualityBySort(word1, word2);
+        boolean expected = false;
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenCharsAreDifferentCheckBySort() {
+        String word1 = "Good";
+        String word2 = "Godd";
+        boolean actual = wordsCompare.checkForSymbolsEqualityBySort(word1, word2);
+        boolean expected = false;
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void shouldReturnTrueWhenCharsAreMatchesCheckBySort() {
+        String word1 = "Good";
+        String word2 = "Godo";
+        boolean actual = wordsCompare.checkForSymbolsEqualityBySort(word1, word2);
         boolean expected = true;
         assertThat(actual, is(expected));
     }
