@@ -14,6 +14,7 @@ public class ManageProperties {
     private final String propertiesPath = rootPath.getFile() + "/ru/job4j/inputoutput/filemanager/app.properties";
     private final int port;
     private final String serverIpAddress;
+    private final File rootDirectory;
 
 
     public ManageProperties() {
@@ -26,6 +27,7 @@ public class ManageProperties {
         }
         this.port = Integer.parseInt(properties.getProperty("port"));
         this.serverIpAddress = properties.getProperty("ip");
+        this.rootDirectory = new File(properties.getProperty("root"));
     }
 
     public int getPort() {

@@ -28,7 +28,7 @@ public class Client {
         Scanner console = new Scanner(System.in);
         String str = "";
 
-        while (!str.equals(exitCommand)) {
+        while (!exitCommand.equals(str)) {
             str = console.nextLine();
             out.println(str);
             String answer = "";

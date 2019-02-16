@@ -1,12 +1,11 @@
 package ru.job4j.inputoutput.filemanager.connection;
 
 import ru.job4j.inputoutput.filemanager.exceptions.ExceptionHandler;
+import ru.job4j.inputoutput.filemanager.utils.ConsoleManager;
 import ru.job4j.inputoutput.filemanager.utils.ManageProperties;
 
 import java.io.*;
-
 import java.net.Socket;
-import java.net.URL;
 
 
 public class Client {
@@ -15,14 +14,15 @@ public class Client {
     private int port;
     private String ipAddress;
     private Connection connection;
-    private InputStream inputStream;
-    private OutputStream outputStream;
+    private ConsoleManager consoleManager = new ConsoleManager();
 
 
 
     public void startClient() {
         initProperties();
         handleException(this::startSocket);
+        handleException(this::startConnection);
+        negotiationWithServer();
 
     }
 
@@ -35,20 +35,35 @@ public class Client {
     }
 
 
-
+    private void startConnection() throws IOException {
+        connection = new Connection(socket);
+    }
 
 
 
 
     private void startSocket() throws IOException {
         socket = new Socket(ipAddress, port);
-        System.out.println(socket.getLocalPort());
     }
 
-    private void startStreams() throws IOException {
-        inputStream = socket.getInputStream();
-        outputStream = socket.getOutputStream();
 
+
+    private void negotiationWithServer() {
+
+        ConsoleManager.print(connection.read());
+
+       int command =  consoleManager.consoleNumberReader();
+       while (command != 5) {
+           connection.write(String.valueOf(command));
+           String serverMessage = connection.read();
+
+       }
+
+
+
+
+        String serverMessage = connection.read();
+        System.out.println("Сообщение от сервера: " + serverMessage);
 
     }
 
@@ -59,6 +74,11 @@ public class Client {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        Client client = new Client();
+        client.startClient();
     }
 
 
