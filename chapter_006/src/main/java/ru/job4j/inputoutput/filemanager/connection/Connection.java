@@ -1,67 +1,45 @@
 package ru.job4j.inputoutput.filemanager.connection;
 
-import ru.job4j.inputoutput.filemanager.exceptions.ExceptionHandler;
-import ru.job4j.inputoutput.filemanager.exceptions.SupplierTypeExceptionHandler;
+import ru.job4j.inputoutput.filemanager.exceptions.ExceptionsHandler;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
-public class Connection {
-
+public class CommandsConnection {
+    private final ExceptionsHandler exceptionsHandler = new ExceptionsHandler();
     private final Socket socket;
-    private final InputStreamReader inputStreamReader;
-    private final OutputStreamWriter outputStreamWriter;
 
-
-
-    public Connection(Socket socket) throws IOException {
+    public CommandsConnection(Socket socket) {
         this.socket = socket;
-        this.inputStreamReader = new InputStreamReader(this.socket.getInputStream());
-        this.outputStreamWriter = new OutputStreamWriter(this.socket.getOutputStream());
+
     }
 
-
     private String unhandledRead() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_8));
         StringBuilder sb = new StringBuilder();
-        sb.append((char) inputStreamReader.read());
-        while (inputStreamReader.ready()) {
-            sb.append((char) inputStreamReader.read());
+        sb.append((char) bufferedReader.read());
+        while (bufferedReader.ready()) {
+            sb.append((char) bufferedReader.read());
         }
     return sb.toString();
     }
 
     private void unhandledWrite(String line) throws IOException {
-        outputStreamWriter.write(line);
-        outputStreamWriter.flush();
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream(), StandardCharsets.UTF_8));
+        bufferedWriter.write(line);
+        bufferedWriter.flush();
     }
+
+
 
     public String read() {
-      return handleException(this::unhandledRead);
+      return exceptionsHandler.handleException(this::unhandledRead);
     }
-
 
     public void write(String line) {
-        handleException(() -> unhandledWrite(line)) ;
+        exceptionsHandler.handleException(() -> unhandledWrite(line)) ;
     }
-
-    private void handleException(ExceptionHandler exceptionHandler) {
-        try {
-            exceptionHandler.handleException();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private String handleException(SupplierTypeExceptionHandler<String> exceptionHandler) {
-        String result = "";
-        try {
-            result = exceptionHandler.handleException();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
 
 
 
