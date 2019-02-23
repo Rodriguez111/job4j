@@ -4,7 +4,7 @@ import ru.job4j.inputoutput.filemanager.exceptions.ExceptionsHandler;
 
 import java.io.*;
 
-public class ConsoleManager implements InputOutputManager {
+public class ConsoleManager {
     private  ExceptionsHandler<String> exceptionsHandlerString = new ExceptionsHandler();
     private  ExceptionsHandler<Integer> exceptionsHandlerInteger = new ExceptionsHandler();
     private InputStream input = System.in;

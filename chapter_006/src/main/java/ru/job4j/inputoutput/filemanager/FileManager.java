@@ -97,7 +97,8 @@ public class FileManager {
     public void uploadFile(Connection connection, String filename, long fileSize) {
         String filePath = currentDirectory + slash + filename;
         File fileToReceive = new File(filePath);
-        fileLoader.receiveFile(fileToReceive);
+        connection.streamToFile(fileToReceive, fileSize);
+        //fileLoader.receiveFile(fileToReceive);
     }
 
     public void downloadFile(String filename) {

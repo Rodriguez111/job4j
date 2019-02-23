@@ -20,9 +20,6 @@ public class Client {
     private ConsoleManager consoleManager = new ConsoleManager();
     ClientCommandHandler clientCommandHandler;
 
-    public Client(InputStream inputStream) {
-        this.consoleManager = new ConsoleManager(inputStream);
-    }
 
     public Client() {
     }
