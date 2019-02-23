@@ -7,7 +7,7 @@ import java.io.File;
  */
 
 public interface FileLoad {
-    void uploadFile(File file);
+    void sendFile(File file);
 
-    File downloadFile();
+    void receiveFile(File file);
 }

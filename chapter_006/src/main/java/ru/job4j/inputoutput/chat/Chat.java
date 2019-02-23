@@ -74,7 +74,7 @@ public class Chat {
 
 
     /**
-     * This method writes data and handles exception with handleException();
+     * This method writes data and handles exception with handleExceptionSupplier();
      *
      * @param line
      * @param output

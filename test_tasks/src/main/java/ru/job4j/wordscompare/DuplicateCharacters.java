@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class DuplicateCharacters {
-
     public List<Character> findDuplicateCharacters(String word) {
         Map<Character, Integer> map = new HashMap<>();
         word.chars().forEach(each -> {

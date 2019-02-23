@@ -1,13 +1,11 @@
 package ru.job4j.inputoutput.socket.bot.server;
 
-import ru.job4j.inputoutput.filemanager.FileBrowser;
 import ru.job4j.inputoutput.socket.bot.exceptions.*;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Server {

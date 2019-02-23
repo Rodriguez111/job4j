@@ -1,29 +1,55 @@
 package ru.job4j.inputoutput.filemanager;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class FileBrowser implements FileBrowse {
 
+
+
+
     @Override
-    public List<File> goDown(File currentDirectory) {
-        List<File> listOfFiles = new ArrayList<>();
-        if (currentDirectory.isDirectory()) {
-            listOfFiles = Arrays.asList(currentDirectory.listFiles());
+    public boolean goDown(File currentDir, File directory) {
+        boolean result = false;
+        if (this.directoryContainsDirectory(currentDir, directory)) {
+            result = true;
         }
-        return listOfFiles;
+        return result;
     }
 
     @Override
-    public List<File> goUp(File currentDirectory) {
-        List<File> listOfFiles = new ArrayList<>();
-        File parent;
-        if (currentDirectory.getParent() != null) {
-            parent = new File(currentDirectory.getParent());
-            listOfFiles = Arrays.asList(parent.listFiles());
+    public boolean goUp(File root, File currentDirectory) {
+        boolean result = false;
+        if (!root.equals(currentDirectory)) {
+            result = true;
         }
-            return listOfFiles;
+            return result;
     }
+
+
+    public boolean directoryContainsFile(File currentDir, File file){
+        boolean result = false;
+        List<File> current = Arrays.asList(currentDir.listFiles());
+        Optional<File> optionalFile =  current.stream().filter(eachFile -> eachFile.equals(file)).findFirst();
+        if(optionalFile.isPresent() && Files.isRegularFile(optionalFile.get().toPath())) {
+            result = true;
+        }
+        return result;
+    }
+
+    private boolean directoryContainsDirectory(File currentDir, File directory){
+        boolean result = false;
+        List<File> current = Arrays.asList(currentDir.listFiles());
+        Optional<File> optionalFile =  current.stream().filter(eachFile -> eachFile.equals(directory)).findFirst();
+        if(optionalFile.isPresent() && optionalFile.get().isDirectory()) {
+            result = true;
+        }
+        return result;
+    }
+
+
+
 }

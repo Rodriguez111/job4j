@@ -4,10 +4,9 @@ package ru.job4j.inputoutput.filemanager;
  */
 
 import java.io.File;
-import java.util.List;
 
 public interface FileBrowse {
-    List<File> goDown(File directory);
-    List<File> goUp(File directory);
+    boolean goDown(File currentDir, File directory);
+    boolean goUp(File root, File currentDirectory);
 
 }

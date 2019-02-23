@@ -1,6 +1,5 @@
 package ru.job4j.inputoutput.filemanager.utils;
 
-import ru.job4j.inputoutput.filemanager.exceptions.ExceptionHandler;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,8 +13,6 @@ public class ManageProperties {
     private final String propertiesPath = rootPath.getFile() + "/ru/job4j/inputoutput/filemanager/app.properties";
     private final int port;
     private final String serverIpAddress;
-    private final File rootDirectory;
-
 
     public ManageProperties() {
         File propertiesFile = new File(propertiesPath);
@@ -27,7 +24,6 @@ public class ManageProperties {
         }
         this.port = Integer.parseInt(properties.getProperty("port"));
         this.serverIpAddress = properties.getProperty("ip");
-        this.rootDirectory = new File(properties.getProperty("root"));
     }
 
     public int getPort() {
@@ -37,4 +33,5 @@ public class ManageProperties {
     public String getServerIpAddress() {
         return serverIpAddress;
     }
+
 }

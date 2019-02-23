@@ -19,8 +19,6 @@ public class WordEquality {
 
             result = charactersCheck(word1, word2);
         }
-
-
         return result;
     }
 
@@ -49,7 +47,6 @@ public class WordEquality {
           result = false;
       }
     return result;
-
   }
 
     public boolean checkForSymbolsEqualityBySort(String word1, String word2) {
@@ -59,6 +56,4 @@ public class WordEquality {
         Arrays.sort(arrayFromWord2);
         return Arrays.equals(arrayFromWord1, arrayFromWord2);
     }
-
-
 }

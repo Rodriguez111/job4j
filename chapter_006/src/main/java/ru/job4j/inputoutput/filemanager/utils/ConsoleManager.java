@@ -1,36 +1,45 @@
 package ru.job4j.inputoutput.filemanager.utils;
 
-import ru.job4j.inputoutput.filemanager.exceptions.SupplierTypeExceptionHandler;
+import ru.job4j.inputoutput.filemanager.exceptions.ExceptionsHandler;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
-public class ConsoleManager<T> {
-    public static void print(String string) {
+public class ConsoleManager implements InputOutputManager {
+    private  ExceptionsHandler<String> exceptionsHandlerString = new ExceptionsHandler();
+    private  ExceptionsHandler<Integer> exceptionsHandlerInteger = new ExceptionsHandler();
+    private InputStream input = System.in;
+
+
+    public ConsoleManager(InputStream inputStream) {
+        this.input = inputStream;
+    }
+
+    public ConsoleManager() {
+    }
+
+    public void print(String string) {
         System.out.println(string);
     }
 
-
-    public String consoleStringReader() {
-       return (String) handleException(this::unhandledConsoleStringReader);
+    public String consoleStringReader(String question) {
+        print(question);
+       return exceptionsHandlerString.handleExceptionSupplier(this::unhandledConsoleStringReader);
     }
 
     public Integer consoleNumberReader() {
-        return (Integer) handleException(this::unhandledConsoleNumberReader);
+        return exceptionsHandlerInteger.handleExceptionSupplier(this::unhandledConsoleNumberReader);
     }
 
-
-    public  String unhandledConsoleStringReader() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private String unhandledConsoleStringReader() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(input));
         return br.readLine();
     }
 
-    private  Integer unhandledConsoleNumberReader() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Integer number = 0;
+    private Integer unhandledConsoleNumberReader() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(input));
+        Integer number;
         while (true) {
-            try{
+            try {
                 number = Integer.parseInt(br.readLine());
                 break;
             } catch (NumberFormatException e) {
@@ -39,17 +48,5 @@ public class ConsoleManager<T> {
         }
         return number;
     }
-
-
-    private  T handleException(SupplierTypeExceptionHandler<? extends Object> exceptionHandler) {
-        T result = null;
-        try {
-            result = (T)exceptionHandler.handleException();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
 
 }
