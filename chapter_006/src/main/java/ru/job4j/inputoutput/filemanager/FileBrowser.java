@@ -30,21 +30,21 @@ public class FileBrowser implements FileBrowse {
     }
 
 
-    public boolean directoryContainsFile(File currentDir, File file){
+    public boolean directoryContainsFile(File currentDir, File file) {
         boolean result = false;
         List<File> current = Arrays.asList(currentDir.listFiles());
         Optional<File> optionalFile =  current.stream().filter(eachFile -> eachFile.equals(file)).findFirst();
-        if(optionalFile.isPresent() && Files.isRegularFile(optionalFile.get().toPath())) {
+        if (optionalFile.isPresent() && Files.isRegularFile(optionalFile.get().toPath())) {
             result = true;
         }
         return result;
     }
 
-    private boolean directoryContainsDirectory(File currentDir, File directory){
+    private boolean directoryContainsDirectory(File currentDir, File directory) {
         boolean result = false;
         List<File> current = Arrays.asList(currentDir.listFiles());
         Optional<File> optionalFile =  current.stream().filter(eachFile -> eachFile.equals(directory)).findFirst();
-        if(optionalFile.isPresent() && optionalFile.get().isDirectory()) {
+        if (optionalFile.isPresent() && optionalFile.get().isDirectory()) {
             result = true;
         }
         return result;

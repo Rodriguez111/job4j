@@ -10,7 +10,7 @@ import java.util.Properties;
 public class ManageProperties {
 
     private URL rootPath = getClass().getClassLoader().getResource("");
-    private final String propertiesPath = rootPath.getFile() + "/ru/job4j/inputoutput/filemanager/app.properties";
+    private final String propertiesPath = rootPath.getFile() + "/fileManager.properties";
     private final int port;
     private final String serverIpAddress;
 

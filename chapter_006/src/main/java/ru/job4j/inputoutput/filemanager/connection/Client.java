@@ -1,6 +1,6 @@
 package ru.job4j.inputoutput.filemanager.connection;
 
-import ru.job4j.inputoutput.filemanager.ClientCommandHandler;
+import ru.job4j.inputoutput.filemanager.commands.ClientCommandHandler;
 import ru.job4j.inputoutput.filemanager.Messages;
 import ru.job4j.inputoutput.filemanager.exceptions.ExceptionsHandler;
 import ru.job4j.inputoutput.filemanager.utils.ConsoleManager;
@@ -44,7 +44,7 @@ public class Client {
     }
 
     private void startClientCommands() {
-        clientCommandHandler = new ClientCommandHandler(connection, consoleManager);
+        clientCommandHandler = new ClientCommandHandler(connection);
     }
 
     private void startSocket() throws IOException {
@@ -59,7 +59,7 @@ public class Client {
             if (!clientCommandHandler.commandExists(command)) {
                 consoleManager.print(Messages.WRONG_COMMAND.getMessage());
             } else {
-                clientCommandHandler.getMethod(command).invoke(clientCommandHandler, command);
+                clientCommandHandler.executeCommand(command);
             }
         }
     }

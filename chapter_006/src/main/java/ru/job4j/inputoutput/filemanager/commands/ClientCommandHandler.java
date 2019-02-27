@@ -1,52 +1,42 @@
-package ru.job4j.inputoutput.filemanager;
+package ru.job4j.inputoutput.filemanager.commands;
 
+import ru.job4j.inputoutput.filemanager.Messages;
 import ru.job4j.inputoutput.filemanager.connection.Connection;
-import ru.job4j.inputoutput.filemanager.exceptions.ExceptionsHandler;
-import ru.job4j.inputoutput.filemanager.utils.ConsoleManager;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.function.Consumer;
 
-public class ClientCommandHandler {
-    private final Connection connection;
-    private final ConsoleManager consoleManager;
-
-    private ExceptionsHandler exceptionHandler = new ExceptionsHandler();
-    private final Map<Integer, Method> clientCommands = new HashMap();
+public class ClientCommandHandler extends CommandHandler {
     private boolean isWorking = true;
 
-    public ClientCommandHandler(Connection connection,ConsoleManager consoleManager) {
-        this.connection = connection;
-        this.consoleManager = consoleManager;
-        exceptionHandler.handleException(this::initCommands);
+    public ClientCommandHandler(Connection connection) {
+        super(connection);
+        initMenu();
     }
 
-    private void initCommands() throws NoSuchMethodException {
-        clientCommands.put(1, this.getClass().getMethod("enterDirectoryCommand", Integer.class));
-        clientCommands.put(2, this.getClass().getMethod("exitDirectoryCommand", Integer.class));
-        clientCommands.put(3, this.getClass().getMethod("uploadFileCommand", Integer.class));
-        clientCommands.put(4, this.getClass().getMethod("downloadFileCommand", Integer.class));
-        clientCommands.put(5, this.getClass().getMethod("exitCommand", Integer.class));
+    private void initMenu()  {
+        menu.get(0).setCommand(enterDirectory);
+        menu.get(1).setCommand(exitDirectory);
+        menu.get(2).setCommand(downloadFile);
+        menu.get(3).setCommand(uploadFile);
+        menu.get(4).setCommand(exitProgram);
     }
 
-
-    public void enterDirectoryCommand(Integer commandItem) {
-        connection.write(commandItem + Messages.END_OF_FRAME.getMessage());
+    Consumer<Integer> enterDirectory = (commandIndex)-> {
+        connection.write(commandIndex + Messages.END_OF_FRAME.getMessage());
         String argument = consoleManager.consoleStringReader("Enter directory:");
         connection.write(argument + Messages.END_OF_FRAME.getMessage());
         consoleManager.print(connection.read());
-    }
+        };
 
-    public void exitDirectoryCommand(Integer commandItem) {
-        connection.write(commandItem + Messages.END_OF_FRAME.getMessage());
+    Consumer<Integer> exitDirectory = (commandIndex)-> {
+        connection.write(commandIndex + Messages.END_OF_FRAME.getMessage());
         consoleManager.print(connection.read());
-    }
+        };
 
-    public void uploadFileCommand(Integer commandItem) {
-        connection.write(commandItem + Messages.END_OF_FRAME.getMessage());
+    Consumer<Integer> uploadFile = (commandIndex) -> {
+        connection.write(commandIndex + Messages.END_OF_FRAME.getMessage());
         String argument = consoleManager.consoleStringReader("Enter local filepath to upload to the destination directory:");
         File fileToUpload = new File(argument);
         if (fileExists(fileToUpload)) {
@@ -63,7 +53,36 @@ public class ClientCommandHandler {
             consoleManager.print(Messages.FILE_DOES_NOT_EXIST.getMessage());
             connection.write(Messages.CLIENT_REJECTED.toString() + Messages.END_OF_FRAME.getMessage());
         }
-    }
+    };
+
+    Consumer<Integer> downloadFile = (commandIndex) -> {
+        connection.write(commandIndex + Messages.END_OF_FRAME.getMessage());
+        String fileName = consoleManager.consoleStringReader("Enter file name:");
+        connection.write(fileName + Messages.END_OF_FRAME.getMessage());
+        String serverAnswer = connection.read();
+        if (serverAnswer.equals(Messages.WRONG_FILE.toString())) {
+            consoleManager.print(Messages.WRONG_FILE.getMessage());
+        } else {
+            long fileSize = Long.parseLong(serverAnswer);
+            String localPath = consoleManager.consoleStringReader("Enter local download directory path:");
+            String filePath = localPath + "/" + fileName;
+            File file = new File(filePath);
+            if (directoryValidate(localPath, fileSize)) {
+                if (fileExists(file)) {
+                    overwriteLocalFile(file, fileSize);
+                } else {
+                    connection.write(Messages.FILE_TRANSFER_START.toString() + Messages.END_OF_FRAME.getMessage());
+                    transferFileToClient(file, fileSize);
+                }
+            }
+        }
+    };
+
+    Consumer<Integer> exitProgram = (commandIndex) -> {
+        connection.write(Messages.EXIT_COMMAND_SERVER.toString() + Messages.END_OF_FRAME.getMessage());
+        consoleManager.print("Program complete.");
+        isWorking = false;
+    };
 
     private void overwriteFile(File file) {
         consoleManager.print(Messages.FILE_ALREADY_EXISTS.getMessage());
@@ -80,29 +99,6 @@ public class ClientCommandHandler {
         connection.write(argument + Messages.END_OF_FRAME.getMessage()); // 1. Send file length.
         connection.write(file.getName() + Messages.END_OF_FRAME.getMessage()); // 2. Send file name.
         return connection.read();
-    }
-
-    public void downloadFileCommand(Integer commandItem) {
-        connection.write(commandItem + Messages.END_OF_FRAME.getMessage());
-        String fileName = consoleManager.consoleStringReader("Enter file name:");
-        connection.write(fileName + Messages.END_OF_FRAME.getMessage());
-        String serverAnswer = connection.read();
-        if (serverAnswer.equals(Messages.WRONG_FILE.toString())) {
-            consoleManager.print(Messages.WRONG_FILE.getMessage());
-        } else {
-            long fileSize = Long.parseLong(serverAnswer);
-            String localPath = consoleManager.consoleStringReader("Enter local download directory path:");
-            String filePath = localPath + "/" + fileName;
-            File file = new File(filePath);
-            if (directoryValidate(localPath, fileSize)) {
-                if (fileExists(file)) {
-                    overWriteLocalFile(file, fileSize);
-                } else {
-                    connection.write(Messages.FILE_TRANSFER_START.toString() + Messages.END_OF_FRAME.getMessage());
-                    transferFileToClient(file, fileSize);
-                }
-            }
-        }
     }
 
     private boolean directoryValidate(String dirPath, long fileSize) {
@@ -123,7 +119,7 @@ public class ClientCommandHandler {
         return result;
     }
 
-    private void overWriteLocalFile(File file, long fileSize) {
+    private void overwriteLocalFile(File file, long fileSize) {
         connection.write(Messages.FILE_ALREADY_EXISTS.toString() + Messages.END_OF_FRAME.getMessage());
         consoleManager.print(Messages.FILE_ALREADY_EXISTS.getMessage());
         String answer = consoleManager.consoleStringReader("?");
@@ -151,13 +147,6 @@ public class ClientCommandHandler {
         consoleManager.print(connection.read());
     }
 
-    public void exitCommand(Integer commandItem) {
-        connection.write(Messages.EXIT_COMMAND_SERVER.toString() + Messages.END_OF_FRAME.getMessage());
-        consoleManager.print("Program complete.");
-        isWorking = false;
-    }
-
-
     private boolean fileExists(File file) {
         boolean result = false;
         if (file.exists() && Files.isRegularFile(file.toPath())) {
@@ -166,12 +155,8 @@ public class ClientCommandHandler {
         return result;
     }
 
-    public Method getMethod(Integer commandItem) {
-        return clientCommands.get(commandItem);
-    }
-
     public boolean commandExists(int commandItem) {
-        return this.clientCommands.containsKey(commandItem);
+        return commandItem > 0 && commandItem <= menu.size();
     }
 
     public boolean isWorking() {

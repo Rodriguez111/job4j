@@ -49,12 +49,15 @@ public class Connection {
 
     private void transferData(InputStream dataInputStream, OutputStream dataOutputStream, long fileSize) throws IOException {
         byte[] buffer = new byte[8192];
-        int count;
+        int count = dataInputStream.read(buffer, 0, (int) Math.min(buffer.length, fileSize));
         System.out.println("Передача данных началась, размер файла " + fileSize);
-        while (fileSize > 0 && (count = dataInputStream.read(buffer, 0, (int) Math.min(buffer.length, fileSize))) != -1) {
-            System.out.println("размер файла " + fileSize + "count " + count);
+        while (fileSize > 0 && (count != -1)) {
+            System.out.println("размер файла " + fileSize + " count " + count + " буффер " + buffer.length);
+
             dataOutputStream.write(buffer, 0, count);
             fileSize -= count;
+            count = dataInputStream.read(buffer, 0, (int) Math.min(buffer.length, fileSize));
+
         }
         dataOutputStream.flush();
         System.out.println("Передача данных завершена, размер файла " + fileSize);

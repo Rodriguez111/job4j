@@ -1,62 +1,48 @@
-package ru.job4j.inputoutput.filemanager;
+package ru.job4j.inputoutput.filemanager.commands;
 
+import ru.job4j.inputoutput.filemanager.FileManager;
+import ru.job4j.inputoutput.filemanager.Messages;
 import ru.job4j.inputoutput.filemanager.connection.Connection;
-import ru.job4j.inputoutput.filemanager.exceptions.ExceptionsHandler;
-import ru.job4j.inputoutput.filemanager.utils.ConsoleManager;
 
 import java.io.File;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.function.Consumer;
 
-public class ServerCommandHandler {
-    private final ConsoleManager consoleManager = new ConsoleManager();
-    private ExceptionsHandler exceptionHandler = new ExceptionsHandler();
-    private final Map<Integer, String> menu = new HashMap();
-    private final Map<Integer, Method> menuOfCommands = new HashMap();
+public class ServerCommandHandler extends CommandHandler {
     private final String ls = System.lineSeparator();
-
-    private final Connection connection;
-    private final FileManager fileManager;
+    private FileManager fileManager;
 
     public ServerCommandHandler(Connection connection, String rootDir) {
-        exceptionHandler.handleException(this::initMenu);
-        this.connection = connection;
+        super(connection);
         this.fileManager = new FileManager(new File(rootDir), connection);
+        initMenu();
     }
 
-    private void initMenu() throws NoSuchMethodException {
-        menu.put(1, "Enter directory (input folder)");
-        menu.put(2, "Exit up from current directory");
-        menu.put(3, "Upload file here");
-        menu.put(4, "Download file (input file name to download)");
-        menu.put(5, "Exit program");
-
-        menuOfCommands.put(1, ServerCommandHandler.class.getMethod("enterDirectoryCommand"));
-        menuOfCommands.put(2, ServerCommandHandler.class.getMethod("exitDirectoryCommand"));
-        menuOfCommands.put(3, ServerCommandHandler.class.getMethod("uploadFileCommand"));
-        menuOfCommands.put(4, ServerCommandHandler.class.getMethod("downloadFileCommand"));
-        menuOfCommands.put(5, ServerCommandHandler.class.getMethod("exitCommand"));
+    private void initMenu() {
+        menu.get(0).setCommand(enterDirectory);
+        menu.get(1).setCommand(exitDirectory);
+        menu.get(2).setCommand(downloadFile);
+        menu.get(3).setCommand(uploadFile);
+        menu.get(4).setCommand(exitProgram);
     }
 
-    public void enterDirectoryCommand() {
+    Consumer<Integer> enterDirectory = (commandIndex)-> {
         String directoryToEnter = connection.read();
         if (fileManager.enterDirectory(directoryToEnter)) {
             sendOkMessageToClient("");
         } else {
             sendErrorMessageToClient(Messages.WRONG_DIR.getMessage());
         }
-    }
+    };
 
-    public void exitDirectoryCommand() {
+    Consumer<Integer> exitDirectory = (commandIndex)-> {
         if (fileManager.exitDirectory()) {
-            sendOkMessageToClient("");
-        } else {
-            sendErrorMessageToClient(Messages.CAN_NOT_GO_UP.getMessage());
-        }
+        sendOkMessageToClient("");
+    } else {
+        sendErrorMessageToClient(Messages.CAN_NOT_GO_UP.getMessage());
     }
+    };
 
-    public void uploadFileCommand() {
+    Consumer<Integer> uploadFile = (commandIndex) -> {
         String messageFromClient = connection.read();
         if (!messageFromClient.equals(Messages.CLIENT_REJECTED.toString())) {
             long fileSize = Long.parseLong(messageFromClient); //1. receive file length
@@ -64,14 +50,14 @@ public class ServerCommandHandler {
             if (!fileManager.isFits(fileSize)) {
                 sendErrorMessageToClient(Messages.TOO_LARGE_FILE.getMessage());
             } else if (fileManager.fileExistsInDirectory(filename)) {
-                overWriteFile(filename, fileSize);
+                overWriteLocalFile(filename, fileSize);
             } else {
                 transferFileToServer(filename, fileSize);
             }
         }
-    }
+    };
 
-    public void downloadFileCommand() {
+    Consumer<Integer> downloadFile = (commandIndex) -> {
         String filename = connection.read();
         if (fileManager.fileExistsInDirectory(filename)) {
             long fileSize = fileManager.getFileSize(filename);
@@ -88,20 +74,19 @@ public class ServerCommandHandler {
         } else {
             connection.write(Messages.WRONG_FILE.toString() + Messages.END_OF_FRAME.getMessage());
         }
-    }
+    };
 
-    private void overWriteFile(String filename, long fileSize) {
+    Consumer<Integer> exitProgram = (commandIndex) -> {
+        consoleManager.print(Messages.EXIT_COMMAND_SERVER.getMessage());
+    };
+
+    private void overWriteLocalFile(String filename, long fileSize) {
         connection.write(Messages.FILE_ALREADY_EXISTS.toString() + Messages.END_OF_FRAME.getMessage());
         String messageFromClient = connection.read();
         if (messageFromClient.equals("y")) {
             transferFileToServer(filename, fileSize);
         }
     }
-
-    public void exitCommand() {
-        consoleManager.print(Messages.EXIT_COMMAND_SERVER.getMessage());
-    }
-
 
     private void overWriteRemoteFile(String fileName) {
         String clientMessage = connection.read();
@@ -110,22 +95,22 @@ public class ServerCommandHandler {
         }
     }
 
-    private void transferFileToClient(String fileName) {
-        sendOkMessageToClient(Messages.FILE_TRANSFER_START.getMessage());
-        fileManager.downloadFile(fileName);
-        sendOkMessageToClient(Messages.FILE_DOWNLOAD_SUCCESS.getMessage());
-    }
-
     private void transferFileToServer(String fileName, long fileSize) {
         sendOkMessageToClient(Messages.FILE_TRANSFER_START.getMessage());
         fileManager.uploadFile(connection, fileName, fileSize);
         sendOkMessageToClient(Messages.FILE_UPLOAD_SUCCESS.getMessage());
     }
 
+    private void transferFileToClient(String fileName) {
+        sendOkMessageToClient(Messages.FILE_TRANSFER_START.getMessage());
+        fileManager.downloadFile(fileName);
+        sendOkMessageToClient(Messages.FILE_DOWNLOAD_SUCCESS.getMessage());
+    }
+
     public String printMenu() {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<Integer, String> eachEntry : menu.entrySet()) {
-            sb.append(eachEntry.getKey() + " - " + eachEntry.getValue() + "; ");
+        for (MenuCommand eachMenuCommand : menu) {
+            sb.append(eachMenuCommand);
         }
         sb.append(ls + "Enter your choice: ");
         return sb.toString();
@@ -143,7 +128,4 @@ public class ServerCommandHandler {
         connection.write(fileManager.getListOfFiles() + ls + printMenu() + Messages.END_OF_FRAME.getMessage());
     }
 
-    public Method getMethod(Integer menuItem) {
-        return menuOfCommands.get(menuItem);
-    }
 }

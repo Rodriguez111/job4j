@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 
 public class FileManager {
     private final File rootDirectory;
-    private List<String> currentDirectoryContent;
     private File currentDirectory;
-    private final String ls = System.lineSeparator();
-    private FileBrowser fileBrowser;
-    private FileLoader fileLoader;
-    private final String doubleSeparator = "==============================";
-    private final String singleSeparator = "------------------------------";
-    private final String slash = "/";
+    private final FileBrowser fileBrowser;
+    private final FileLoader fileLoader;
+    private final static String LINE_SEPARATOR = System.lineSeparator();
+    private final static String DOUBLE_SEPARATOR = "==============================";
+    private final static String SINGLE_SEPARATOR = "------------------------------";
+    private final static String SLASH = "/";
+    private final static String ROOT = "root/";
 
     public FileManager(File currentDirectory, Connection connection) {
         this.rootDirectory = currentDirectory;
@@ -29,7 +29,7 @@ public class FileManager {
 
     public boolean enterDirectory(String directory) {
         boolean result = false;
-        File dir = new File(currentDirectory.getAbsolutePath() + "/" + directory);
+        File dir = new File(currentDirectory.getAbsolutePath() + SLASH + directory);
         if (fileBrowser.goDown(currentDirectory, dir)) {
             currentDirectory = dir;
             getAndSortDirectoryContent();
@@ -49,25 +49,24 @@ public class FileManager {
     }
 
     public String getListOfFiles() {
-        getAndSortDirectoryContent();
+        List<String> currentDirectoryContent =  getAndSortDirectoryContent();
         String relative = rootDirectory.toURI().relativize(currentDirectory.toURI()).getPath();
         StringBuilder sb = new StringBuilder();
-        sb.append(doubleSeparator + ls);
-        sb.append("root/" + relative + ls);
-        sb.append(singleSeparator + ls);
+        sb.append(DOUBLE_SEPARATOR + LINE_SEPARATOR);
+        sb.append(ROOT + relative + LINE_SEPARATOR);
+        sb.append(SINGLE_SEPARATOR + LINE_SEPARATOR);
         if (currentDirectoryContent.size() == 0) {
-            sb.append("..." + ls);
+            sb.append("..." + LINE_SEPARATOR);
         } else {
             for (String eachFile : currentDirectoryContent) {
-                sb.append(eachFile + ls);
+                sb.append(eachFile + LINE_SEPARATOR);
             }
         }
-        sb.append(doubleSeparator);
+        sb.append(DOUBLE_SEPARATOR);
         return sb.toString();
     }
 
-
-    private void getAndSortDirectoryContent() {
+    private List<String> getAndSortDirectoryContent() {
         List<File> listOfFiles = Arrays.asList(currentDirectory.listFiles());
         listOfFiles.sort((File f1, File f2) -> {
             int result;
@@ -80,35 +79,32 @@ public class FileManager {
             }
             return result;
         });
-        currentDirectoryContent = listOfFiles.stream().map(File::getName).collect(Collectors.toList());
+        return listOfFiles.stream().map(File::getName).collect(Collectors.toList());
     }
-
 
     public boolean isFits(long fileSize) {
         return currentDirectory.getFreeSpace() > fileSize;
     }
 
     public boolean fileExistsInDirectory(String fileName) {
-        String filePath = currentDirectory + slash + fileName;
+        String filePath = currentDirectory + SLASH + fileName;
         return fileBrowser.directoryContainsFile(currentDirectory, new File(filePath));
     }
 
-
     public void uploadFile(Connection connection, String filename, long fileSize) {
-        String filePath = currentDirectory + slash + filename;
+        String filePath = currentDirectory + SLASH + filename;
         File fileToReceive = new File(filePath);
         connection.streamToFile(fileToReceive, fileSize);
-        //fileLoader.receiveFile(fileToReceive);
     }
 
     public void downloadFile(String filename) {
-        String filePath = currentDirectory + slash + filename;
+        String filePath = currentDirectory + SLASH + filename;
         File fileToSend = new File(filePath);
         fileLoader.sendFile(fileToSend);
     }
 
     public long getFileSize(String filename) {
-        String filePath = currentDirectory + slash + filename;
+        String filePath = currentDirectory + SLASH + filename;
         File file = new File(filePath);
         return file.length();
     }

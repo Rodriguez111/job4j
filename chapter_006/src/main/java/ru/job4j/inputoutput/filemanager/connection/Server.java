@@ -1,7 +1,7 @@
 package ru.job4j.inputoutput.filemanager.connection;
 
 import ru.job4j.inputoutput.filemanager.Messages;
-import ru.job4j.inputoutput.filemanager.ServerCommandHandler;
+import ru.job4j.inputoutput.filemanager.commands.ServerCommandHandler;
 import ru.job4j.inputoutput.filemanager.exceptions.ExceptionHandler;
 import ru.job4j.inputoutput.filemanager.utils.ConsoleManager;
 import ru.job4j.inputoutput.filemanager.utils.ManageProperties;
@@ -65,7 +65,7 @@ public class Server {
             } else if (commandFromClient.equals(Messages.MENU_REQUEST.toString())) {
                 serverCommandHandler.sendListOfFilesAndMenu();
             } else {
-                serverCommandHandler.getMethod(Integer.parseInt(commandFromClient)).invoke(serverCommandHandler);
+                serverCommandHandler.executeCommand(Integer.parseInt(commandFromClient));
             }
         }
     }
