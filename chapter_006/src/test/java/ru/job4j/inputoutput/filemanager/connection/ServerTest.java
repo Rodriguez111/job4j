@@ -51,23 +51,23 @@ public class ServerTest {
         new File(clientFileSystem + "/textFileFromClient.txt").createNewFile();
     }
 
-//    @Test
-//    public void whenExitCommandThenServerShutDown() throws IOException {
-//        bais = new ByteArrayInputStream("EXIT_COMMAND_SERVER*".getBytes());
-//        Socket socket = mock(Socket.class);
-//        when(socket.getInputStream()).thenReturn(bais);
-//        when(socket.getOutputStream()).thenReturn(baos);
-//
-//        String root = serverFileSystem;
-//        Server server = new Server(root);
-//        server.clientSocket = socket;
-//        server.startServer();
-//
-//        String expected = "INFO! Exit command received from client, server is shutting down." + ls;
-//        String actual = baos.toString();
-//
-//        assertThat(actual, is(expected));
-//    }
+    @Test
+    public void whenExitCommandThenServerShutDown() throws IOException {
+        bais = new ByteArrayInputStream("EXIT_COMMAND_SERVER*".getBytes());
+        Socket socket = mock(Socket.class);
+        when(socket.getInputStream()).thenReturn(bais);
+        when(socket.getOutputStream()).thenReturn(baos);
+
+        String root = serverFileSystem;
+        Server server = new Server(root);
+        server.clientSocket = socket;
+        server.startServer();
+
+        String expected = "INFO! Exit command received from client, server is shutting down." + ls;
+        String actual = baos.toString();
+
+        assertThat(actual, is(expected));
+    }
 
 
 }

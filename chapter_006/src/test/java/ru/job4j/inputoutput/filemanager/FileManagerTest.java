@@ -8,6 +8,7 @@ import ru.job4j.inputoutput.filemanager.connection.Connection;
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.util.Properties;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;

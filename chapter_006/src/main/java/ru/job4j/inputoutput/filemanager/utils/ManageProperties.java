@@ -8,9 +8,7 @@ import java.net.URL;
 import java.util.Properties;
 
 public class ManageProperties {
-
-    private URL rootPath = getClass().getClassLoader().getResource("");
-    private final String propertiesPath = rootPath.getFile() + "/fileManager.properties";
+    private final String propertiesPath = getClass().getClassLoader().getResource("fileManager.properties").getFile();
     private final int port;
     private final String serverIpAddress;
 
