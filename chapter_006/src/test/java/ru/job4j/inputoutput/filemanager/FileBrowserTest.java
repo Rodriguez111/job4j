@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class FileBrowserTest {
     private final String path = System.getProperty("java.io.tmpdir");
-    private final String serverFileSystem = path + "00TestServer/";
+    private final String serverFileSystem = path + "/00TestServer";
 
     @Before
     public void init() throws IOException {
