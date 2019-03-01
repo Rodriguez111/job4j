@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 public class FileManagerTest {
     private final String path = System.getProperty("java.io.tmpdir");
-    private final String serverFileSystem = path + "00TestServer/";
+    private final String serverFileSystem = path + "/00TestServer";
 
 
     private final static String LINE_SEPARATOR = System.lineSeparator();

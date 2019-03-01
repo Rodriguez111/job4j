@@ -13,8 +13,8 @@ import static org.mockito.Mockito.when;
 
 public class ServerTest {
     private final String path = System.getProperty("java.io.tmpdir");
-    private final String serverFileSystem = path + "00TestServer/";
-    private final String clientFileSystem = path + "00TestClient/";
+    private final String serverFileSystem = path + "/00TestServer";
+    private final String clientFileSystem = path + "/00TestClient";
 
     private ByteArrayOutputStream baos;
     private ByteArrayInputStream bais;
@@ -30,6 +30,7 @@ public class ServerTest {
     }
 
     public void createTestFilesStructure() throws IOException {
+        System.out.println(serverFileSystem);
         new File(serverFileSystem).mkdirs();
         new File(serverFileSystem + "/text.pdf").createNewFile();
         new File(serverFileSystem + "/text.txt").createNewFile();
