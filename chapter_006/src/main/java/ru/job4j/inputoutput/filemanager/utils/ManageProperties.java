@@ -1,22 +1,17 @@
 package ru.job4j.inputoutput.filemanager.utils;
 
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Properties;
 
 public class ManageProperties {
-    private final String propertiesPath = getClass().getClassLoader().getResource("fileManager.properties").getFile();
     private final int port;
     private final String serverIpAddress;
 
     public ManageProperties() {
-        File propertiesFile = new File(propertiesPath);
+
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream(propertiesFile));
+            properties.load(ManageProperties.class.getClassLoader().getResourceAsStream("fileManager.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }

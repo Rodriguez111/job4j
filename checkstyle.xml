@@ -4,94 +4,94 @@
         "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 
 <!--suppress XmlHighlighting -->
-<module name="Checker">
+<module value="Checker">
 
     <!--Расширение файла должно быть java, properties, xml-->
-    <property name="fileExtensions" value="java, properties, xml"/>
+    <property value="fileExtensions" value="java, properties, xml"/>
 
     <!-- Checks for Size Violations.                    -->
     <!-- See http://checkstyle.sf.net/config_sizes.html -->
-    <module name="FileLength"/>
+    <module value="FileLength"/>
 
     <!-- Checks for Headers                                -->
     <!-- See http://checkstyle.sf.net/config_header.html   -->
-    <!-- <module name="Header"> -->
-    <!--   <property name="headerFile" value="${checkstyle.header.file}"/> -->
-    <!--   <property name="fileExtensions" value="java"/> -->
+    <!-- <module value="Header"> -->
+    <!--   <property value="headerFile" value="${checkstyle.header.file}"/> -->
+    <!--   <property value="fileExtensions" value="java"/> -->
     <!-- </module> -->
 
-    <module name="TreeWalker">
+    <module value="TreeWalker">
 
         <!-- Checks for Naming Conventions.                  -->
         <!-- See http://checkstyle.sf.net/config_naming.html -->
-        <module name="ConstantName"/>
-        <!--<module name="LocalFinalVariableName"/>-->
-        <module name="LocalVariableName"/>
-        <module name="MemberName"/>
-        <module name="MethodName"/>
-        <module name="PackageName">
-            <property name="format" value="^[a-z]+(\.[a-z0-9]*)*$"/>
+        <module value="ConstantName"/>
+        <!--<module value="LocalFinalVariableName"/>-->
+        <module value="LocalVariableName"/>
+        <module value="MemberName"/>
+        <module value="MethodName"/>
+        <module value="PackageName">
+            <property value="format" value="^[a-z]+(\.[a-z0-9]*)*$"/>
         </module>
-        <module name="ParameterName"/>
-        <module name="StaticVariableName"/>
-        <module name="TypeName"/>
+        <module value="ParameterName"/>
+        <module value="StaticVariableName"/>
+        <module value="TypeName"/>
 
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
-        <!--<module name="LineLength"/>-->
-        <module name="MethodLength"/>
-        <module name="ParameterNumber"/>
+        <!--<module value="LineLength"/>-->
+        <module value="MethodLength"/>
+        <module value="ParameterNumber"/>
 
         <!-- Checks for whitespace                               -->
         <!-- See http://checkstyle.sf.net/config_whitespace.html -->
-        <module name="EmptyForIteratorPad"/>
-        <module name="GenericWhitespace"/>
-        <module name="MethodParamPad"/>
-        <module name="NoWhitespaceAfter"/>
-        <module name="NoWhitespaceBefore"/>
-        <module name="OperatorWrap"/>
-        <module name="ParenPad"/>
-        <module name="TypecastParenPad"/>
-        <module name="WhitespaceAfter"/>
-        <module name="WhitespaceAround"/>
+        <module value="EmptyForIteratorPad"/>
+        <module value="GenericWhitespace"/>
+        <module value="MethodParamPad"/>
+        <module value="NoWhitespaceAfter"/>
+        <module value="NoWhitespaceBefore"/>
+        <module value="OperatorWrap"/>
+        <module value="ParenPad"/>
+        <module value="TypecastParenPad"/>
+        <module value="WhitespaceAfter"/>
+        <module value="WhitespaceAround"/>
 
         <!-- Modifier Checks                                    -->
         <!-- See http://checkstyle.sf.net/config_modifiers.html -->
 
         <!-- Checks for blocks. You know, those {}'s         -->
         <!-- See http://checkstyle.sf.net/config_blocks.html -->
-        <module name="AvoidNestedBlocks"/>
-        <module name="EmptyBlock"/>
-        <module name="LeftCurly"/>
-        <module name="NeedBraces"/>
-        <module name="RightCurly"/>
+        <module value="AvoidNestedBlocks"/>
+        <module value="EmptyBlock"/>
+        <module value="LeftCurly"/>
+        <module value="NeedBraces"/>
+        <module value="RightCurly"/>
 
         <!-- Checks for common coding problems               -->
         <!-- See http://checkstyle.sf.net/config_coding.html -->
-        <!--<module name="AvoidInlineConditionals"/>-->
-        <module name="EmptyStatement"/>
-        <module name="EqualsHashCode"/>
-        <!--<module name="HiddenField"/>-->
-        <module name="IllegalInstantiation"/>
-        <module name="InnerAssignment"/>
-        <!--<module name="MagicNumber"/>-->
-        <module name="MissingSwitchDefault"/>
-        <module name="SimplifyBooleanExpression"/>
-        <module name="SimplifyBooleanReturn"/>
+        <!--<module value="AvoidInlineConditionals"/>-->
+        <module value="EmptyStatement"/>
+        <module value="EqualsHashCode"/>
+        <!--<module value="HiddenField"/>-->
+        <module value="IllegalInstantiation"/>
+        <module value="InnerAssignment"/>
+        <!--<module value="MagicNumber"/>-->
+        <module value="MissingSwitchDefault"/>
+        <module value="SimplifyBooleanExpression"/>
+        <module value="SimplifyBooleanReturn"/>
 
         <!-- Checks for class design                         -->
         <!-- See http://checkstyle.sf.net/config_design.html -->
-        <!--<module name="DesignForExtension"/>-->
-        <!--<module name="FinalClass"/>-->
-        <!--<module name="HideUtilityClassConstructor"/>-->
-        <module name="InterfaceIsType"/>
+        <!--<module value="DesignForExtension"/>-->
+        <!--<module value="FinalClass"/>-->
+        <!--<module value="HideUtilityClassConstructor"/>-->
+        <module value="InterfaceIsType"/>
 
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
-        <module name="ArrayTypeStyle"/>
-        <!--<module name="FinalParameters"/>-->
-        <module name="TodoComment"/>
-        <module name="UpperEll"/>
+        <module value="ArrayTypeStyle"/>
+        <!--<module value="FinalParameters"/>-->
+        <module value="TodoComment"/>
+        <module value="UpperEll"/>
 
     </module>
 

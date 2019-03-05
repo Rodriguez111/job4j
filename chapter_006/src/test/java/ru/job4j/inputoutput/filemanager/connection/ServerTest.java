@@ -30,7 +30,6 @@ public class ServerTest {
     }
 
     public void createTestFilesStructure() throws IOException {
-        //System.out.println(serverFileSystem);
         new File(serverFileSystem).mkdirs();
         new File(serverFileSystem + "/text.pdf").createNewFile();
         new File(serverFileSystem + "/text.txt").createNewFile();

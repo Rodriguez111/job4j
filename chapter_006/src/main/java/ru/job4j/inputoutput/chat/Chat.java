@@ -23,8 +23,6 @@ public class Chat {
         this.output = output;
     }
 
-    private final String phrases = getClass().getClassLoader().getResource("ru/job4j/inputoutput/chat/phrases.txt").getFile();
-
     private final String pause = "пауза";
     private final String resume = "продолжить";
     private final String end = "стоп";
@@ -59,7 +57,7 @@ public class Chat {
 
 
     private void takeLines() throws IOException {
-        InputStreamReader isr = new InputStreamReader(new FileInputStream(phrases), StandardCharsets.UTF_8);
+        InputStreamReader isr = new InputStreamReader(Chat.class.getClassLoader().getResourceAsStream("ru/job4j/inputoutput/chat/phrases.txt"), StandardCharsets.UTF_8);
         int read;
         StringBuilder sb = new StringBuilder();
         while ((read = isr.read()) > 0) {

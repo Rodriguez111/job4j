@@ -125,7 +125,7 @@ public class ClientCommandHandler extends CommandHandler {
         String answer = consoleManager.consoleStringReader("?");
         connection.write(answer + Messages.END_OF_FRAME.getMessage());
         if (answer.equals("y")) {
-            if (file.delete()) {
+            if (file.renameTo(file)) {
                 transferFileToClient(file, fileSize);
             }
         }
