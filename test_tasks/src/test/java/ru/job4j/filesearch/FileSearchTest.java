@@ -65,7 +65,6 @@ public class FileSearchTest {
         new File(source + "/file.java").createNewFile();
         new File(source + "/file.xml").createNewFile();
         new File(source + "/newfolder").mkdirs();
-        new File(source + "/newfolder/ztext.pdf").createNewFile();
         new File(source + "/newfolder/text.pdf").createNewFile();
         new File(source + "/newfolder/text.txt").createNewFile();
         new File(source + "/newfolder/file.xml").createNewFile();
@@ -78,7 +77,7 @@ public class FileSearchTest {
     }
 
         @Test
-        public void shouldReturnTwoResultsWhenSearchByMask() throws IOException {
+        public void shouldReturnOneResultWhenSearchByMask() throws IOException {
         FileSearch.main(generateArgsByMask());
 
         BufferedReader br = new BufferedReader(new FileReader(outputFile));
@@ -94,9 +93,8 @@ public class FileSearchTest {
 
         sb.setLength(0);
         sb.append(new File(source + "/newfolder/newfolderztext2").getAbsolutePath())
-                .append(ls)
-                .append(new File(source + "/newfolder/ztext.pdf").getAbsolutePath())
                 .append(ls);
+
 
         String expected = sb.toString();
         assertThat(actual, is(expected));
