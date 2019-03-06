@@ -4,7 +4,7 @@
     <artifactId>junior</artifactId>
     <packaging>pom</packaging>
     <version>2.0</version>
-    <value>junior</value>
+    <name>junior</name>
     <url>http://job4j.ru/</url>
 
     <properties>
@@ -55,6 +55,31 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.0.0</version>
 
+            </plugin>
+
+
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>fully.qualified.MainClass</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
 

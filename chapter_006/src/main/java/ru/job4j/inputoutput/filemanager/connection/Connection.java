@@ -52,17 +52,15 @@ public class Connection {
         int bufferSize = buffer.length;
         int min = (int) Math.min(bufferSize, fileSize);
         int count = dataInputStream.read(buffer, 0, min);
-        //System.out.println("Передача данных началась, размер файла " + fileSize);
         while (fileSize > 0 && (count != -1)) {
             dataOutputStream.write(buffer, 0, count);
             fileSize -= count;
             bufferSize = buffer.length;
             min = (int) Math.min(bufferSize, fileSize);
             count = dataInputStream.read(buffer, 0, min);
-            //System.out.println("размер файла " + fileSize + " count " + count + " буфер " + bufferSize + " min " + min);
         }
         dataOutputStream.flush();
-        //System.out.println("Передача данных завершена, размер файла " + fileSize);
+
     }
 
     public String read() {
