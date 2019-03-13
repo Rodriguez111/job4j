@@ -17,5 +17,5 @@ Class-Path: maven-settings-builder-3.0.jar javafx-fxml-11.jar plexus-u
  avafx-graphics-11-win.jar javafx-controls-11.jar aether-api-1.7.jar j
  avafx-fxml-11-win.jar checker-qual-2.5.2.jar animal-sniffer-annotatio
  ns-1.17.jar javafx-base-11-win.jar commons-io-2.6.jar
-Main-Class: ru.job4j.filesearch.FileSearch
+Main-Class: ru.job4j.filesearch.Args
 

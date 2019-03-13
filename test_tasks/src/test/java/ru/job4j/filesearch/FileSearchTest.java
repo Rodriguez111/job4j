@@ -3,10 +3,14 @@ package ru.job4j.filesearch;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+
 
 public class FileSearchTest {
     private final String path = System.getProperty("java.io.tmpdir");
@@ -15,6 +19,24 @@ public class FileSearchTest {
     private final String outputFile = outputDir + "/log.txt";
     private final String ls = System.lineSeparator();
 
+    public void createTestFilesStructure() throws IOException {
+        new File(source).mkdirs();
+        new File(outputDir).mkdirs();
+        new File(source + "/text.pdf").createNewFile();
+        new File(source + "/text.txt").createNewFile();
+        new File(source + "/file.java").createNewFile();
+        new File(source + "/file.xml").createNewFile();
+        new File(source + "/newfolder").mkdirs();
+        new File(source + "/newfolder/text.pdf").createNewFile();
+        new File(source + "/newfolder/text.txt").createNewFile();
+        new File(source + "/newfolder/file.xml").createNewFile();
+        new File(source + "/newfolder/file.java").createNewFile();
+        new File(source + "/newfolder/newfolderztext2").mkdirs();
+        new File(source + "/newfolder/newfolderztext2/text.pdf").createNewFile();
+        new File(source + "/newfolder/newfolderztext2/text.txt").createNewFile();
+        new File(source + "/newfolder/newfolderztext2/file.xml").createNewFile();
+        new File(source + "/newfolder/newfolderztext2/file.java").createNewFile();
+    }
 
     @Before
     public void init() throws IOException {
@@ -57,28 +79,10 @@ public class FileSearchTest {
         return args;
     }
 
-    public void createTestFilesStructure() throws IOException {
-        new File(source).mkdirs();
-        new File(outputDir).mkdirs();
-        new File(source + "/text.pdf").createNewFile();
-        new File(source + "/text.txt").createNewFile();
-        new File(source + "/file.java").createNewFile();
-        new File(source + "/file.xml").createNewFile();
-        new File(source + "/newfolder").mkdirs();
-        new File(source + "/newfolder/text.pdf").createNewFile();
-        new File(source + "/newfolder/text.txt").createNewFile();
-        new File(source + "/newfolder/file.xml").createNewFile();
-        new File(source + "/newfolder/file.java").createNewFile();
-        new File(source + "/newfolder/newfolderztext2").mkdirs();
-        new File(source + "/newfolder/newfolderztext2/text.pdf").createNewFile();
-        new File(source + "/newfolder/newfolderztext2/text.txt").createNewFile();
-        new File(source + "/newfolder/newfolderztext2/file.xml").createNewFile();
-        new File(source + "/newfolder/newfolderztext2/file.java").createNewFile();
-    }
 
-        @Test
-        public void shouldReturnOneResultWhenSearchByMask() throws IOException {
-        FileSearch.main(generateArgsByMask());
+    @Test
+    public void shouldReturnOneResultWhenSearchByMask() throws IOException {
+        Args.main(generateArgsByMask());
 
         BufferedReader br = new BufferedReader(new FileReader(outputFile));
         StringBuilder sb = new StringBuilder();
@@ -103,7 +107,7 @@ public class FileSearchTest {
 
     @Test
     public void shouldReturnOneResultWhenSearchByFullName() throws IOException {
-        FileSearch.main(generateArgsByFullName());
+        Args.main(generateArgsByFullName());
 
         BufferedReader br = new BufferedReader(new FileReader(outputFile));
         StringBuilder sb = new StringBuilder();
@@ -127,7 +131,7 @@ public class FileSearchTest {
 
     @Test
     public void shouldReturnOneResultWhenSearchByRegularExpression() throws IOException {
-        FileSearch.main(generateArgsByRegularExpression());
+        Args.main(generateArgsByRegularExpression());
 
         BufferedReader br = new BufferedReader(new FileReader(outputFile));
         StringBuilder sb = new StringBuilder();
@@ -147,4 +151,5 @@ public class FileSearchTest {
         String expected = sb.toString();
         assertThat(actual, is(expected));
     }
+
 }

@@ -93,6 +93,8 @@ public class RCommand {
         int count = 1;
         for (RArgument eachArg : arguments) {
             if (possibleValues.containsKey(count)) {
+
+
                 if (!possibleValues.get(count).contains(eachArg)) {
                     throw new ArgumentException("Unknown argument: " + eachArg.getArgumentGuide());
                 }
