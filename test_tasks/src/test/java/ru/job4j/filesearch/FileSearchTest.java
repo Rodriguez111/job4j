@@ -84,10 +84,12 @@ public class FileSearchTest {
 
     @Test
     public void shouldReturnOneResultWhenSearchByMask() throws IOException {
-
         Args.main(generateArgsByMask());
+        Args args = new Args();
+        FileSearch fileSearch = new FileSearch(args);
+        fileSearch.search();
 
-        BufferedReader br = new BufferedReader(new FileReader(new File(outputFile)));
+        BufferedReader br = new BufferedReader(new FileReader(outputFile));
         StringBuilder sb = new StringBuilder();
         String read = br.readLine();
         while (read != null) {
@@ -111,8 +113,11 @@ public class FileSearchTest {
     @Test
     public void shouldReturnOneResultWhenSearchByFullName() throws IOException {
         Args.main(generateArgsByFullName());
+        Args args = new Args();
+        FileSearch fileSearch = new FileSearch(args);
+        fileSearch.search();
 
-        BufferedReader br = new BufferedReader(new FileReader(new File(outputFile)));
+        BufferedReader br = new BufferedReader(new FileReader(outputFile));
         StringBuilder sb = new StringBuilder();
         String read = br.readLine();
         while (read != null) {
@@ -135,8 +140,11 @@ public class FileSearchTest {
     @Test
     public void shouldReturnOneResultWhenSearchByRegularExpression() throws IOException {
         Args.main(generateArgsByRegularExpression());
+        Args args = new Args();
+        FileSearch fileSearch = new FileSearch(args);
+        fileSearch.search();
 
-        BufferedReader br = new BufferedReader(new FileReader(new File(outputFile)));
+        BufferedReader br = new BufferedReader(new FileReader(outputFile));
         StringBuilder sb = new StringBuilder();
         String read = br.readLine();
         while (read != null) {
