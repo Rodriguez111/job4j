@@ -8,7 +8,7 @@ import ru.job4j.trackersql.TrackerSQL;
 
 import java.util.function.Consumer;
 
-public class Start extends StartUI {
+public class StartTracker extends StartUI {
 
     public static void main(String[] args) {
         Input input = new ConsoleInput();
