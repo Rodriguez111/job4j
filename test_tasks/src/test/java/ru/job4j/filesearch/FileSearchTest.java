@@ -41,6 +41,8 @@ public class FileSearchTest {
     @Before
     public void init() throws IOException {
         createTestFilesStructure();
+        new File(source + "/newfolder/newfolderztext2/file.java").createNewFile();
+        new File(outputFile).createNewFile();
     }
 
     public String[] generateArgsByMask() {
