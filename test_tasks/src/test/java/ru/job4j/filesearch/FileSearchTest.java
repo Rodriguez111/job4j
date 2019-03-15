@@ -36,7 +36,6 @@ public class FileSearchTest {
         new File(source + "/newfolder/newfolderztext2/text.txt").createNewFile();
         new File(source + "/newfolder/newfolderztext2/file.xml").createNewFile();
         new File(source + "/newfolder/newfolderztext2/file.java").createNewFile();
-        new File(outputFile).createNewFile();
     }
 
     @Before
