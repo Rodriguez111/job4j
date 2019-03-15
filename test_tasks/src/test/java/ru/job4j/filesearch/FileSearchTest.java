@@ -16,7 +16,7 @@ public class FileSearchTest {
     private final String path = System.getProperty("java.io.tmpdir");
     private final String source = path + "/00Test";
     private final String outputDir = path + "/00Output";
-    private final String outputFile = outputDir + "log.txt";
+    private final String outputFile = outputDir + "/log.txt";
     private final String ls = System.lineSeparator();
 
     public void createTestFilesStructure() throws IOException {
@@ -83,9 +83,10 @@ public class FileSearchTest {
 
     @Test
     public void shouldReturnOneResultWhenSearchByMask() throws IOException {
+
         Args.main(generateArgsByMask());
 
-        BufferedReader br = new BufferedReader(new FileReader(outputFile));
+        BufferedReader br = new BufferedReader(new FileReader(new File(outputFile)));
         StringBuilder sb = new StringBuilder();
         String read = br.readLine();
         while (read != null) {
@@ -110,7 +111,7 @@ public class FileSearchTest {
     public void shouldReturnOneResultWhenSearchByFullName() throws IOException {
         Args.main(generateArgsByFullName());
 
-        BufferedReader br = new BufferedReader(new FileReader(outputFile));
+        BufferedReader br = new BufferedReader(new FileReader(new File(outputFile)));
         StringBuilder sb = new StringBuilder();
         String read = br.readLine();
         while (read != null) {
@@ -134,7 +135,7 @@ public class FileSearchTest {
     public void shouldReturnOneResultWhenSearchByRegularExpression() throws IOException {
         Args.main(generateArgsByRegularExpression());
 
-        BufferedReader br = new BufferedReader(new FileReader(outputFile));
+        BufferedReader br = new BufferedReader(new FileReader(new File(outputFile)));
         StringBuilder sb = new StringBuilder();
         String read = br.readLine();
         while (read != null) {
