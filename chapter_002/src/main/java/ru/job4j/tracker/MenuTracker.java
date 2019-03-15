@@ -1,12 +1,13 @@
 package ru.job4j.tracker;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class MenuTracker  {
     private Input input;
     private int position;
-    private Tracker tracker;
+    private ITracker iTracker;
     private UserAction[] actions = new UserAction[7];
     private boolean isRunning = true;
     private final Consumer<String> output;
@@ -19,9 +20,9 @@ public class MenuTracker  {
         return actions.length;
     }
 
-    public MenuTracker(Input input, Tracker tracker, Consumer<String> output) {
+    public MenuTracker(Input input, ITracker iTracker, Consumer<String> output) {
         this.input = input;
-        this.tracker = tracker;
+        this.iTracker = iTracker;
         this.output = output;
        fillActions();
     }
@@ -65,7 +66,7 @@ public class MenuTracker  {
      */
     public void selectKey(int key) {
         if (key >= 0 && key < actions.length) {
-            this.actions[key].execute(input, tracker, output);
+            this.actions[key].execute(input, iTracker, output);
         }
     }
 
@@ -80,11 +81,11 @@ public class MenuTracker  {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        public void execute(Input input, ITracker iTracker, Consumer<String> output) {
             String itemName = input.ask("Please, enter the name of new item: ");
             String itemDescr = input.ask("Please, enter the description of new item: ");
             Item newItem = new Item(itemName, itemDescr);
-            tracker.add(newItem);
+            iTracker.add(newItem);
             output.accept(String.format("----- Новая заявка ID:%s добавлена -----", newItem.getId()));
 
         }
@@ -100,8 +101,8 @@ public class MenuTracker  {
 
 
         @Override
-        public void execute(Input input, Tracker tracker, Consumer<String> output) {
-            List<Item> allItems = tracker.getAll();
+        public void execute(Input input, ITracker iTracker, Consumer<String> output) {
+            List<Item> allItems = iTracker.findAll();
             output.accept(String.format("----- Список всех заявок: -----"));
             for (Item eachItem : allItems) {
               output.accept(String.format(eachItem.toString()));
@@ -120,13 +121,13 @@ public class MenuTracker  {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        public void execute(Input input, ITracker iTracker, Consumer<String> output) {
             String idToReplace = input.ask("Please, enter the id of the item You want to edit: ");
             String itemName = input.ask("Please, enter the name of new item: ");
             String itemDescr = input.ask("Please, enter the description of new item: ");
             Item newItem = new Item(itemName, itemDescr);
             newItem.setId(idToReplace);
-            if (tracker.replace(idToReplace, newItem)) {
+            if (iTracker.replace(idToReplace, newItem)) {
                 output.accept(String.format("----- Заявка ID:%s отредактирована -----", idToReplace));
             } else {
                 output.accept(String.format("----- Не удалось отредактировать заявку ID:%s -----", idToReplace));
@@ -144,10 +145,10 @@ public class MenuTracker  {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        public void execute(Input input, ITracker iTracker, Consumer<String> output) {
             output.accept(String.format("----- Удаление заявки -----"));
             String idToDelete = input.ask("Please, enter the id of the item You want to delete: ");
-            if (tracker.delete(idToDelete)) {
+            if (iTracker.delete(idToDelete)) {
                 output.accept(String.format("----- Заявка ID:%s удалена -----", idToDelete));
             } else {
                 output.accept(String.format("----- Не удалось удалить заявку ID:%s -----", idToDelete));
@@ -164,11 +165,17 @@ public class MenuTracker  {
             super(key, name);
         }
         @Override
-        public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        public void execute(Input input, ITracker iTracker, Consumer<String> output) {
             output.accept(String.format("----- Поиск заявки по ID: -----"));
             String idToFind = input.ask("Please, enter the id of the item You want to find: ");
-            Item foundItem = tracker.findById(idToFind);
-            output.accept(String.format(foundItem.toString()));
+            Optional<Item> itemOptional = Optional.ofNullable(iTracker.findById(idToFind));
+           if (itemOptional.isPresent()) {
+               output.accept(String.format(itemOptional.get().toString()));
+           } else {
+               output.accept("Item is not found");
+           }
+            //Item foundItem = iTracker.findById(idToFind);
+            //output.accept(String.format(foundItem.toString()));
             output.accept(String.format("----- Поиск завершен -----"));
         }
     }
@@ -182,10 +189,10 @@ public class MenuTracker  {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        public void execute(Input input, ITracker iTracker, Consumer<String> output) {
             output.accept(String.format("----- Поиск заявок по названию: -----"));
             String nameToFind = input.ask("Please, enter the name of the item You want to find: ");
-            List<Item> allItems = tracker.findByName(nameToFind);
+            List<Item> allItems = iTracker.findByName(nameToFind);
             for (Item eachItem : allItems) {
               output.accept(String.format(eachItem.toString()));
             }
@@ -203,7 +210,7 @@ public class MenuTracker  {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker, Consumer<String> output) {
+        public void execute(Input input, ITracker iTracker, Consumer<String> output) {
             isRunning = false;
             output.accept(String.format("Program complete."));
         }

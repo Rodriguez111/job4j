@@ -1,28 +1,33 @@
 package ru.job4j.tracker;
 
+import ru.job4j.trackersql.TrackerSQL;
+
 import java.util.function.Consumer;
+
+
 
 public class StartUI {
     private final Input input;
-    private final Tracker tracker;
+    private final ITracker iTracker;
     private final Consumer<String> output;
 
 
+    public StartUI(Input input, ITracker tracker, Consumer<String> output) {
+        this.input = input;
+        this.iTracker = tracker;
+        this.output = output;
+        init();
+    }
+
     public StartUI() {
         this.input = new ValidateInput(new ConsoleInput());
-        this.tracker = new Tracker();
+        this.iTracker = new Tracker();
         this.output = new Consumer<String>() {
             @Override
             public void accept(String s) {
-
+                System.out.println(s);
             }
         };
-    }
-
-    public StartUI(Input input, Tracker tracker, Consumer<String> output) {
-        this.input = input;
-        this.tracker = tracker;
-        this.output = output;
         init();
     }
 
@@ -31,7 +36,7 @@ public class StartUI {
      * initiating main logic.
      */
     public void init() {
-        MenuTracker menuTracker = new MenuTracker(this.input, this.tracker, this.output);
+        MenuTracker menuTracker = new MenuTracker(this.input, this.iTracker, this.output);
         do {
             menuTracker.showMenu(output);
             int key = input.ask("Input menu item: ", menuTracker.availableKeys());
@@ -41,7 +46,16 @@ public class StartUI {
 
     public static void main(String[] args) {
         Input input = new ConsoleInput();
-        new StartUI().init();
+        ITracker iTracker = new TrackerSQL();
+        Consumer<String> output = new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+                System.out.println(s);
+            }
+        };
+        new StartUI(input, iTracker, output);
+
+        //new StartUI();
     }
 
 }

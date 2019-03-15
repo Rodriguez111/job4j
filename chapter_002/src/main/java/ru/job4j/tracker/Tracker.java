@@ -1,16 +1,13 @@
 package ru.job4j.tracker;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Accounting claims.
  */
 
-public class Tracker {
+public class Tracker implements ITracker {
     //private int position = 0;
     private String id = "0000000";
     private static final Random RANDOM = new Random();
@@ -64,7 +61,7 @@ public class Tracker {
      *
      * @return - all not-null items from the array.
      */
-    public List<Item> getAll() {
+    public List<Item> findAll() {
     return this.items;
     }
 
@@ -83,7 +80,12 @@ public class Tracker {
      * @return - found item.
      */
     public Item findById(String id) {
-      return items.stream().filter(item -> item.getId().equals(id)).findFirst().get();
+        Item resultItem = null;
+        Optional<Item> optionalItem = items.stream().filter(item -> item.getId().equals(id)).findFirst();
+        if (optionalItem.isPresent()) {
+            resultItem =   optionalItem.get();
+        }
+      return resultItem;
     }
 
     /**

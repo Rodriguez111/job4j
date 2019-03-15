@@ -48,7 +48,7 @@ public class StartUITest {
         Input input = new StubInput(answers);
         Tracker tracker = new Tracker();
         StartUI startUI = new StartUI(input, tracker, output);
-        String actual = tracker.getAll().get(0).getName();
+        String actual = tracker.findAll().get(0).getName();
         assertThat(actual, is("Name1"));
     }
 
@@ -79,7 +79,7 @@ public class StartUITest {
         String[] answers = new String[]{"4", item2.getId(), "7"};
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input, tracker, output);
-        List<Item> actual = tracker.getAll();
+        List<Item> actual = tracker.findAll();
         List<Item> expected = new ArrayList<>();
         expected.add(item1);
         expected.add(item3);

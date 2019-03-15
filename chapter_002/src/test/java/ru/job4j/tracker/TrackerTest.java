@@ -43,7 +43,7 @@ public class TrackerTest {
         expected.add(item1);
         expected.add(item3);
         tracker.delete(item2.getId());
-        List<Item> actual = tracker.getAll();
+        List<Item> actual = tracker.findAll();
         assertThat(actual, is(expected));
     }
 
@@ -60,7 +60,7 @@ public class TrackerTest {
         expected.add(item1);
         expected.add(item2);
         expected.add(item3);
-        List<Item> actual = tracker.getAll();
+        List<Item> actual = tracker.findAll();
         assertThat(actual, is(expected));
     }
 

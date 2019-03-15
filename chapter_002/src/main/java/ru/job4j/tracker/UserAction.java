@@ -4,6 +4,6 @@ import java.util.function.Consumer;
 
 public interface UserAction {
     int key();
-    void execute(Input input, Tracker tracker, Consumer<String> output);
+    void execute(Input input, ITracker iTracker, Consumer<String> output);
     String info();
 }
