@@ -16,13 +16,6 @@ private Output output;
 
     private void initOutputType() {
         output = args.getOutputFilePath() == "" ? new ConsoleOutput() : new FileOutput(new File(args.getOutputFilePath()));
-        try {
-            if (args.getOutputFilePath() == "") {
-                new File(args.getOutputFilePath()).createNewFile();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private List<File> searchFiles() {
