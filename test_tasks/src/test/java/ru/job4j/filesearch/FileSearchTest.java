@@ -22,6 +22,7 @@ public class FileSearchTest {
     public void createTestFilesStructure() throws IOException {
         new File(source).mkdirs();
         new File(outputDir).mkdirs();
+        new File(outputFile).createNewFile();
         new File(source + "/text.pdf").createNewFile();
         new File(source + "/text.txt").createNewFile();
         new File(source + "/file.java").createNewFile();
