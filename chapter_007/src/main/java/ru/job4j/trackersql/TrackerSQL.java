@@ -17,10 +17,10 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
-    private final String tableName = "tracker";
-    private final String column1 = "id";
-    private final String column2 = "name";
-    private final String column3 = "description";
+    private final static String TABLE_NAME = "tracker";
+    private final static String COLUMN_1 = "id";
+    private final static String COLUMN_2 = "name";
+    private final static String COLUMN_3 = "description";
 
     private static final Logger LOG = LoggerFactory.getLogger(TrackerSQL.class);
 
@@ -48,8 +48,8 @@ public class TrackerSQL implements ITracker, AutoCloseable {
 
     public void createSQLTable() {
         try {
-         preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + tableName
-                 + "(" + column1 + " serial primary key, " + column2 + " VARCHAR(60) NOT NULL, " + column3 + " VARCHAR(180) NOT NULL)");
+         preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + TABLE_NAME
+                 + "(" + COLUMN_1 + " serial primary key, " + COLUMN_2 + " VARCHAR(60) NOT NULL, " + COLUMN_3 + " VARCHAR(180) NOT NULL)");
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -61,7 +61,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public Item add(Item item) {
         try {
-            preparedStatement = connection.prepareStatement("INSERT INTO " + tableName + " (" + column2 + ", " + column3 + ") VALUES "
+            preparedStatement = connection.prepareStatement("INSERT INTO " + TABLE_NAME + " (" + COLUMN_2 + ", " + COLUMN_3 + ") VALUES "
                     + "(?, ?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, item.getName());
             preparedStatement.setString(2, item.getDescription());
@@ -82,13 +82,13 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         boolean result = false;
         try {
 
-            preparedStatement = connection.prepareStatement("SELECT EXISTS (SELECT " + column1 + " FROM " + tableName + " WHERE id = ?)");
+            preparedStatement = connection.prepareStatement("SELECT EXISTS (SELECT " + COLUMN_1 + " FROM " + TABLE_NAME + " WHERE id = ?)");
             preparedStatement.setInt(1, Integer.valueOf(id));
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 if (resultSet.getBoolean(1)) {
-                    preparedStatement = connection.prepareStatement("UPDATE " + tableName + " SET " + column2 + " = ?, " + column3 + " = ? "
-                            + " WHERE " + column1 + " = ?");
+                    preparedStatement = connection.prepareStatement("UPDATE " + TABLE_NAME + " SET " + COLUMN_2 + " = ?, " + COLUMN_3 + " = ? "
+                            + " WHERE " + COLUMN_1 + " = ?");
                     preparedStatement.setString(1, item.getName());
                     preparedStatement.setString(2, item.getDescription());
                     preparedStatement.setInt(3, Integer.valueOf(id));
@@ -107,12 +107,12 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         boolean result = false;
         try {
 
-            preparedStatement = connection.prepareStatement("SELECT EXISTS (SELECT " + column1 + " FROM " + tableName + " WHERE id = ?)");
+            preparedStatement = connection.prepareStatement("SELECT EXISTS (SELECT " + COLUMN_1 + " FROM " + TABLE_NAME + " WHERE id = ?)");
             preparedStatement.setInt(1, Integer.valueOf(id));
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 if (resultSet.getBoolean(1)) {
-                    preparedStatement = connection.prepareStatement("DELETE FROM " + tableName + " WHERE " + column1 + " = ?");
+                    preparedStatement = connection.prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = ?");
                     preparedStatement.setInt(1, Integer.valueOf(id));
                     preparedStatement.executeUpdate();
                     result = true;
@@ -145,7 +145,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public List<Item> findByName(String key) {
         List<Item> itemList = new ArrayList<>();
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE " + column2 + " = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_2 + " = ?");
             preparedStatement.setString(1, key);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -163,7 +163,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public Item findById(String id) {
         Item item = null;
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM " + tableName + " WHERE " + column1 + " = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = ?");
             preparedStatement.setInt(1, Integer.valueOf(id));
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
