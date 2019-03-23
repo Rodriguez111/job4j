@@ -1,11 +1,10 @@
 package ru.job4j.trackersql;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import ru.job4j.tracker.ITracker;
 import ru.job4j.tracker.Item;
 import ru.job4j.trackersql.exeptions.ExHandler;
-import ru.job4j.trackersql.exeptions.TripleConsumerEx;
+
 
 import java.io.InputStream;
 import java.sql.*;
@@ -21,11 +20,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     private final static String COLUMN_2 = "name";
     private final static String COLUMN_3 = "description";
 
-    private static final Logger LOG = LoggerFactory.getLogger(TrackerSQL.class);
-
     private QueryHandle queryHandle;
-
-
 
     public TrackerSQL(Connection connection) {
         this.connection = connection;
@@ -38,9 +33,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         createSQLTable();
         this.queryHandle = new QueryHandle(this.connection);
     }
-
-
-
 
 
     public boolean init() {
@@ -69,31 +61,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         });
     }
 
-
-
-
-
-
-
-//    @Override
-//    public Item add(Item item) {
-//        return (Item) exHandler.exHandle(() -> {
-//            PreparedStatement preparedStatement;
-//            ResultSet resultSet;
-//                preparedStatement = connection.prepareStatement("INSERT INTO " + TABLE_NAME + " (" + COLUMN_2 + ", " + COLUMN_3 + ") VALUES "
-//                        + "(?, ?)", Statement.RETURN_GENERATED_KEYS);
-//                preparedStatement.setString(1, item.getName());
-//                preparedStatement.setString(2, item.getDescription());
-//                preparedStatement.executeUpdate();
-//                resultSet = preparedStatement.getGeneratedKeys();
-//                if (resultSet.next()) {
-//                    item.setId(String.valueOf(resultSet.getInt(1)));
-//                }
-//            return item;
-//        });
-//    }
-
-
     @Override
     public Item add(Item item) {
         String query = "INSERT INTO " + TABLE_NAME + " (" + COLUMN_2 + ", " + COLUMN_3 + ") VALUES (?, ?)";
@@ -108,31 +75,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      }, 1);
         return resultItem.get();
     }
-
-//    @Override
-//    public boolean replace(String id, Item item) {
-//        return (boolean) exHandler.exHandle(() -> {
-//            PreparedStatement preparedStatement = null;
-//            ResultSet resultSet = null;
-//            boolean result = false;
-//            preparedStatement = connection.prepareStatement("SELECT EXISTS (SELECT " + COLUMN_1 + " FROM " + TABLE_NAME + " WHERE id = ?)");
-//            preparedStatement.setInt(1, Integer.valueOf(id));
-//            resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {
-//                if (resultSet.getBoolean(1)) {
-//                    preparedStatement = connection.prepareStatement("UPDATE " + TABLE_NAME + " SET " + COLUMN_2 + " = ?, " + COLUMN_3 + " = ? "
-//                            + " WHERE " + COLUMN_1 + " = ?");
-//                    preparedStatement.setString(1, item.getName());
-//                    preparedStatement.setString(2, item.getDescription());
-//                    preparedStatement.setInt(3, Integer.valueOf(id));
-//                    preparedStatement.executeUpdate();
-//                    result = true;
-//                }
-//            }
-//            return result;
-//        });
-//    }
-
 
     @Override
     public boolean replace(String id, Item item) {
@@ -156,39 +98,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     return result.get();
     }
 
-
-    private void closeResources(PreparedStatement preparedStatement, ResultSet resultSet) {
-        try {
-            preparedStatement.close();
-            resultSet.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-//    @Override
-//    public boolean delete(String id) {
-//     return (boolean) exHandler.exHandle(() -> {
-//            PreparedStatement preparedStatement;
-//            ResultSet resultSet;
-//            boolean result = false;
-//            preparedStatement = connection.prepareStatement("SELECT EXISTS (SELECT " + COLUMN_1 + " FROM " + TABLE_NAME + " WHERE id = ?)");
-//            preparedStatement.setInt(1, Integer.valueOf(id));
-//            resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {
-//                if (resultSet.getBoolean(1)) {
-//                    preparedStatement = connection.prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = ?");
-//                    preparedStatement.setInt(1, Integer.valueOf(id));
-//                    preparedStatement.executeUpdate();
-//                    result = true;
-//                }
-//            }
-//            return result;
-//        })  ;
-//    }
-
         @Override
     public boolean delete(String id) {
         String query = "SELECT EXISTS (SELECT " + COLUMN_1 + " FROM " + TABLE_NAME + " WHERE id = ?)";
@@ -210,27 +119,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             return result.get();
         }
 
-
-
-//    @Override
-//    public List<Item> findAll() {
-//        return (List<Item>) exHandler.exHandle(() -> {
-//            PreparedStatement preparedStatement;
-//            ResultSet resultSet;
-//            List<Item> itemList = new ArrayList<>();
-//
-//            preparedStatement = connection.prepareStatement("SELECT * FROM Tracker");
-//            resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                Item item = new Item(resultSet.getString("name"), resultSet.getString("description"));
-//                item.setId(String.valueOf(resultSet.getInt("id")));
-//                itemList.add(item);
-//            }
-//            return itemList;
-//
-//        });
-//    }
-
     @Override
     public List<Item> findAll() {
         String query = "SELECT * FROM Tracker";
@@ -246,31 +134,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         });
         return resultList.get();
     }
-
-
-
-//    @Override
-//    public List<Item> findByName(String key) {
-//        return (List<Item>) exHandler.exHandle(() -> {
-//            PreparedStatement preparedStatement;
-//            ResultSet resultSet;
-//            List<Item> itemList = new ArrayList<>();
-//            try {
-//                preparedStatement = connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_2 + " = ?");
-//                preparedStatement.setString(1, key);
-//                resultSet = preparedStatement.executeQuery();
-//                while (resultSet.next()) {
-//                    Item item = new Item(resultSet.getString("name"), resultSet.getString("description"));
-//                    item.setId(String.valueOf(resultSet.getInt("id")));
-//                    itemList.add(item);
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            return itemList;
-//        });
-//    }
-
 
     @Override
     public List<Item> findByName(String name) {
@@ -288,32 +151,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         });
         return resultList.get();
     }
-
-
-
-//    @Override
-//    public Item findById(String id) {
-//        return (Item) exHandler.exHandle(() -> {
-//            PreparedStatement preparedStatement;
-//            ResultSet resultSet;
-//            Item item = null;
-//            try {
-//                preparedStatement = connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = ?");
-//                preparedStatement.setInt(1, Integer.valueOf(id));
-//                resultSet = preparedStatement.executeQuery();
-//                while (resultSet.next()) {
-//                    item = new Item(resultSet.getString("name"), resultSet.getString("description"));
-//                    item.setId(String.valueOf(resultSet.getInt("id")));
-//
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            return item;
-//        });
-//
-//
-//    }
 
     @Override
     public Item findById(String id) {
@@ -341,5 +178,4 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public void close() throws Exception {
         connection.close();
     }
-
 }
