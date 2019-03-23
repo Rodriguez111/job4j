@@ -20,18 +20,18 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     private final static String COLUMN_2 = "name";
     private final static String COLUMN_3 = "description";
 
-    private QueryHandle queryHandle;
+    private QueryHandler queryHandler;
 
     public TrackerSQL(Connection connection) {
         this.connection = connection;
         createSQLTable();
-        this.queryHandle = new QueryHandle(connection);
+        this.queryHandler = new QueryHandler(connection);
     }
 
     public TrackerSQL() {
         init();
         createSQLTable();
-        this.queryHandle = new QueryHandle(this.connection);
+        this.queryHandler = new QueryHandler(this.connection);
     }
 
 
@@ -65,7 +65,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public Item add(Item item) {
         String query = "INSERT INTO " + TABLE_NAME + " (" + COLUMN_2 + ", " + COLUMN_3 + ") VALUES (?, ?)";
         List<Object> listOfParams = List.of(item.getName(), item.getDescription());
-        Optional<Item> resultItem =  queryHandle.processQuery(query, listOfParams, ps -> {
+        Optional<Item> resultItem =  queryHandler.processQuery(query, listOfParams, ps -> {
             ps.executeUpdate();
             ResultSet resultSet = ps.getGeneratedKeys();
             if (resultSet.next()) {
@@ -80,14 +80,14 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public boolean replace(String id, Item item) {
      String query = "SELECT EXISTS (SELECT " + COLUMN_1 + " FROM " + TABLE_NAME + " WHERE id = ?)";
      List<Object> listOfParams = List.of(Integer.valueOf(id));
-        Optional<Boolean> result =  queryHandle.processQuery(query, listOfParams, ps -> {
+        Optional<Boolean> result =  queryHandler.processQuery(query, listOfParams, ps -> {
             ResultSet resultSet =  ps.executeQuery();
             Optional<Boolean> res = Optional.of(false);
             if (resultSet.next()) {
                 if (resultSet.getBoolean(1)) {
                     String query2 = "UPDATE " + TABLE_NAME + " SET " + COLUMN_2 + " = ?, " + COLUMN_3 + " = ? WHERE " + COLUMN_1 + " = ?";
                     List<Object> listOfParams2 = List.of(item.getName(), item.getDescription(), Integer.valueOf(id));
-                    res = queryHandle.processQuery(query2, listOfParams2, ps2 -> {
+                    res = queryHandler.processQuery(query2, listOfParams2, ps2 -> {
                         ps2.executeUpdate();
                         return true;
                     });
@@ -102,13 +102,13 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public boolean delete(String id) {
         String query = "SELECT EXISTS (SELECT " + COLUMN_1 + " FROM " + TABLE_NAME + " WHERE id = ?)";
         List<Object> listOfParams = List.of(Integer.valueOf(id));
-            Optional<Boolean> result = queryHandle.processQuery(query, listOfParams, ps -> {
+            Optional<Boolean> result = queryHandler.processQuery(query, listOfParams, ps -> {
                 ResultSet resultSet = ps.executeQuery();
                 Optional<Boolean> result2 = Optional.of(false);
                 if (resultSet.next()) {
                     if (resultSet.getBoolean(1)) {
                         String query2 = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = ?";
-                       result2 = queryHandle.processQuery(query2, listOfParams, ps2 -> {
+                       result2 = queryHandler.processQuery(query2, listOfParams, ps2 -> {
                             ps2.executeUpdate();
                             return true;
                         });
@@ -122,7 +122,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public List<Item> findAll() {
         String query = "SELECT * FROM Tracker";
-        Optional<List<Item>> resultList = queryHandle.processQuery(query, List.of(), ps -> {
+        Optional<List<Item>> resultList = queryHandler.processQuery(query, List.of(), ps -> {
             List<Item> itemList = new ArrayList<>();
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
@@ -139,7 +139,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public List<Item> findByName(String name) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_2 + " = ?";
         List<Object> listOfParams = List.of(name);
-        Optional<List<Item>> resultList = queryHandle.processQuery(query, listOfParams, ps -> {
+        Optional<List<Item>> resultList = queryHandler.processQuery(query, listOfParams, ps -> {
             List<Item> itemList = new ArrayList<>();
            ResultSet resultSet = ps.executeQuery();
            while (resultSet.next()) {
@@ -156,7 +156,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public Item findById(String id) {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = ?";
         List<Object> listOfParams = List.of(Integer.valueOf(id));
-        Optional<Item> resultItem = queryHandle.processQuery(query, listOfParams, ps -> {
+        Optional<Item> resultItem = queryHandler.processQuery(query, listOfParams, ps -> {
             Item item = null;
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {

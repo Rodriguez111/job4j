@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class QueryHandle {
+public class QueryHandler {
   private  Map<Class, TripleConsumerEx<Integer, PreparedStatement, Object>> dispatcher = new HashMap<>();
   private final Connection connection;
 
-    public QueryHandle(Connection connection) {
+    public QueryHandler(Connection connection) {
         this.connection = connection;
         initDispatcher();
     }
