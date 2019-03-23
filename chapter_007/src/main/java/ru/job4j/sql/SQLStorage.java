@@ -19,9 +19,9 @@ public class SQLStorage {
             connection =  DriverManager.getConnection(url, username, password);
 
 
-            //insert(connection);
+            insert(connection);
            // select(connection);
-            select(connection);
+           // select(connection);
 
 
         } catch (SQLException e) {
@@ -34,24 +34,18 @@ public class SQLStorage {
 
 
     public static void select(Connection connection) {
-
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
         try {
-
-            //Statement statement = connection.createStatement();
             preparedStatement = connection.prepareStatement("SELECT * FROM ? WHERE car.id in (?, ?, ?) ");
             preparedStatement.setString(1, "car");
             preparedStatement.setInt(2, 1);
             preparedStatement.setInt(3, 3);
             preparedStatement.setInt(4, 4);
-            //resultSet = statement.executeQuery("SELECT * FROM car");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 System.out.println(String.format("%s %s", resultSet.getString("manufacturer"), resultSet.getString("model")));
-
             }
-
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         } finally {
@@ -79,7 +73,6 @@ public class SQLStorage {
             preparedStatement.executeUpdate();
             generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
-
                 System.out.println(generatedKeys.getInt(1));
             }
 
