@@ -13,30 +13,15 @@ public class ParseOutputResult {
     private static final Logger LOG = LoggerFactory.getLogger(ParseOutputResult.class);
     private final Config config = new Config();
     private final String output = StoreXML.class.getClassLoader().getResource(config.get("fileXMLOutput")).getFile();
-    private SAXParserFactory parserFactory;
-    private SAXParser parser;
-    private XMLHandler handler = new XMLHandler();
-
-    public ParseOutputResult() {
-        initParser();
-    }
-
-    private void initParser() {
-        this.parserFactory = SAXParserFactory.newInstance();
-        try {
-            this.parser = parserFactory.newSAXParser();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
-    }
+    private final static XMLHandler XML_HANDLER = new XMLHandler();
 
     public void parse() {
         LOG.info("Parsing destination XML and calculating result...");
+        SAXParserFactory parserFactory = SAXParserFactory.newInstance();
         try {
-            parser.parse(new File(output), handler);
-        } catch (SAXException e) {
+            SAXParser parser = parserFactory.newSAXParser();
+            parser.parse(new File(output), XML_HANDLER);
+        } catch (SAXException | ParserConfigurationException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,10 +29,10 @@ public class ParseOutputResult {
     }
 
     public void outputResult() {
-        System.out.println("Result sum = " + handler.getSummary());
+        System.out.println("Result sum = " + XML_HANDLER.getSummary());
     }
 
     public XMLHandler getHandler() {
-        return handler;
+        return XML_HANDLER;
     }
 }

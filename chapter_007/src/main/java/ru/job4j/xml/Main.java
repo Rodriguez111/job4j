@@ -8,9 +8,10 @@ public class Main {
 
 
     public static void main(String[] args) {
-        StoreSQL storeSQL = new StoreSQL();
         long beginTime = System.currentTimeMillis();
-        storeSQL.generateLessThenMillionEntries(1000);
+        StoreSQL storeSQL = new StoreSQL();
+
+        storeSQL.generateLessThenMillionEntries(10000);
         //storeSQL.generateMoreThenMillionEntries(100000);
 
         List<Entry> list = storeSQL.selectAllToList();

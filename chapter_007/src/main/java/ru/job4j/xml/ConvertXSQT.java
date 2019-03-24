@@ -21,19 +21,17 @@ public class ConvertXSQT {
 
     private final TransformerFactory factory = TransformerFactory.newInstance();
 
-
-
     public void convert(File source, File dest, File scheme) {
         LOG.info("Converting primary XML file to another format...");
-        ByteArrayInputStream byteArrayInputStreamXSL = getByteArrayInputStreamFromFile(scheme);
-        ByteArrayInputStream byteArrayInputStreamXML = getByteArrayInputStreamFromFile(source);
+        FileInputStream fileInputStreamXSL = getFileInputStreamFromFile(scheme);
+        FileInputStream fileInputStreamXML = getFileInputStreamFromFile(source);
         try {
             Transformer transformer = factory.newTransformer(
-                    new StreamSource(byteArrayInputStreamXSL)
+                    new StreamSource(fileInputStreamXSL)
             );
 
             transformer.transform(new StreamSource(
-                            byteArrayInputStreamXML),
+                            fileInputStreamXML),
                     new StreamResult(dest));
 
         } catch (TransformerConfigurationException e) {
@@ -43,14 +41,15 @@ public class ConvertXSQT {
         }
     }
 
-    private ByteArrayInputStream getByteArrayInputStreamFromFile(File source) {
-        ByteArrayInputStream bais = null;
+
+    private FileInputStream getFileInputStreamFromFile(File source) {
+        FileInputStream fis = null;
         try {
-            bais = new ByteArrayInputStream(FileUtils.readFileToByteArray(source));
+            fis = new FileInputStream(source);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    return bais;
+        return fis;
     }
 
     public String getSource() {
