@@ -15,13 +15,4 @@ class TrackerSQLTest {
         assertThat(sql.init(), is(true));
     }
 
-    @Test
-    public void checkConnection2() {
-        TrackerSQL sql = new TrackerSQL();
-        StartUI startUI = new StartUI();
-        startUI.init();
-    }
-
-
-
 }

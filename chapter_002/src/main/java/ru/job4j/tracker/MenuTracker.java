@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class MenuTracker  {
+public class MenuTracker {
     private Input input;
     private int position;
     private ITracker iTracker;
@@ -24,7 +24,7 @@ public class MenuTracker  {
         this.input = input;
         this.iTracker = iTracker;
         this.output = output;
-       fillActions();
+        fillActions();
     }
 
     /**
@@ -42,7 +42,6 @@ public class MenuTracker  {
     }
 
     /**
-     *
      * @param userAction - action class instance to add.
      */
     public void addAction(UserAction userAction) {
@@ -62,6 +61,7 @@ public class MenuTracker  {
 
     /**
      * Selects the menu item corresponding to the passed key and executes it.
+     *
      * @param key - passed key of the menu item.
      */
     public void selectKey(int key) {
@@ -105,7 +105,7 @@ public class MenuTracker  {
             List<Item> allItems = iTracker.findAll();
             output.accept(String.format("----- Список всех заявок: -----"));
             for (Item eachItem : allItems) {
-              output.accept(String.format(eachItem.toString()));
+                output.accept(String.format(eachItem.toString()));
 
             }
             output.accept(String.format("----- Конец списка -----"));
@@ -123,17 +123,22 @@ public class MenuTracker  {
         @Override
         public void execute(Input input, ITracker iTracker, Consumer<String> output) {
             String idToReplace = input.ask("Please, enter the id of the item You want to edit: ");
-            String itemName = input.ask("Please, enter the name of new item: ");
-            String itemDescr = input.ask("Please, enter the description of new item: ");
-            Item newItem = new Item(itemName, itemDescr);
-            newItem.setId(idToReplace);
-            if (iTracker.replace(idToReplace, newItem)) {
-                output.accept(String.format("----- Заявка ID:%s отредактирована -----", idToReplace));
+
+            Item item = iTracker.findById(idToReplace);
+            if (item != null) {
+                String itemName = input.ask("Please, enter the name of new item: ");
+                String itemDescr = input.ask("Please, enter the description of new item: ");
+                Item newItem = new Item(itemName, itemDescr);
+                newItem.setId(idToReplace);
+                if (iTracker.replace(idToReplace, newItem)) {
+                    output.accept(String.format("----- Заявка ID:%s отредактирована -----", idToReplace));
+                } else {
+                    output.accept(String.format("----- Не удалось отредактировать заявку ID:%s -----", idToReplace));
+                }
             } else {
-                output.accept(String.format("----- Не удалось отредактировать заявку ID:%s -----", idToReplace));
+                output.accept(String.format("----- Несуществующий ID:%s -----", idToReplace));
             }
         }
-
     }
 
     /**
@@ -148,13 +153,17 @@ public class MenuTracker  {
         public void execute(Input input, ITracker iTracker, Consumer<String> output) {
             output.accept(String.format("----- Удаление заявки -----"));
             String idToDelete = input.ask("Please, enter the id of the item You want to delete: ");
-            if (iTracker.delete(idToDelete)) {
-                output.accept(String.format("----- Заявка ID:%s удалена -----", idToDelete));
+            Item item = iTracker.findById(idToDelete);
+            if (item != null) {
+                if (iTracker.delete(idToDelete)) {
+                    output.accept(String.format("----- Заявка ID:%s удалена -----", idToDelete));
+                } else {
+                    output.accept(String.format("----- Не удалось удалить заявку ID:%s -----", idToDelete));
+                }
             } else {
-                output.accept(String.format("----- Не удалось удалить заявку ID:%s -----", idToDelete));
+                output.accept(String.format("----- Несуществующий ID:%s -----", idToDelete));
             }
         }
-
     }
 
     /**
@@ -164,16 +173,17 @@ public class MenuTracker  {
         public FindItemById(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, ITracker iTracker, Consumer<String> output) {
             output.accept(String.format("----- Поиск заявки по ID: -----"));
             String idToFind = input.ask("Please, enter the id of the item You want to find: ");
             Optional<Item> itemOptional = Optional.ofNullable(iTracker.findById(idToFind));
-           if (itemOptional.isPresent()) {
-               output.accept(String.format(itemOptional.get().toString()));
-           } else {
-               output.accept("Item is not found");
-           }
+            if (itemOptional.isPresent()) {
+                output.accept(String.format(itemOptional.get().toString()));
+            } else {
+                output.accept("Item is not found");
+            }
             //Item foundItem = iTracker.findById(idToFind);
             //output.accept(String.format(foundItem.toString()));
             output.accept(String.format("----- Поиск завершен -----"));
@@ -194,7 +204,7 @@ public class MenuTracker  {
             String nameToFind = input.ask("Please, enter the name of the item You want to find: ");
             List<Item> allItems = iTracker.findByName(nameToFind);
             for (Item eachItem : allItems) {
-              output.accept(String.format(eachItem.toString()));
+                output.accept(String.format(eachItem.toString()));
             }
             output.accept(String.format("----- Поиск завершен -----"));
         }

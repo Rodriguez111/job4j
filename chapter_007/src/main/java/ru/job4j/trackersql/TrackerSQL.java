@@ -5,13 +5,12 @@ import ru.job4j.tracker.ITracker;
 import ru.job4j.tracker.Item;
 import ru.job4j.trackersql.exeptions.ExHandler;
 
-
 import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
 
 public class TrackerSQL implements ITracker, AutoCloseable {
-    ExHandler exHandler = new ExHandler();
+    private ExHandler exHandler = new ExHandler();
 
     private Connection connection;
 
@@ -47,7 +46,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             );
 
         } catch (Exception e) {
-           throw new IllegalStateException();
+            throw new IllegalStateException();
         }
         return this.connection != null;
     }
@@ -65,59 +64,37 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public Item add(Item item) {
         String query = "INSERT INTO " + TABLE_NAME + " (" + COLUMN_2 + ", " + COLUMN_3 + ") VALUES (?, ?)";
         List<Object> listOfParams = List.of(item.getName(), item.getDescription());
-        Optional<Item> resultItem =  queryHandler.processQuery(query, listOfParams, ps -> {
+        Optional<Item> resultItem = queryHandler.processQuery(query, listOfParams, ps -> {
             ps.executeUpdate();
             ResultSet resultSet = ps.getGeneratedKeys();
             if (resultSet.next()) {
-                    item.setId(String.valueOf(resultSet.getInt(1)));
-                }
+                item.setId(String.valueOf(resultSet.getInt(1)));
+            }
             return item;
-     }, 1);
+        }, 1);
         return resultItem.get();
     }
 
+
     @Override
     public boolean replace(String id, Item item) {
-     String query = "SELECT EXISTS (SELECT " + COLUMN_1 + " FROM " + TABLE_NAME + " WHERE id = ?)";
-     List<Object> listOfParams = List.of(Integer.valueOf(id));
-        Optional<Boolean> result =  queryHandler.processQuery(query, listOfParams, ps -> {
-            ResultSet resultSet =  ps.executeQuery();
-            Optional<Boolean> res = Optional.of(false);
-            if (resultSet.next()) {
-                if (resultSet.getBoolean(1)) {
-                    String query2 = "UPDATE " + TABLE_NAME + " SET " + COLUMN_2 + " = ?, " + COLUMN_3 + " = ? WHERE " + COLUMN_1 + " = ?";
-                    List<Object> listOfParams2 = List.of(item.getName(), item.getDescription(), Integer.valueOf(id));
-                    res = queryHandler.processQuery(query2, listOfParams2, ps2 -> {
-                        ps2.executeUpdate();
-                        return true;
-                    });
-                }
-            }
-            return res.get();
-        });
-    return result.get();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_2 + " = ?, " + COLUMN_3 + " = ? WHERE " + COLUMN_1 + " = ?";
+        List<Object> listOfParams = List.of(item.getName(), item.getDescription(), Integer.valueOf(id));
+        return queryHandler.processQuery(query, listOfParams, ps -> {
+            ps.executeUpdate();
+            return true;
+        }).get();
     }
 
-        @Override
+    @Override
     public boolean delete(String id) {
-        String query = "SELECT EXISTS (SELECT " + COLUMN_1 + " FROM " + TABLE_NAME + " WHERE id = ?)";
+        String query2 = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = ?";
         List<Object> listOfParams = List.of(Integer.valueOf(id));
-            Optional<Boolean> result = queryHandler.processQuery(query, listOfParams, ps -> {
-                ResultSet resultSet = ps.executeQuery();
-                Optional<Boolean> result2 = Optional.of(false);
-                if (resultSet.next()) {
-                    if (resultSet.getBoolean(1)) {
-                        String query2 = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_1 + " = ?";
-                       result2 = queryHandler.processQuery(query2, listOfParams, ps2 -> {
-                            ps2.executeUpdate();
-                            return true;
-                        });
-                    }
-                }
-               return result2.get();
-            });
-            return result.get();
-        }
+        return queryHandler.processQuery(query2, listOfParams, ps2 -> {
+            ps2.executeUpdate();
+            return true;
+        }).get();
+    }
 
     @Override
     public List<Item> findAll() {
@@ -141,13 +118,13 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         List<Object> listOfParams = List.of(name);
         Optional<List<Item>> resultList = queryHandler.processQuery(query, listOfParams, ps -> {
             List<Item> itemList = new ArrayList<>();
-           ResultSet resultSet = ps.executeQuery();
-           while (resultSet.next()) {
-               Item item = new Item(resultSet.getString("name"), resultSet.getString("description"));
-               item.setId(String.valueOf(resultSet.getInt("id")));
-               itemList.add(item);
-           }
-           return itemList;
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Item item = new Item(resultSet.getString("name"), resultSet.getString("description"));
+                item.setId(String.valueOf(resultSet.getInt("id")));
+                itemList.add(item);
+            }
+            return itemList;
         });
         return resultList.get();
     }
@@ -172,7 +149,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         }
         return item;
     }
-
 
     @Override
     public void close() throws Exception {
