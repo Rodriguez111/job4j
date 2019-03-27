@@ -1,5 +1,6 @@
 package ru.job4j.siteparser;
 
+<<<<<<< HEAD
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -16,4 +17,7 @@ public class SiteParser {
             e.printStackTrace();
         }
     }
+=======
+public class SiteParser {
+>>>>>>> origin/master
 }
