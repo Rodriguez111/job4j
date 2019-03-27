@@ -15,23 +15,23 @@ import java.io.*;
 public class ConvertXSQT {
     private static final Logger LOG = LoggerFactory.getLogger(ConvertXSQT.class);
     private final Config config = new Config();
-    private final String source = ConvertXSQT.class.getClassLoader().getResource(config.get("fileXMLSource")).getFile();
-    private final String output = ConvertXSQT.class.getClassLoader().getResource(config.get("fileXMLOutput")).getFile();
-    private final String transformPatternXsl = ConvertXSQT.class.getClassLoader().getResource(config.get("fileXSL")).getFile();
+//    private final String source = ConvertXSQT.class.getClassLoader().getResource(config.get("fileXMLSource")).getFile();
+//    private final String output = ConvertXSQT.class.getClassLoader().getResource(config.get("fileXMLOutput")).getFile();
+//    private final String transformPatternXsl = ConvertXSQT.class.getClassLoader().getResource(config.get("fileXSL")).getFile();
 
     private final TransformerFactory factory = TransformerFactory.newInstance();
 
     public void convert(File source, File dest, File scheme) {
         LOG.info("Converting primary XML file to another format...");
-        FileInputStream fileInputStreamXSL = getFileInputStreamFromFile(scheme);
-        FileInputStream fileInputStreamXML = getFileInputStreamFromFile(source);
+        BufferedInputStream inputStreamXSL = getFileInputStreamFromFile(scheme);
+        BufferedInputStream inputStreamXML = getFileInputStreamFromFile(source);
         try {
             Transformer transformer = factory.newTransformer(
-                    new StreamSource(fileInputStreamXSL)
+                    new StreamSource(inputStreamXSL)
             );
 
             transformer.transform(new StreamSource(
-                            fileInputStreamXML),
+                            inputStreamXML),
                     new StreamResult(dest));
 
         } catch (TransformerConfigurationException e) {
@@ -42,26 +42,26 @@ public class ConvertXSQT {
     }
 
 
-    private FileInputStream getFileInputStreamFromFile(File source) {
-        FileInputStream fis = null;
+    private BufferedInputStream getFileInputStreamFromFile(File source) {
+        BufferedInputStream bis = null;
         try {
-            fis = new FileInputStream(source);
+            bis = new BufferedInputStream(new FileInputStream(source));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return fis;
+        return bis;
     }
 
-    public String getSource() {
-        return source;
-    }
+//    public String getSource() {
+//        return source;
+//    }
+//
+//    public String getOutput() {
+//        return output;
+//    }
 
-    public String getOutput() {
-        return output;
-    }
-
-    public String getTransformPatternXsl() {
-        return transformPatternXsl;
-    }
+//    public String getTransformPatternXsl() {
+//        return transformPatternXsl;
+//    }
 
 }

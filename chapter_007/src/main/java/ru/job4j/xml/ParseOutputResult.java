@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ParseOutputResult {
     private static final Logger LOG = LoggerFactory.getLogger(ParseOutputResult.class);
     private final Config config = new Config();
-    private final String output = StoreXML.class.getClassLoader().getResource(config.get("fileXMLOutput")).getFile();
+    private final String output = config.getOutput();
     private final static XMLHandler XML_HANDLER = new XMLHandler();
 
     public void parse() {
@@ -21,9 +21,7 @@ public class ParseOutputResult {
         try {
             SAXParser parser = parserFactory.newSAXParser();
             parser.parse(new File(output), XML_HANDLER);
-        } catch (SAXException | ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

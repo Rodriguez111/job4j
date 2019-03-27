@@ -16,12 +16,12 @@ public class Main {
 
         List<Entry> list = storeSQL.selectAllToList();
         Element element = new Element(list);
-        String primaryXML = StoreXML.class.getClassLoader().getResource("").getFile() + CONFIG.get("fileXMLSource");
+        String primaryXML = CONFIG.getSource();
         StoreXML storeXML = new StoreXML(new File(primaryXML));
         storeXML.save(element);
 
         ConvertXSQT convertXSQT = new ConvertXSQT();
-        convertXSQT.convert(new File(convertXSQT.getSource()), new File(convertXSQT.getOutput()), new File(convertXSQT.getTransformPatternXsl()));
+        convertXSQT.convert(new File(CONFIG.getSource()), new File(CONFIG.getOutput()), new File(CONFIG.getTransformPatternXsl()));
 
         ParseOutputResult parseOutputResult = new ParseOutputResult();
         parseOutputResult.parse();

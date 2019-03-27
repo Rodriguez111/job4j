@@ -15,9 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ConvertXSQTTest {
     private final ConvertXSQT convertXSQT = new ConvertXSQT();
-    private final File source = new File(convertXSQT.getSource());
-    private final File output = new File(convertXSQT.getOutput());
-    private final File transform = new File(convertXSQT.getTransformPatternXsl());
+    private final Config config = new Config();
+    private final File source = new File(config.getSource());
+    private final File output = new File(config.getOutput());
+    private final File transform = new File(config.getTransformPatternXsl());
 
     @Test
    public void shouldConvertToOtherXMLFormatWhenConvert() throws IOException {

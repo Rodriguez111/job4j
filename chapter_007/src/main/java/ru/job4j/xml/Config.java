@@ -8,8 +8,15 @@ import java.util.Properties;
 public class Config {
     private final Properties values = new Properties();
 
+    private final String source;
+    private final String output;
+    private final String transformPatternXsl;
+
     public Config() {
         init();
+        this.source = Config.class.getClassLoader().getResource(values.getProperty("fileXMLSource")).getFile();
+        this.output = Config.class.getClassLoader().getResource(values.getProperty("fileXMLOutput")).getFile();
+        this.transformPatternXsl = Config.class.getClassLoader().getResource(values.getProperty("fileXSL")).getFile();
     }
 
     public void init() {
@@ -20,7 +27,19 @@ public class Config {
         }
     }
 
-    public String get(String key) {
+    public String getSource() {
+        return source;
+    }
+
+    public String getOutput() {
+        return output;
+    }
+
+    public String getTransformPatternXsl() {
+        return transformPatternXsl;
+    }
+
+        public String get(String key) {
         return this.values.getProperty(key);
     }
 
