@@ -5,7 +5,6 @@ import ru.job4j.tracker.ITracker;
 import ru.job4j.tracker.Item;
 import ru.job4j.trackersql.exeptions.ExHandler;
 
-import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
 
@@ -25,30 +24,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         this.connection = connection;
         createSQLTable();
         this.queryHandler = new QueryHandler(connection);
-    }
-
-    public TrackerSQL() {
-        init();
-        createSQLTable();
-        this.queryHandler = new QueryHandler(this.connection);
-    }
-
-
-    public boolean init() {
-        try (InputStream inputStream = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
-            Properties config = new Properties();
-            config.load(inputStream);
-            Class.forName(config.getProperty("driver-class-name"));
-            this.connection = DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
-                    config.getProperty("password")
-            );
-
-        } catch (Exception e) {
-            throw new IllegalStateException();
-        }
-        return this.connection != null;
     }
 
     public void createSQLTable() {

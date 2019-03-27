@@ -16,7 +16,7 @@ public class StartTracker extends StartUI {
 
 
         Input input = new ConsoleInput();
-        ITracker iTracker = new TrackerSQL();
+        ITracker iTracker = new TrackerSQL(CommonConnection.create());
         Consumer<String> output = new Consumer<String>() {
             @Override
             public void accept(String s) {

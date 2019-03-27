@@ -16,8 +16,12 @@ public class ConnectionRollback {
      * @throws SQLException possible exception.
      */
 
-    public static Connection create(Connection connection) throws SQLException {
-        connection.setAutoCommit(false);
+    public static Connection create(Connection connection) {
+        try {
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return (Connection) Proxy.newProxyInstance(
                 ConnectionRollback.class.getClassLoader(),
                 new Class[] {Connection.class},
