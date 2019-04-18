@@ -5,11 +5,11 @@
     <entries>
       <xsl:for-each select="element/entryList">
         <xsl:text>&#10;</xsl:text>
-        <entry>
+        <vacancy>
           <xsl:attribute name="href">
             <xsl:apply-templates select="value"  />
           </xsl:attribute>
-        </entry>
+        </vacancy>
       </xsl:for-each>
       <xsl:text>&#10;</xsl:text>
     </entries>

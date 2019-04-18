@@ -11,7 +11,7 @@ public class Main {
         long beginTime = System.currentTimeMillis();
         StoreSQL storeSQL = new StoreSQL();
 
-        storeSQL.generateLessThenMillionEntries(10000);
+        storeSQL.generateLessThenMillionEntries(100);
         //storeSQL.generateMoreThenMillionEntries(100000);
 
         List<Entry> list = storeSQL.selectAllToList();
