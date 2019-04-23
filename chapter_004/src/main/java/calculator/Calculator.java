@@ -15,7 +15,7 @@ public class Calculator {
 
 
 //    public static void main(String[] args) {
-//        Calculator calculator = new Calculator();
+//        calculator calculator = new calculator();
 //        calculator.multiply(0, 10, 2,
 //                (value, index) -> {
 //           double result = value * index;

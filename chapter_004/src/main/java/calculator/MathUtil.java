@@ -16,7 +16,7 @@ public class MathUtil {
 
 
 //    public static void main(String[] args) {
-//        Calculator calculator = new Calculator();
+//        calculator calculator = new calculator();
 //        calculator.multiply(0, 10, 2,
 //                MathUtil::add, System.out::println);
 //    }
