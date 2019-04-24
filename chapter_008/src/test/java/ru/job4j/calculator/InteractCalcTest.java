@@ -35,11 +35,11 @@ public class InteractCalcTest {
         StringBuilder sb = new StringBuilder();
         sb.append("Choose operation:")
                 .append(ls)
-                .append("* - Multiple")
-                .append(ls)
                 .append("+ - Add")
                 .append(ls)
                 .append("- - Subtract")
+                .append(ls)
+                .append("* - Multiple")
                 .append(ls)
                 .append("/ - Divide")
                 .append(ls)
@@ -63,7 +63,7 @@ public class InteractCalcTest {
         commands.add("5");
         commands.add("exit");
         Input input = new FakeInput(commands);
-        InteractCalc calc = new InteractCalc(input);
+        InteractCalc calc = new InteractCalc(input, new CalcMenu());
         calc.startCalc();
 
         String actual = baos.toString();
@@ -79,7 +79,7 @@ public class InteractCalcTest {
         commands.add("20");
         commands.add("exit");
         Input input = new FakeInput(commands);
-        InteractCalc calc = new InteractCalc(input);
+        InteractCalc calc = new InteractCalc(input, new CalcMenu());
         calc.startCalc();
 
         String actual = baos.toString();
@@ -95,7 +95,7 @@ public class InteractCalcTest {
         commands.add("-5");
         commands.add("exit");
         Input input = new FakeInput(commands);
-        InteractCalc calc = new InteractCalc(input);
+        InteractCalc calc = new InteractCalc(input, new CalcMenu());
         calc.startCalc();
 
         String actual = baos.toString();
@@ -111,7 +111,7 @@ public class InteractCalcTest {
         commands.add("5");
         commands.add("exit");
         Input input = new FakeInput(commands);
-        InteractCalc calc = new InteractCalc(input);
+        InteractCalc calc = new InteractCalc(input, new CalcMenu());
         calc.startCalc();
 
         String actual = baos.toString();
@@ -130,7 +130,7 @@ public class InteractCalcTest {
         commands.add("4");
         commands.add("exit");
         Input input = new FakeInput(commands);
-        InteractCalc calc = new InteractCalc(input);
+        InteractCalc calc = new InteractCalc(input, new CalcMenu());
         calc.startCalc();
 
         String actual = baos.toString();
@@ -150,7 +150,7 @@ public class InteractCalcTest {
         commands.add("2");
         commands.add("exit");
         Input input = new FakeInput(commands);
-        InteractCalc calc = new InteractCalc(input);
+        InteractCalc calc = new InteractCalc(input, new CalcMenu());
         calc.startCalc();
 
         String actual = baos.toString();

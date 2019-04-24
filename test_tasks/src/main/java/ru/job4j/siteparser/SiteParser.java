@@ -108,7 +108,7 @@ public class SiteParser {
             if (startOfTheYearReached) {
                 break;
             }
-            vacancies.addAll(scanSinglePage(i))  ;
+            vacancies.addAll(scanSinglePage(i));
         }
         return vacancies;
     }

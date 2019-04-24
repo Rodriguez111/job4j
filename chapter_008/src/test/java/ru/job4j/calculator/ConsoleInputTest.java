@@ -29,7 +29,6 @@ public class ConsoleInputTest {
         newStream = new PrintStream(baos);
         System.setOut(newStream);
 
-
     }
 
     @After
@@ -80,6 +79,7 @@ public class ConsoleInputTest {
     public void whenInputPlusThenReturnPlus() {
         bais = new ByteArrayInputStream("+".getBytes());
         ConsoleInput consoleInput = new ConsoleInput(bais);
+        consoleInput.setMenu(new CalcMenu());
         String actual = consoleInput.getOperation("Input value");
         String expected = "+";
         assertThat(actual, is(expected));
@@ -89,6 +89,7 @@ public class ConsoleInputTest {
     public void whenInputExitThenReturnExit() {
         bais = new ByteArrayInputStream("exit".getBytes());
         ConsoleInput consoleInput = new ConsoleInput(bais);
+        consoleInput.setMenu(new CalcMenu());
         String actual = consoleInput.getOperation("Input value");
         String expected = "exit";
         assertThat(actual, is(expected));
@@ -98,6 +99,7 @@ public class ConsoleInputTest {
     public void whenInputSomeWrongSymbolThenAskInputAgainAndThrowExceptionBecauseThereIsNoMoreDataInStream() {
         bais = new ByteArrayInputStream("!".getBytes());
         ConsoleInput consoleInput = new ConsoleInput(bais);
+        consoleInput.setMenu(new CalcMenu());
         Throwable exception = assertThrows(NoSuchElementException.class, () -> {
             consoleInput.getSecondValue("Input value");
         });

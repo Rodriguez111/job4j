@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class ConsoleInput implements Input {
 
     private final Scanner scanner;
-
+    private CalcMenu menu;
 
     public ConsoleInput(InputStream inputStream) {
         this.scanner = new Scanner(inputStream);
@@ -52,13 +52,21 @@ public class ConsoleInput implements Input {
         boolean isRight = false;
         do {
             result = scanner.nextLine();
-            if (result.equals("+") || result.equals("-") || result.equals("*") || result.equals("/") || result.equals("exit")) {
+            if (menu.isValid(result)) {
                 isRight = true;
             } else {
-                System.out.println("Incorrect operation, it must be \"+\", \"-\", \"*\", \"/\" or \"exit\" ");
+                printWarning();
             }
         } while (!isRight);
         return result;
     }
 
+   private void printWarning() {
+       System.out.println("Incorrect operation, it must be " + menu.getAllMenuSymbols());
+   }
+
+    @Override
+    public void setMenu(CalcMenu menu) {
+        this.menu = menu;
+    }
 }

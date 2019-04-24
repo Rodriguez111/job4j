@@ -57,15 +57,19 @@ public class Vacancy {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Vacancy vacancy = (Vacancy) o;
-        return id == vacancy.id &&
-                Objects.equals(name, vacancy.name) &&
-                Objects.equals(text, vacancy.text) &&
-                Objects.equals(link, vacancy.link) &&
-                Objects.equals(author, vacancy.author) &&
-                Objects.equals(date, vacancy.date);
+        return id == vacancy.id
+              &&  Objects.equals(name, vacancy.name)
+              &&  Objects.equals(text, vacancy.text)
+              &&  Objects.equals(link, vacancy.link)
+              &&  Objects.equals(author, vacancy.author)
+              &&  Objects.equals(date, vacancy.date);
     }
 
     @Override

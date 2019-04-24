@@ -32,4 +32,9 @@ public class FakeInput implements Input {
     public String getOperation(String question) {
         return answers.get(count++);
     }
+
+    @Override
+    public void setMenu(CalcMenu menu) {
+
+    }
 }
