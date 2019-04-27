@@ -47,24 +47,24 @@ public class SQLManagerTest {
         outputStream.close();
     }
 
-    @Test
-   public void whenAdd2EntriesThenReturnListWithSize2() throws IOException {
-        String[] args = {pathToFile};
-        ArgManager argManager = new ArgManager(args);
-        PropertiesManager.setPropertiesFile(argManager.getPropertiesFile());
-         Connection connection = ConnectionRollback.create(SQLConnection.createConnection());
-         SQLManager manager = new SQLManager(connection);
-        List<Vacancy> list = new ArrayList<>();
-        Vacancy vacancy1 = new Vacancy("name1", "text1", "link1", "author1", "2019-03-01 20:40");
-        Vacancy vacancy2 = new Vacancy("name2", "text2", "link2", "author2", "2019-03-02 18:40");
-        list.add(vacancy1);
-        list.add(vacancy2);
-        manager.addEntryList(list);
-
-        List<Vacancy> resultList = manager.selectAll();
-        int actual = resultList.size();
-        assertThat(actual, is(2));
-   }
+//    @Test
+//   public void whenAdd2EntriesThenReturnListWithSize2() throws IOException {
+//        String[] args = {pathToFile};
+//        ArgManager argManager = new ArgManager(args);
+//        PropertiesManager.setPropertiesFile(argManager.getPropertiesFile());
+//         Connection connection = ConnectionRollback.create(SQLConnection.createConnection());
+//         SQLManager manager = new SQLManager(connection);
+//        List<Vacancy> list = new ArrayList<>();
+//        Vacancy vacancy1 = new Vacancy("name1", "text1", "link1", "author1", "2019-03-01 20:40");
+//        Vacancy vacancy2 = new Vacancy("name2", "text2", "link2", "author2", "2019-03-02 18:40");
+//        list.add(vacancy1);
+//        list.add(vacancy2);
+//        manager.addEntryList(list);
+//
+//        List<Vacancy> resultList = manager.selectAll();
+//        int actual = resultList.size();
+//        assertThat(actual, is(2));
+//   }
 
 
 
