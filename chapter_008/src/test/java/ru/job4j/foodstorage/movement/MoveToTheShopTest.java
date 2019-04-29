@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.foodstorage.food.Food;
-import ru.job4j.foodstorage.food.FoodInterface;
 import ru.job4j.foodstorage.storage.Shop;
 
 import java.io.ByteArrayOutputStream;
@@ -41,13 +40,13 @@ public class MoveToTheShopTest {
         System.setIn(originalInput);
     }
 
-    public String printTestOutput(List<FoodInterface> listOfFood, String name) {
+    public String printTestOutput(List<Food> listOfFood, String name) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(BALANCE + name)
                 .append(LS)
                 .append(SINGLE_DELIMITER)
                 .append(LS);
-        for (FoodInterface eachFood : listOfFood) {
+        for (Food eachFood : listOfFood) {
             stringBuilder.append(eachFood)
                     .append(LS);
         }
@@ -63,7 +62,7 @@ public class MoveToTheShopTest {
         LocalDateTime milkExpire = today.plusDays(5);
         LocalDateTime milkCreateDate = today.minusDays(3);
         Food food = new Food("Milk", milkExpire, milkCreateDate, 100, 20);
-        List<FoodInterface> listOfFood = new ArrayList<>();
+        List<Food> listOfFood = new ArrayList<>();
         listOfFood.add(food);
 
         Shop shop = new Shop("Shop");
@@ -72,7 +71,7 @@ public class MoveToTheShopTest {
 
         shop.printBalance();
 
-        List<FoodInterface> testList = List.of(food);
+        List<Food> testList = List.of(food);
         String actual = baos.toString();
         String expected = printTestOutput(testList, "Shop");
 
@@ -85,7 +84,7 @@ public class MoveToTheShopTest {
         LocalDateTime milkExpire = today.plusDays(10);
         LocalDateTime milkCreateDate = today.minusDays(1);
         Food food = new Food("Milk", milkExpire, milkCreateDate, 100, 20);
-        List<FoodInterface> listOfFood = new ArrayList<>();
+        List<Food> listOfFood = new ArrayList<>();
         listOfFood.add(food);
 
         Shop shop = new Shop("Shop");
@@ -94,7 +93,7 @@ public class MoveToTheShopTest {
 
         shop.printBalance();
 
-        List<FoodInterface> testList = List.of();
+        List<Food> testList = List.of();
         String actual = baos.toString();
         String expected = printTestOutput(testList, "Shop");
 
@@ -107,7 +106,7 @@ public class MoveToTheShopTest {
         LocalDateTime milkExpire = today.minusDays(1);
         LocalDateTime milkCreateDate = today.minusDays(10);
         Food food = new Food("Milk", milkExpire, milkCreateDate, 100, 20);
-        List<FoodInterface> listOfFood = new ArrayList<>();
+        List<Food> listOfFood = new ArrayList<>();
         listOfFood.add(food);
 
         Shop shop = new Shop("Shop");
@@ -116,7 +115,7 @@ public class MoveToTheShopTest {
 
         shop.printBalance();
 
-        List<FoodInterface> testList = List.of();
+        List<Food> testList = List.of();
         String actual = baos.toString();
         String expected = printTestOutput(testList, "Shop");
 

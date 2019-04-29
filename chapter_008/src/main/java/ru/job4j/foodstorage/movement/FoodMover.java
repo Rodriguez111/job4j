@@ -1,7 +1,6 @@
 package ru.job4j.foodstorage.movement;
 
 import ru.job4j.foodstorage.food.Food;
-import ru.job4j.foodstorage.food.FoodInterface;
 import ru.job4j.foodstorage.storage.Storage;
 
 import java.util.ArrayList;
@@ -22,10 +21,10 @@ public abstract class FoodMover implements Mover {
      * @param listOfFood - list of advancedFood from which we select products according to criteria.
      * @return - returns list of selected products.
      */
-    public List<FoodInterface> select(List<FoodInterface> listOfFood) {
-        List<FoodInterface> temp = List.copyOf(listOfFood);
-        List<FoodInterface> result = new ArrayList<>();
-        for (FoodInterface eachFood : temp) {
+    public List<Food> select(List<Food> listOfFood) {
+        List<Food> temp = List.copyOf(listOfFood);
+        List<Food> result = new ArrayList<>();
+        for (Food eachFood : temp) {
             if (checkExpireDate(eachFood)) {
                 result.add(eachFood);
                 listOfFood.remove(eachFood);
@@ -34,9 +33,18 @@ public abstract class FoodMover implements Mover {
         return result;
     }
 
-    public void move(List<FoodInterface> listOfFood) {
-        List<FoodInterface> result = select(listOfFood);
-        this.storage.addFood(result);
+    public void move(List<Food> listOfFood) {
+        List<Food> result = select(listOfFood);
+        if (result.size() > 0) {
+            this.storage.addFood(result);
+        }
+    }
+
+    @Override
+    public void put(List<Food> listOfFood) {
+        if (listOfFood.size() > 0) {
+            this.storage.addFood(listOfFood);
+        }
     }
 
     /**
@@ -45,7 +53,7 @@ public abstract class FoodMover implements Mover {
      * @param food - advancedFood item to check.
      * @return - true or false.
      */
-   public abstract boolean checkExpireDate(FoodInterface food);
+   public abstract boolean checkExpireDate(Food food);
 
     /**
      * @param threshold  - percents amount of threshold.

@@ -1,8 +1,6 @@
 package ru.job4j.foodstorage.movement;
 
 import ru.job4j.foodstorage.food.Food;
-import ru.job4j.foodstorage.food.FoodInterface;
-import ru.job4j.foodstorage.storage.Shop;
 import ru.job4j.foodstorage.storage.Storage;
 
 import java.time.Duration;
@@ -17,16 +15,16 @@ public class MoveToTheShopDisc extends FoodMover {
     }
 
     @Override
-    public void move(List<FoodInterface> listOfFood) {
-        List<FoodInterface> result = super.select(listOfFood);
-        for (FoodInterface eachFood : result) {
+    public void move(List<Food> listOfFood) {
+        List<Food> result = super.select(listOfFood);
+        for (Food eachFood : result) {
             eachFood.setPrice(eachFood.getPrice() - (eachFood.getPrice() * eachFood.getDiscount() / 100));
         }
         this.storage.addFood(result);
     }
 
     @Override
-    public boolean checkExpireDate(FoodInterface food) {
+    public boolean checkExpireDate(Food food) {
         LocalDateTime today = LocalDateTime.now();
         Duration lifetime = Duration.between(food.getCreateDate(), food.getExpireDate());
         long higherThreshold = getThreshold(HIGHER_PERCENTAGE_THRESHOLD, lifetime.toDays());

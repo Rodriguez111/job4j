@@ -1,13 +1,16 @@
 package ru.job4j.foodstorage;
 
 import ru.job4j.advancedfoodstorage.food.AdvancedFood;
+import ru.job4j.advancedfoodstorage.food.FoodType;
 import ru.job4j.advancedfoodstorage.movement.MoveToRecycle;
+import ru.job4j.advancedfoodstorage.movement.MoveToWHRefrigerator;
 import ru.job4j.advancedfoodstorage.storage.Recycle;
-import ru.job4j.advancedfoodstorage.storage.Warehouse2;
+import ru.job4j.advancedfoodstorage.storage.RefrigeratorWareHouse;
 import ru.job4j.foodstorage.food.Food;
-import ru.job4j.foodstorage.food.FoodInterface;
 import ru.job4j.foodstorage.movement.*;
+import ru.job4j.foodstorage.storage.Shop;
 import ru.job4j.foodstorage.storage.Trash;
+import ru.job4j.foodstorage.storage.Warehouse;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,8 +24,11 @@ public class ControlQuality {
         this.movers = movers;
     }
 
-    public void moveProducts(List<FoodInterface> listOfFood) {
+    public void moveProducts(List<Food> listOfFood) {
         for (Mover eachMover : this.movers) {
+            if (listOfFood.size() == 0) {
+                break;
+            }
             eachMover.move(listOfFood);
         }
     }
@@ -31,33 +37,57 @@ public class ControlQuality {
 
         LocalDateTime today = LocalDateTime.now();
 
+        LocalDateTime milkExpire = today.plusDays(2);
+        LocalDateTime milkCreateDate = today.minusDays(3);
+        AdvancedFood advMilk = new AdvancedFood("Milk", milkExpire, milkCreateDate, 20, 40, true, FoodType.MILK);
+
         LocalDateTime cheeseExpire = today.minusDays(1);
         LocalDateTime cheeseCreateDate = today.minusDays(35);
         Food cheese = new Food("Cheddar", cheeseExpire, cheeseCreateDate, 52, 50);
 
         LocalDateTime bananaExpire = today.minusDays(2);
         LocalDateTime bananaCreateDate = today.minusDays(21);
-        Food banana = new Food("Banana", bananaExpire, bananaCreateDate, 23, 50);
-        AdvancedFood advBanana = new AdvancedFood(banana, true);
+        AdvancedFood advBanana = new AdvancedFood("Banana", bananaExpire, bananaCreateDate, 23, 50, true, FoodType.FRUITS);
 
-        LocalDateTime milkExpire = today.plusDays(10);
-        LocalDateTime milkCreateDate = today.minusDays(2);
-        Food milk1 = new Food("Milk 2.5%", milkExpire, milkCreateDate, 20, 50);
 
-        List<FoodInterface> listOfFood = new ArrayList<>();
+        LocalDateTime tomatoExpire = today.plusDays(14);
+        LocalDateTime tomatoCreateDate = today.minusDays(3);
+        AdvancedFood advTomato = new AdvancedFood("Tomato", tomatoExpire, tomatoCreateDate, 18, 60, true,  FoodType.VEGETABLES);
+
+
+
+        List<Food> listOfFood = new ArrayList<>();
         listOfFood.add(cheese);
-        listOfFood.add(milk1);
+        listOfFood.add(advMilk);
         listOfFood.add(advBanana);
+        listOfFood.add(advTomato);
 
 
         Recycle recycle = new Recycle("Recycle");
         Trash trash = new Trash("Trash");
+        RefrigeratorWareHouse refrigeratorWareHouse = new RefrigeratorWareHouse("RefrigeratorWareHouse");
+        Shop shop = new Shop("Shop");
+        Warehouse warehouse = new Warehouse("Warehouse");
+
+
+
         MoveToRecycle moveToRecycle = new MoveToRecycle(new MoveToTheTrash(recycle));
-        List<Mover> movers = List.of(moveToRecycle);
+        MoveToWHRefrigerator moveToWHRefrigerator = new MoveToWHRefrigerator(new MoveToTheWareHouse(refrigeratorWareHouse));
+        MoveToTheShop moveToTheShop = new MoveToTheShop(shop);
+        MoveToTheShopDisc moveToTheShopDisc = new MoveToTheShopDisc(shop);
+        MoveToTheTrash moveToTheTrash = new MoveToTheTrash(trash);
+        MoveToTheWareHouse moveToTheWareHouse = new MoveToTheWareHouse(warehouse);
+
+        List<Mover> movers = List.of(moveToRecycle, moveToWHRefrigerator, moveToTheShop, moveToTheShopDisc, moveToTheTrash, moveToTheWareHouse);
+        //List<Mover> movers = List.of(moveToTheShop);
         ControlQuality controlQuality = new ControlQuality(movers);
         controlQuality.moveProducts(listOfFood);
 
         recycle.printBalance();
+        refrigeratorWareHouse.printBalance();
+        shop.printBalance();
+        trash.printBalance();
+        warehouse.printBalance();
     }
 
 }

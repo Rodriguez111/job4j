@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.foodstorage.food.Food;
-import ru.job4j.foodstorage.food.FoodInterface;
 import ru.job4j.foodstorage.storage.Shop;
 
 import java.io.ByteArrayOutputStream;
@@ -16,7 +15,6 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class MoveToTheShopDiscTest {
     private final static String BALANCE = "Balance of products on ";
@@ -63,7 +61,7 @@ public class MoveToTheShopDiscTest {
         LocalDateTime milkExpire = today.plusDays(1);
         LocalDateTime milkCreateDate = today.minusDays(10);
         Food food = new Food("Milk", milkExpire, milkCreateDate, 100, 20);
-        List<FoodInterface> listOfFood = new ArrayList<>();
+        List<Food> listOfFood = new ArrayList<>();
         listOfFood.add(food);
 
         Shop shop = new Shop("Shop");
@@ -86,7 +84,7 @@ public class MoveToTheShopDiscTest {
         LocalDateTime milkExpire = today.plusDays(5);
         LocalDateTime milkCreateDate = today.minusDays(2);
         Food food = new Food("Milk", milkExpire, milkCreateDate, 100, 20);
-        List<FoodInterface> listOfFood = new ArrayList<>();
+        List<Food> listOfFood = new ArrayList<>();
         listOfFood.add(food);
 
         Shop shop = new Shop("Shop");
@@ -108,7 +106,7 @@ public class MoveToTheShopDiscTest {
         LocalDateTime milkExpire = today.minusDays(1);
         LocalDateTime milkCreateDate = today.minusDays(10);
         Food food = new Food("Milk", milkExpire, milkCreateDate, 100, 20);
-        List<FoodInterface> listOfFood = new ArrayList<>();
+        List<Food> listOfFood = new ArrayList<>();
         listOfFood.add(food);
 
         Shop shop = new Shop("Shop");

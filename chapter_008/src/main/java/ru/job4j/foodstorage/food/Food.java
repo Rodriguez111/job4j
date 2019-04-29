@@ -2,7 +2,7 @@ package ru.job4j.foodstorage.food;
 
 import java.time.LocalDateTime;
 
-public class Food implements FoodInterface {
+public class Food {
     private String name;
     private LocalDateTime expireDate;
     private LocalDateTime createDate;

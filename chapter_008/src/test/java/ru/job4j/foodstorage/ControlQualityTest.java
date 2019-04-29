@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.foodstorage.food.Food;
-import ru.job4j.foodstorage.food.FoodInterface;
 import ru.job4j.foodstorage.movement.*;
 import ru.job4j.foodstorage.storage.Shop;
 import ru.job4j.foodstorage.storage.Trash;
@@ -79,7 +78,7 @@ public class ControlQualityTest {
         LocalDateTime cheeseCreateDate = today.minusDays(35);
         Food cheese = new Food("Cheddar", cheeseExpire, cheeseCreateDate, 52, 50);
 
-        List<FoodInterface> listOfFood = new ArrayList<>();
+        List<Food> listOfFood = new ArrayList<>();
         listOfFood.add(milk1);
         listOfFood.add(beef);
         listOfFood.add(pork);

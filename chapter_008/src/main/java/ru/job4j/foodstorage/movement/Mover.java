@@ -1,13 +1,13 @@
 package ru.job4j.foodstorage.movement;
 
 import ru.job4j.foodstorage.food.Food;
-import ru.job4j.foodstorage.food.FoodInterface;
 
 import java.util.List;
 
 public interface Mover {
-    List<FoodInterface> select(List<FoodInterface> listOfFood);
+    List<Food> select(List<Food> listOfFood);
 
-    void move(List<FoodInterface> listOfFood);
+    void move(List<Food> listOfFood);
 
+    void put(List<Food> listOfFood);
 }

@@ -1,8 +1,6 @@
 package ru.job4j.foodstorage.movement;
 
 import ru.job4j.foodstorage.food.Food;
-import ru.job4j.foodstorage.food.FoodInterface;
-import ru.job4j.foodstorage.storage.Shop;
 import ru.job4j.foodstorage.storage.Storage;
 
 import java.time.Duration;
@@ -17,15 +15,14 @@ public class MoveToTheShop extends FoodMover {
         super(storage);
     }
 
-
-
     @Override
-    public boolean checkExpireDate(FoodInterface food) {
+    public boolean checkExpireDate(Food food) {
         LocalDateTime today = LocalDateTime.now();
         Duration lifetime = Duration.between(food.getCreateDate(), food.getExpireDate());
         long lowerThreshold = getThreshold(LOWER_PERCENTAGE_THRESHOLD, lifetime.toDays());
         long higherThreshold = getThreshold(HIGHER_PERCENTAGE_THRESHOLD, lifetime.toDays());
         Duration daysPassed = Duration.between(food.getCreateDate(), today);
-        return daysPassed.toDays() > lowerThreshold && daysPassed.toDays() < higherThreshold;
+        return daysPassed.toDays() >= lowerThreshold && daysPassed.toDays() <= higherThreshold;
     }
+
 }
