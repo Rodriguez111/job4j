@@ -61,7 +61,7 @@ public class RootItemTest {
         menuItem.setSubMenu(subMenu);
         subMenu.setSubMenu(subSubMenu);
 
-        RootItem rootItem =  RootItem.createMenu();
+        RootItem rootItem =  new RootItem();
         rootItem.addItem(menuItem);
         rootItem.printMenu();
 

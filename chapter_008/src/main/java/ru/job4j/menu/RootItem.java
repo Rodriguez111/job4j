@@ -6,24 +6,14 @@ import java.util.Optional;
 
 public class RootItem {
     private final static String DELIMITER = "=======================";
-    private static final List<MenuItem> ROOT = new ArrayList<>();
+    private final List<MenuItem> root = new ArrayList<>();
     private static RootItem rootItem;
-    private static int count;
-
-    private RootItem() {
-    }
-
-    public static RootItem createMenu() {
-        if (rootItem == null) {
-            rootItem = new RootItem();
-        }
-        return rootItem;
-    }
+    private int count;
 
 
     public void printMenu() {
         System.out.println(DELIMITER);
-        for (MenuItem eachItem : ROOT) {
+        for (MenuItem eachItem : root) {
             printItemWithSubItems(eachItem);
         }
         System.out.println(DELIMITER);
@@ -40,12 +30,12 @@ public class RootItem {
 
     public void addItem(MenuItem item) {
         item.setNumber(++count + ".");
-        ROOT.add(item);
+        root.add(item);
     }
 
     public Optional<Action> getAction(String itemNumber) {
         Optional<Action> result = Optional.empty();
-        for (MenuItem eachItem : ROOT) {
+        for (MenuItem eachItem : root) {
             if (result.isPresent()) {
                 break;
             }

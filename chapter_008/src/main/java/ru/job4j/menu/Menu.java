@@ -10,7 +10,7 @@ public class Menu {
 
     public Menu(Input input) {
         this.input = input;
-        this.root = RootItem.createMenu();
+        this.root = new RootItem();
         this.menuInitiator = new MenuInitiator(this);
         start();
     }
