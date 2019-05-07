@@ -5,7 +5,6 @@ import ru.job4j.food.foodstorage.food.Food;
 import java.time.LocalDateTime;
 
 public class AdvancedFood extends Food {
-
     private boolean isRecyclable;
 
     private FoodType type;

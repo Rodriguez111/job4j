@@ -64,19 +64,19 @@ public class MoveToWHRefrigeratorTest {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime tomatoExpire = today.plusDays(10);
         LocalDateTime tomatoCreateDate = today.minusDays(1);
-        Food food = new AdvancedFood("AdvancedTomato", tomatoExpire,
+        AdvancedFood advancedFood = new AdvancedFood("AdvancedTomato", tomatoExpire,
                 tomatoCreateDate, 100, 20,
                 true, FoodType.VEGETABLES);
-        List<Food> listOfFood = new ArrayList<>();
-        listOfFood.add(food);
+        List<AdvancedFood> listOfFood = new ArrayList<>();
+        listOfFood.add(advancedFood);
 
         RefrigeratorWareHouse refrigeratorWareHouse = new RefrigeratorWareHouse("RefrigeratorWareHouse");
-        Mover mover = new MoveToWHRefrigerator(new MoveToTheWareHouse(refrigeratorWareHouse));
-        mover.move(listOfFood);
+        MoveToWHRefrigerator mover = new MoveToWHRefrigerator(new MoveToTheWareHouse(refrigeratorWareHouse));
+        mover.moveAdvancedFood(listOfFood);
 
         refrigeratorWareHouse.printBalance();
 
-        List<Food> testList = List.of(food);
+        List<Food> testList = List.of(advancedFood);
         String actual = baos.toString();
         String expected = printTestOutput(testList, "RefrigeratorWareHouse");
 
@@ -112,15 +112,15 @@ public class MoveToWHRefrigeratorTest {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime bananaExpire = today.plusDays(5);
         LocalDateTime bananaCreateDate = today.minusDays(5);
-        Food food = new AdvancedFood("AdvancedBanana", bananaExpire,
+        AdvancedFood advancedFood = new AdvancedFood("AdvancedBanana", bananaExpire,
                 bananaCreateDate, 100, 20,
                 true, FoodType.VEGETABLES);
-        List<Food> listOfFood = new ArrayList<>();
-        listOfFood.add(food);
+        List<AdvancedFood> listOfFood = new ArrayList<>();
+        listOfFood.add(advancedFood);
 
         RefrigeratorWareHouse refrigeratorWareHouse = new RefrigeratorWareHouse("RefrigeratorWareHouse");
-        Mover mover = new MoveToWHRefrigerator(new MoveToTheWareHouse(refrigeratorWareHouse));
-        mover.move(listOfFood);
+        MoveToWHRefrigerator mover = new MoveToWHRefrigerator(new MoveToTheWareHouse(refrigeratorWareHouse));
+        mover.moveAdvancedFood(listOfFood);
 
         refrigeratorWareHouse.printBalance();
 
@@ -142,9 +142,8 @@ public class MoveToWHRefrigeratorTest {
         listOfFood.add(food);
 
         RefrigeratorWareHouse refrigeratorWareHouse = new RefrigeratorWareHouse("RefrigeratorWareHouse");
-        Mover mover = new MoveToWHRefrigerator(new MoveToTheWareHouse(refrigeratorWareHouse));
+        MoveToWHRefrigerator mover = new MoveToWHRefrigerator(new MoveToTheWareHouse(refrigeratorWareHouse));
         mover.move(listOfFood);
-
         refrigeratorWareHouse.printBalance();
 
         List<Food> testList = List.of();

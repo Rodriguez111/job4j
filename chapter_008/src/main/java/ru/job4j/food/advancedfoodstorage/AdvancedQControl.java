@@ -22,6 +22,4 @@ public class AdvancedQControl extends ControlQuality {
     public void resort() {
         resorter.resort();
     }
-
-
 }

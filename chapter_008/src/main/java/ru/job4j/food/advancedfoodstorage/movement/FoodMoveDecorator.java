@@ -11,37 +11,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class FoodMoveDecorator implements Mover {
-
     public final Mover mover;
 
     public FoodMoveDecorator(Mover mover) {
         this.mover = mover;
     }
 
-    @Override
-    public List<Food> select(List<Food> listOfFood) {
-        List<Food> select = mover.select(listOfFood);
+
+    public void moveAdvancedFood(List<AdvancedFood> listOfFood) {
+        List<AdvancedFood> temp = List.copyOf(listOfFood);
         List<Food> result = new ArrayList<>();
-        for (Food eachFood : select) {
-            try {
-                if (checkCondition((AdvancedFood) eachFood)) {
-                    result.add(eachFood);
-                } else {
-                    listOfFood.add(eachFood);
-                }
-            } catch (ClassCastException e) {
-                listOfFood.add(eachFood);
+        for (AdvancedFood eachFood : temp) {
+            if (checkCondition(eachFood)) {
+                result.add(eachFood);
+                listOfFood.remove(eachFood);
             }
         }
-        return result;
+      mover.move(result);
+    }
+
+    @Override
+    public List<Food> select(List<Food> listOfFood) {
+        return null;
     }
 
     @Override
     public void move(List<Food> listOfFood) {
-        List<Food> select = select(listOfFood);
-        if (select.size() > 0) {
-            put(select);
-        }
 
     }
 
@@ -50,11 +45,5 @@ public abstract class FoodMoveDecorator implements Mover {
         return this.mover.getStorage();
     }
 
-    @Override
-    public void put(List<Food> listOfFood) {
-        mover.put(listOfFood);
-    }
-
     public abstract boolean checkCondition(AdvancedFood food);
-
 }

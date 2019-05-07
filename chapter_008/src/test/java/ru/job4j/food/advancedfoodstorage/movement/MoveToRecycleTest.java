@@ -65,19 +65,19 @@ public class MoveToRecycleTest {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime milkExpire = today.minusDays(2);
         LocalDateTime milkCreateDate = today.minusDays(10);
-        Food food = new AdvancedFood("AdvancedMilk", milkExpire,
+        AdvancedFood advancedFood = new AdvancedFood("AdvancedMilk", milkExpire,
                 milkCreateDate, 100, 20,
                 true, FoodType.MILK);
-        List<Food> listOfFood = new ArrayList<>();
-        listOfFood.add(food);
+        List<AdvancedFood> listOfFood = new ArrayList<>();
+        listOfFood.add(advancedFood);
 
         Recycle recycle = new Recycle("Recycle");
-        Mover mover = new MoveToRecycle(new MoveToTheTrash(recycle));
-        mover.move(listOfFood);
+        MoveToRecycle mover = new MoveToRecycle(new MoveToTheTrash(recycle));
+        mover.moveAdvancedFood(listOfFood);
 
         recycle.printBalance();
 
-        List<Food> testList = List.of(food);
+        List<Food> testList = List.of(advancedFood);
         String actual = baos.toString();
         String expected = printTestOutput(testList, "Recycle");
 
@@ -89,15 +89,15 @@ public class MoveToRecycleTest {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime milkExpire = today.minusDays(2);
         LocalDateTime milkCreateDate = today.minusDays(10);
-        Food food = new AdvancedFood("AdvancedMilk", milkExpire,
+        AdvancedFood advancedFood = new AdvancedFood("AdvancedMilk", milkExpire,
                 milkCreateDate, 100, 20,
                 false, FoodType.MILK);
-        List<Food> listOfFood = new ArrayList<>();
-        listOfFood.add(food);
+        List<AdvancedFood> listOfFood = new ArrayList<>();
+        listOfFood.add(advancedFood);
 
         Recycle recycle = new Recycle("Recycle");
-        Mover mover = new MoveToRecycle(new MoveToTheTrash(recycle));
-        mover.move(listOfFood);
+        MoveToRecycle mover = new MoveToRecycle(new MoveToTheTrash(recycle));
+        mover.moveAdvancedFood(listOfFood);
 
         recycle.printBalance();
 
@@ -113,15 +113,15 @@ public class MoveToRecycleTest {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime milkExpire = today.plusDays(2);
         LocalDateTime milkCreateDate = today.minusDays(10);
-        Food food = new AdvancedFood("AdvancedMilk", milkExpire,
+        AdvancedFood advancedFood = new AdvancedFood("AdvancedMilk", milkExpire,
                 milkCreateDate, 100, 20,
                 true, FoodType.MILK);
-        List<Food> listOfFood = new ArrayList<>();
-        listOfFood.add(food);
+        List<AdvancedFood> listOfFood = new ArrayList<>();
+        listOfFood.add(advancedFood);
 
         Recycle recycle = new Recycle("Recycle");
-        Mover mover = new MoveToRecycle(new MoveToTheTrash(recycle));
-        mover.move(listOfFood);
+        MoveToRecycle mover = new MoveToRecycle(new MoveToTheTrash(recycle));
+        mover.moveAdvancedFood(listOfFood);
 
         recycle.printBalance();
 

@@ -41,12 +41,6 @@ public abstract class FoodMover implements Mover {
         }
     }
 
-    @Override
-    public void put(List<Food> listOfFood) {
-        if (listOfFood.size() > 0) {
-            this.storage.addFood(listOfFood);
-        }
-    }
 
     public StorageInterface getStorage() {
         return storage;

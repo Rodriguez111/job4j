@@ -9,7 +9,6 @@ import java.util.List;
 
 
 public class MoveToRecycle extends FoodMoveDecorator {
-
     public MoveToRecycle(MoveToTheTrash mover) {
         super(mover);
     }
@@ -17,13 +16,5 @@ public class MoveToRecycle extends FoodMoveDecorator {
     @Override
     public boolean checkCondition(AdvancedFood food) {
         return food.isRecyclable();
-    }
-
-    @Override
-    public void move(List<Food> listOfFood) {
-        List<Food> select = select(listOfFood);
-        if (select.size() > 0) {
-            super.put(select);
-        }
     }
 }

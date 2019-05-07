@@ -11,7 +11,6 @@ public class MoveToWHRefrigerator extends FoodMoveDecorator {
         super(mover);
     }
 
-
     @Override
     public boolean checkCondition(AdvancedFood food) {
         return food.getType().equals(FoodType.VEGETABLES);
