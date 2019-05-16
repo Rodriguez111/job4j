@@ -12,11 +12,10 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class MenuItemTest {
-    private final static String DELIMITER = "======================";
-    private final static String LS = System.lineSeparator();
 
+    private final static String LS = System.lineSeparator();
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    private InputStream originalInput;
+
     private PrintStream originalStream;
     private PrintStream newStream;
 
@@ -30,7 +29,7 @@ public class MenuItemTest {
     @After
     public void after() {
         System.setOut(originalStream);
-        System.setIn(originalInput);
+
     }
 
     public String printTestOutput(String offset, String number, String name) {

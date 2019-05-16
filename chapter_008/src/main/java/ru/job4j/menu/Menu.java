@@ -4,31 +4,54 @@ import java.util.Optional;
 
 public class Menu {
     private final Input input;
-    private final RootItem root;
-    private final MenuInitiator menuInitiator;
 
+    private final RootItem root = new RootItem();
+    private final MenuInitiator menuInitiator;
 
     public Menu(Input input) {
         this.input = input;
-        this.root = new RootItem();
+
         this.menuInitiator = new MenuInitiator(this);
         start();
     }
 
-    public void setItem(MenuItem item) {
-        root.addItem(item);
-    }
 
     private void print() {
         root.printMenu();
     }
 
     private Optional<Action> getAction(String itemNumber) {
-        return root.getAction(itemNumber);
+
+        Optional<Action> result = Optional.empty();
+        Optional<MenuItem> item = root.getItem(itemNumber);
+        if (item.isPresent()) {
+            result = Optional.of(item.get().getAction());
+        }
+        return result;
     }
 
-    public static void main(String[] args) {
-        Menu menu = new Menu(new ConsoleInput());
+    void addItem(String itemNumber, MenuItem subItem) {
+        int result = root.addItem(itemNumber, subItem);
+        if (result == -1) {
+            itemNotFoundMsg(itemNumber);
+        } else if (result == -2) {
+            subItemExistsMsg(itemNumber, subItem.getName());
+        }
+    }
+
+    void addAction(String itemNumber, Action action) {
+        if (!root.addAction(itemNumber, action)) {
+            itemNotFoundMsg(itemNumber);
+        }
+    }
+
+    private void itemNotFoundMsg(String itemNumber) {
+        System.out.println("Item with number \"" + itemNumber + "\" is not exists");
+    }
+
+    private void subItemExistsMsg(String itemNumber, String subItemName) {
+        System.out.println("Sub item \"" + subItemName + "\" already exists in item \"" + itemNumber + "\"");
+
     }
 
     private void start() {
@@ -44,4 +67,5 @@ public class Menu {
             act.run();
         }
     }
+
 }

@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.jupiter.api.AfterEach;
+
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -18,7 +21,7 @@ public class MenuTest {
     private final static String LS = System.lineSeparator();
 
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    private InputStream originalInput;
+
     private PrintStream originalStream;
     private PrintStream newStream;
 
@@ -32,7 +35,7 @@ public class MenuTest {
     @After
     public void after() {
         System.setOut(originalStream);
-        System.setIn(originalInput);
+
 
     }
 
@@ -40,7 +43,8 @@ public class MenuTest {
         StringBuilder sb = new StringBuilder();
         sb.append(DELIMITER)
                 .append(LS)
-                .append("1. Menu item")
+
+                .append("1. First")
                 .append(LS)
                 .append(" 1.1. SubItem")
                 .append(LS)
@@ -56,9 +60,9 @@ public class MenuTest {
                 .append(LS)
                 .append("  1.4.1. This is sub subItem too")
                 .append(LS)
-                .append("2. Another rootMenu item")
+                .append("2. Second")
                 .append(LS)
-                .append("3. One more rootMenu item")
+                .append("3. Third")
                 .append(LS)
                 .append("4. Exit")
                 .append(LS)
@@ -73,6 +77,26 @@ public class MenuTest {
 
         String actual = baos.toString();
         String expected = printTestMenu() + LS + "Menu item is running..." + LS + printTestMenu() + LS + "Bye-bye" + LS;
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void whenSelectItemWhichNotExistsThenPrintIncorrectItemMessage() {
+        List<String> list = List.of("5.", "4.");
+        Menu menu = new Menu(new FakeInput(list));
+
+        String actual = baos.toString();
+        String expected = printTestMenu() + LS + "Incorrect item number, please try again" + LS + printTestMenu() + LS + "Bye-bye" + LS;
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void whenSelectItemWhichDoNotHaveAccordingActionThenPrintNoActionMessage() {
+        List<String> list = List.of("3.", "4.");
+        Menu menu = new Menu(new FakeInput(list));
+
+        String actual = baos.toString();
+        String expected = printTestMenu() + LS + "No action is associated with this item." + LS + printTestMenu() + LS + "Bye-bye" + LS;
         assertThat(actual, is(expected));
     }
 

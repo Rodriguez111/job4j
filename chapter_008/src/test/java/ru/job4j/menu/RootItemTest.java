@@ -6,9 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
-import java.lang.reflect.Field;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -18,7 +16,8 @@ public class RootItemTest {
     private final static String LS = System.lineSeparator();
 
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    private InputStream originalInput;
+
+
     private PrintStream originalStream;
     private PrintStream newStream;
 
@@ -32,8 +31,6 @@ public class RootItemTest {
     @After
     public void after() {
         System.setOut(originalStream);
-        System.setIn(originalInput);
-
     }
 
     public String printTestItem(String offset, String number, String name) {
@@ -53,16 +50,15 @@ public class RootItemTest {
     }
 
     @Test
-    public void whenPrintMenuThenPrintAllItemsWithAllSubItems() throws Exception {
-
+    public void whenPrintMenuThenPrintAllItemsWithAllSubItems() {
         MenuItem menuItem = new MenuItem("Menu1");
         MenuItem subMenu = new MenuItem("SubMenu1");
         MenuItem subSubMenu = new MenuItem("SubSubMenu1");
         menuItem.setSubMenu(subMenu);
         subMenu.setSubMenu(subSubMenu);
 
-        RootItem rootItem =  new RootItem();
-        rootItem.addItem(menuItem);
+        RootItem rootItem = new RootItem();
+        rootItem.addItem("0.", menuItem);
         rootItem.printMenu();
 
         String actual = baos.toString();

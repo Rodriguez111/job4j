@@ -1,19 +1,21 @@
 package ru.job4j.menu;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
+import java.util.Stack;
 
 public class RootItem {
     private final static String DELIMITER = "=======================";
-    private final List<MenuItem> root = new ArrayList<>();
-    private static RootItem rootItem;
-    private int count;
+    private final MenuItem root = new MenuItem("ROOT");
 
+    public RootItem() {
+        this.root.setNumber("0.");
+    }
 
-    public void printMenu() {
+    void printMenu() {
         System.out.println(DELIMITER);
-        for (MenuItem eachItem : root) {
+        for (MenuItem eachItem : root.getSubMenu()) {
+
             printItemWithSubItems(eachItem);
         }
         System.out.println(DELIMITER);
@@ -28,33 +30,46 @@ public class RootItem {
         }
     }
 
-    public void addItem(MenuItem item) {
-        item.setNumber(++count + ".");
-        root.add(item);
-    }
 
-    public Optional<Action> getAction(String itemNumber) {
-        Optional<Action> result = Optional.empty();
-        for (MenuItem eachItem : root) {
-            if (result.isPresent()) {
-                break;
+    int addItem(String itemNumber, MenuItem subItem) {
+        int result = -1;
+        Optional<MenuItem> item = getItem(itemNumber);
+        if (item.isPresent()) {
+            if (item.get().subItemExists(subItem)) {
+                result = -2;
+            } else {
+                item.get().setSubMenu(subItem);
+                result = 0;
             }
-            result = search(eachItem, itemNumber);
+
         }
         return result;
     }
 
-    private Optional<Action> search(MenuItem item, String itemNumber) {
-        Optional<Action> result = Optional.empty();
-        if (itemNumber.equals(item.getNumber())) {
-            return Optional.of(item.getAction());
+
+    boolean addAction(String itemNumber, Action action) {
+        boolean result = false;
+        Optional<MenuItem> item = getItem(itemNumber);
+        if (item.isPresent()) {
+            item.get().setAction(action);
+            result = true;
         }
-        if (item.hasSubMenu()) {
-            for (int i = 0; i < item.getSubMenu().size(); i++) {
-                if (result.isPresent()) {
-                    break;
+        return result;
+    }
+
+    Optional<MenuItem> getItem(String itemNumber) {
+        Optional<MenuItem> result = Optional.empty();
+        Stack<MenuItem> stack = new Stack<>();
+        stack.push(this.root);
+        while (!stack.empty()) {
+            MenuItem currentItem = stack.pop();
+            if (itemNumber.equals(currentItem.getNumber())) {
+                result = Optional.of(currentItem);
+            } else {
+                for (MenuItem eachItem : currentItem.getSubMenu()) {
+                    stack.push(eachItem);
                 }
-                result = search(item.getSubMenu().get(i), itemNumber);
+
             }
         }
         return result;

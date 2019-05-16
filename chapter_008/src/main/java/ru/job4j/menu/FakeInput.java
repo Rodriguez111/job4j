@@ -3,7 +3,6 @@ package ru.job4j.menu;
 import java.util.List;
 
 public class FakeInput implements Input {
-
     private final List<String> answers;
     private int count;
 

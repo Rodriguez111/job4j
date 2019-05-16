@@ -3,6 +3,9 @@ package ru.job4j.menu;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Objects;
+
+
 public class MenuItem {
     private static final String SPACE = " ";
 
@@ -12,7 +15,11 @@ public class MenuItem {
 
     private int offset;
 
-    private Action action;
+
+    private Action action = () -> {
+        System.out.println("No action is associated with this item.");
+    };
+
 
     private List<MenuItem> subMenu = new ArrayList<>();
 
@@ -21,35 +28,47 @@ public class MenuItem {
         this.number = "1.";
     }
 
-    public void setSubMenu(MenuItem child) {
+
+    void setSubMenu(MenuItem child) {
+        String currentNumber = this.number;
+        if (currentNumber.equals("0.")) {
+            currentNumber = "";
+        }
         String childrenNumber;
-        childrenNumber = this.number + "" + (subMenu.size() + 1) + ".";
+        childrenNumber = currentNumber + "" + (subMenu.size() + 1) + ".";
         child.setNumber(childrenNumber);
-        child.setOffset(this.offset + 1);
+        if (!this.number.equals("0.")) {
+            child.setOffset(this.offset + 1);
+        }
         this.subMenu.add(child);
     }
 
-    public void setNumber(String number) {
+    void setNumber(String number) {
         this.number = number;
     }
 
-    public void setOffset(int offset) {
+    private void setOffset(int offset) {
         this.offset = offset;
     }
 
-    public List<MenuItem> getSubMenu() {
+    List<MenuItem> getSubMenu() {
         return this.subMenu;
     }
 
-    public void printItem() {
+    void printItem() {
         System.out.println(generateOffset() + this.number + SPACE + this.name);
     }
 
-    public boolean hasSubMenu() {
+    boolean hasSubMenu() {
         return subMenu.size() > 0;
     }
 
-    public void setAction(Action action) {
+    boolean subItemExists(MenuItem rootItem) {
+        return this.subMenu.contains(rootItem);
+    }
+
+    void setAction(Action action) {
+
         this.action = action;
     }
 
@@ -61,11 +80,34 @@ public class MenuItem {
         return sb.toString();
     }
 
-    public String getNumber() {
+
+    String getNumber() {
         return number;
     }
 
-    public Action getAction() {
+    Action getAction() {
         return action;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MenuItem menuItem = (MenuItem) o;
+        return Objects.equals(name, menuItem.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
 }
