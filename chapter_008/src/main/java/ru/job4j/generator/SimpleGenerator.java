@@ -10,12 +10,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SimpleGenerator implements GenerateInterface {
-    private final  String patternString;
-    private final Pattern pattern;
+    private final  Pattern pattern;
 
     public SimpleGenerator(String patternString) {
-        this.patternString = patternString;
-        this.pattern = Pattern.compile(String.format(patternString, "\\S{1,}"));
+        this.pattern = Pattern.compile(patternString);
     }
 
     /**
@@ -43,33 +41,13 @@ public class SimpleGenerator implements GenerateInterface {
         int occurrences = occurrenceCount(string);
         keyMappingValidation(occurrences, pairs.size());
 
-        Pattern pattern = generatePattern(pairs);
         Matcher matcher = pattern.matcher(string);
-
         while (matcher.find()) {
             String extractWord = matcher.group().substring(2, matcher.group().length() - 1);
             string = string.replace(matcher.group(), pairs.get(extractWord));
 
         }
         return string;
-    }
-
-    /**
-     * Substitutes certain words from the map (entry key)
-     * into the original pattern (patternString field)
-     * and generates compiled Pattern instance.
-     * @param pairs - map with pairs.
-     * @return - compiled Pattern instance.
-     */
-    private Pattern generatePattern(Map<String, String> pairs) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, String> eachPair : pairs.entrySet()) {
-            sb.append("(")
-                    .append(String.format(this.patternString, eachPair.getKey()))
-                    .append(")|");
-        }
-        String regEx = sb.toString().substring(0, sb.length() - 1);
-        return Pattern.compile(regEx);
     }
 
     /**

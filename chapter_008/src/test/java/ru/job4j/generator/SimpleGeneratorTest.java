@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class SimpleGeneratorTest {
-    private final String patternString = "\\$\\{%s\\}";
+    private final String patternString = "\\$\\{\\S{1,}\\}";
     private final GenerateInterface generator = new SimpleGenerator(patternString);
 
     @Test
