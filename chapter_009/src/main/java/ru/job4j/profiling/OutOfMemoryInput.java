@@ -1,4 +1,4 @@
-package profiling;
+package ru.job4j.profiling;
 
 import ru.job4j.tracker.Input;
 

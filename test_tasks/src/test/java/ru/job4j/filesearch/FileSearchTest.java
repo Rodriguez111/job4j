@@ -97,9 +97,7 @@ public class FileSearchTest {
             read = br.readLine();
         }
         br.close();
-
         String actual = sb.toString();
-
         sb.setLength(0);
         sb.append(new File(source + "/newfolder/newfolderztext2").getAbsolutePath())
                 .append(ls);
