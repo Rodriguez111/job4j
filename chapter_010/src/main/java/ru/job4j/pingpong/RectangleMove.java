@@ -3,12 +3,15 @@ package ru.job4j.pingpong;
 import javafx.scene.shape.Rectangle;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class RectangleMove implements Runnable {
     private final Rectangle rect;
     private final int limitX;
     private final int limitY;
     private final Runnable runnable;
+    private int step = 1;
+    private final static int SLEEP = 50;
     private final Map<Directions, Runnable> movements = new HashMap<>();
 
     private void initMovements() {
@@ -47,57 +50,43 @@ public class RectangleMove implements Runnable {
         return this.rect.getY() >= limitY - rect.getHeight();
     }
 
-    private void moveHorizontal() {
-        int step = 1;
-        while (true) {
+    private void move(Consumer<Integer> consumer) {
+        while (!Thread.currentThread().isInterrupted()) {
             if (borderReached()) {
                 step = -step;
             }
-            this.rect.setX(this.rect.getX() + step);
-            sleep(50);
+            consumer.accept(step);
+            sleep();
         }
+    }
+
+    private void moveHorizontal() {
+        move((step) -> {this.rect.setX(this.rect.getX() + step);});
     }
 
     private void moveVertical() {
-        int step = 1;
-        while (true) {
-            if (borderReached()) {
-                step = -step;
-            }
-            this.rect.setY(this.rect.getY() - step);
-            sleep(50);
-        }
+        move((step) -> {this.rect.setY(this.rect.getY() - step);});
     }
 
     private void moveMainDiagonal() {
-        int step = 1;
-        while (true) {
-            if (borderReached()) {
-                step = -step;
-            }
-            this.rect.setX(this.rect.getX() + step);
+        move((step) -> {this.rect.setX(this.rect.getX() + step);
             this.rect.setY(this.rect.getY() + step);
-            sleep(50);
-        }
+        });
     }
 
     private void moveSecondaryDiagonal() {
-        int step = 1;
-        while (true) {
-            if (borderReached()) {
-                step = -step;
-            }
-            this.rect.setX(this.rect.getX() + step);
+        move((step) -> {this.rect.setX(this.rect.getX() + step);
             this.rect.setY(this.rect.getY() - step);
-            sleep(50);
-        }
+        });
     }
 
-    private void sleep(int milliseconds) {
+
+    private void sleep() {
         try {
-            Thread.sleep(milliseconds);
+            Thread.sleep(SLEEP);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(Thread.currentThread().getName() + " was interrupted");
+            Thread.currentThread().interrupt();
         }
     }
 
