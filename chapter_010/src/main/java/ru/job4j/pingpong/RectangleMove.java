@@ -49,7 +49,7 @@ public class RectangleMove implements Runnable {
 
     private void moveHorizontal() {
         int step = 1;
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             if (borderReached()) {
                 step = -step;
             }
@@ -60,7 +60,7 @@ public class RectangleMove implements Runnable {
 
     private void moveVertical() {
         int step = 1;
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             if (borderReached()) {
                 step = -step;
             }
@@ -71,7 +71,7 @@ public class RectangleMove implements Runnable {
 
     private void moveMainDiagonal() {
         int step = 1;
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             if (borderReached()) {
                 step = -step;
             }
@@ -83,7 +83,7 @@ public class RectangleMove implements Runnable {
 
     private void moveSecondaryDiagonal() {
         int step = 1;
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             if (borderReached()) {
                 step = -step;
             }
@@ -97,7 +97,8 @@ public class RectangleMove implements Runnable {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(Thread.currentThread().getName() + " was interrupted");
+            Thread.currentThread().interrupt();
         }
     }
 
