@@ -3,14 +3,11 @@ package ru.job4j.pingpong;
 import javafx.scene.shape.Rectangle;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class RectangleMove implements Runnable {
     private final Rectangle rect;
     private final int limitX;
     private final int limitY;
-    private final static int SLEEP = 50;
-    private int step = 1;
     private final Runnable runnable;
     private final Map<Directions, Runnable> movements = new HashMap<>();
 
@@ -50,42 +47,58 @@ public class RectangleMove implements Runnable {
         return this.rect.getY() >= limitY - rect.getHeight();
     }
 
-
-    private void move(Consumer<Integer> consumer) {
-        while (true) {
+    private void moveHorizontal() {
+        int step = 1;
+        while (!Thread.currentThread().isInterrupted()) {
             if (borderReached()) {
                 step = -step;
             }
-            consumer.accept(step);
-            sleep();
+            this.rect.setX(this.rect.getX() + step);
+            sleep(50);
         }
     }
 
-    private void moveHorizontal() {
-        move((step) -> {this.rect.setX(this.rect.getX() + step);});
-    }
-
     private void moveVertical() {
-        move((step) -> {this.rect.setY(this.rect.getY() - step);});
+        int step = 1;
+        while (!Thread.currentThread().isInterrupted()) {
+            if (borderReached()) {
+                step = -step;
+            }
+            this.rect.setY(this.rect.getY() - step);
+            sleep(50);
+        }
     }
 
     private void moveMainDiagonal() {
-        move((step) -> {this.rect.setX(this.rect.getX() + step);
-        this.rect.setY(this.rect.getY() + step);
-        });
+        int step = 1;
+        while (!Thread.currentThread().isInterrupted()) {
+            if (borderReached()) {
+                step = -step;
+            }
+            this.rect.setX(this.rect.getX() + step);
+            this.rect.setY(this.rect.getY() + step);
+            sleep(50);
+        }
     }
 
     private void moveSecondaryDiagonal() {
-        move((step) -> {this.rect.setX(this.rect.getX() + step);
+        int step = 1;
+        while (!Thread.currentThread().isInterrupted()) {
+            if (borderReached()) {
+                step = -step;
+            }
+            this.rect.setX(this.rect.getX() + step);
             this.rect.setY(this.rect.getY() - step);
-        });
+            sleep(50);
+        }
     }
 
-    private void sleep() {
+    private void sleep(int milliseconds) {
         try {
-            Thread.sleep(SLEEP);
+            Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(Thread.currentThread().getName() + " was interrupted");
+            Thread.currentThread().interrupt();
         }
     }
 
