@@ -9,9 +9,9 @@ public class RectangleMove implements Runnable {
     private final Rectangle rect;
     private final int limitX;
     private final int limitY;
-    private final Runnable runnable;
-    private int step = 1;
     private final static int SLEEP = 50;
+    private int step = 1;
+    private final Runnable runnable;
     private final Map<Directions, Runnable> movements = new HashMap<>();
 
     private void initMovements() {
@@ -50,8 +50,9 @@ public class RectangleMove implements Runnable {
         return this.rect.getY() >= limitY - rect.getHeight();
     }
 
+
     private void move(Consumer<Integer> consumer) {
-        while (!Thread.currentThread().isInterrupted()) {
+        while (true) {
             if (borderReached()) {
                 step = -step;
             }
@@ -70,7 +71,7 @@ public class RectangleMove implements Runnable {
 
     private void moveMainDiagonal() {
         move((step) -> {this.rect.setX(this.rect.getX() + step);
-            this.rect.setY(this.rect.getY() + step);
+        this.rect.setY(this.rect.getY() + step);
         });
     }
 
@@ -80,13 +81,11 @@ public class RectangleMove implements Runnable {
         });
     }
 
-
     private void sleep() {
         try {
             Thread.sleep(SLEEP);
         } catch (InterruptedException e) {
-            System.out.println(Thread.currentThread().getName() + " was interrupted");
-            Thread.currentThread().interrupt();
+            e.printStackTrace();
         }
     }
 
