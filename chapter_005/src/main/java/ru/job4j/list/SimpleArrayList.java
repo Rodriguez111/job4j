@@ -57,6 +57,9 @@ private void growUp() {
     return indexOf;
     }
 
+    public int size() {
+        return size;
+    }
 
     @Override
     public Iterator<E> iterator() {
