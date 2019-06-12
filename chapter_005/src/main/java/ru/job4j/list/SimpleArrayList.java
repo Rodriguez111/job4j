@@ -22,6 +22,14 @@ public boolean add(E value) {
     return true;
 }
 
+    public boolean addAll(Iterable<E> collection) {
+        boolean result = false;
+        for(E eachElement : collection) {
+            result = add(eachElement);
+        }
+        return result;
+    }
+
 public E get(int index) {
     return array[index];
 }
@@ -57,6 +65,9 @@ private void growUp() {
     return indexOf;
     }
 
+    public int size() {
+        return size;
+    }
 
     @Override
     public Iterator<E> iterator() {
