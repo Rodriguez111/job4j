@@ -16,11 +16,11 @@ public class SimpleBlockingQueue<T> {
 
     private boolean isFull = false;
 
-    public SimpleBlockingQueue(int bound) {
+    public SimpleBlockingQueue(final int bound) {
         this.bound = bound;
     }
 
-    public synchronized void offer(T value) {
+    public synchronized void offer(final T value) {
         if (this.queue.size() < this.bound) {
             this.queue.offer(value);
             if (this.queue.size() == bound) {
