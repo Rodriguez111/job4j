@@ -16,39 +16,18 @@ public class SimpleBlockingQueueTest2 {
     final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(10);
 
     Thread producer = new Thread(() -> {
-        synchronized (queue) {
+
             for (int i = 0; i < 10; i++) {
-                synchronized (queue) {
                     queue.offer(i);
-                    queue.notifyAll();
-                    while (queue.isFull()) {
-                        try {
-                            queue.wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
             }
-        }
     });
 
     Thread consumer = new Thread(() -> {
 
         while (!queue.isEmpty() || !Thread.currentThread().isInterrupted()) {
-            synchronized (queue) {
-                if (!queue.isEmpty()) {
-                    buffer.add(queue.poll());
-                    queue.notifyAll();
-                }
-                while (queue.isEmpty()) {
-                    try {
-                        queue.wait();
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
-                }
+            Integer poll = queue.poll();
+            if(poll != null) {
+                buffer.add(poll);
             }
         }
     });

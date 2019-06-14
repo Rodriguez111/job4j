@@ -14,32 +14,40 @@ public class SimpleBlockingQueue<T> {
 
     private final int bound;
 
-    private boolean isFull = false;
-
-    public SimpleBlockingQueue(final int bound) {
+    public SimpleBlockingQueue(int bound) {
         this.bound = bound;
     }
 
-    public synchronized void offer(final T value) {
-        if (this.queue.size() < this.bound) {
-            this.queue.offer(value);
-            if (this.queue.size() == bound) {
-                this.isFull = true;
+    public synchronized void offer(T value) {
+        while (isFull()) {
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
+        this.queue.offer(value);
+        this.notifyAll();
     }
 
     public synchronized T poll() {
-        this.isFull = false;
-        return this.queue.poll();
+        while (isEmpty() && !Thread.currentThread().isInterrupted()) {
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        T result = this.queue.poll();
+        this.notifyAll();
+        return result;
     }
 
-    public boolean isFull() {
-        return isFull;
+    private boolean isFull() {
+        return this.queue.size() == bound;
     }
 
     public synchronized boolean isEmpty() {
         return this.queue.size() == 0;
-
     }
 }

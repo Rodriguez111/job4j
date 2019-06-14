@@ -26,21 +26,7 @@ public class SimpleBlockingQueueTest {
 
         private void produce(int amount) {
             for (int i = 0; i < amount; i++) {
-                synchronized (simpleBlockingQueue) {
-                    if (!simpleBlockingQueue.isFull()) {
-                        simpleBlockingQueue.offer(i);
-                        simpleBlockingQueue.notifyAll();
-                    } else {
-                        while (simpleBlockingQueue.isFull()) {
-                            try {
-                                simpleBlockingQueue.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        i--;
-                    }
-                }
+                simpleBlockingQueue.offer(i);
             }
         }
     }
@@ -48,7 +34,6 @@ public class SimpleBlockingQueueTest {
     private class Consumer extends Thread {
         private final SimpleBlockingQueue<Integer> simpleBlockingQueue;
         private final List<Integer> result = new ArrayList<>();
-        private boolean isStopped = false;
 
         public Consumer(SimpleBlockingQueue<Integer> simpleBlockingQueue) {
             this.simpleBlockingQueue = simpleBlockingQueue;
@@ -56,30 +41,17 @@ public class SimpleBlockingQueueTest {
 
         @Override
         public void run() {
-            while (!isStopped) {
+            while (!isInterrupted() || !simpleBlockingQueue.isEmpty()) {
                 consume();
             }
+
         }
 
         private void consume() {
-            synchronized (simpleBlockingQueue) {
-                if (!simpleBlockingQueue.isEmpty()) {
-                    this.result.add(simpleBlockingQueue.poll());
-                    simpleBlockingQueue.notifyAll();
-                } else {
-                    while (simpleBlockingQueue.isEmpty() && !isStopped) {
-                        try {
-                            simpleBlockingQueue.wait(10);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+            Integer polled = simpleBlockingQueue.poll();
+            if (polled != null) {
+                result.add(polled);
             }
-        }
-
-        public void setStopped(boolean stopped) {
-            isStopped = stopped;
         }
 
         public int getResultSize() {
@@ -97,10 +69,8 @@ public class SimpleBlockingQueueTest {
         producer.start();
         consumer.start();
         producer.join();
-        Thread.sleep(500);
-        consumer.setStopped(true);
+        consumer.interrupt();
         consumer.join();
-
         Assert.assertThat(consumer.getResultSize(), is(1000000));
     }
 }
