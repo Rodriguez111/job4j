@@ -19,24 +19,22 @@ public class SimpleBlockingQueue<T> {
     }
 
     public synchronized void offer(T value) {
-        while (isFull()) {
-            try {
+
+        try {
+            while (isFull()) {
                 this.wait();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
             }
+            this.queue.offer(value);
+            this.notifyAll();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
-        this.queue.offer(value);
-        this.notifyAll();
+
     }
 
-    public synchronized T poll() {
+    public synchronized T poll() throws InterruptedException {
         while (isEmpty() && !Thread.currentThread().isInterrupted()) {
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+            this.wait();
         }
         T result = this.queue.poll();
         this.notifyAll();

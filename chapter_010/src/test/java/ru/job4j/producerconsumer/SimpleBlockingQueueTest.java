@@ -48,9 +48,10 @@ public class SimpleBlockingQueueTest {
         }
 
         private void consume() {
-            Integer polled = simpleBlockingQueue.poll();
-            if (polled != null) {
-                result.add(polled);
+            try {
+                result.add(simpleBlockingQueue.poll());
+            } catch (InterruptedException e) {
+                interrupt();
             }
         }
 
