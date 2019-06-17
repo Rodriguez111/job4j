@@ -10,26 +10,28 @@ import java.util.Iterator;
 public class ThreadSafeList<E> implements Iterable<E> {
 
    @GuardedBy("this")
-   private final SimpleArrayList<E> simpleArrayList;
+   private final SimpleArrayList<E> simpleArrayList = new SimpleArrayList<>();
 
-    public ThreadSafeList(SimpleArrayList<E> simpleArrayList) {
-        this.simpleArrayList = simpleArrayList;
+    public ThreadSafeList() {
     }
 
+    public ThreadSafeList(final SimpleArrayList<E> simpleArrayList) {
+        this.simpleArrayList.addAll(simpleArrayList);
+    }
 
-    public synchronized boolean add(E value) {
+    public synchronized boolean add(final E value) {
         return simpleArrayList.add(value);
     }
 
-    public synchronized E get(int index) {
+    public synchronized E get(final int index) {
         return simpleArrayList.get(index);
     }
 
-    public synchronized int indexOf(E item) {
+    public synchronized int indexOf(final E item) {
         return simpleArrayList.indexOf(item);
     }
 
-    public boolean contains(E item) {
+    public boolean contains(final E item) {
         return indexOf(item) >= 0;
     }
 
