@@ -10,7 +10,7 @@ public class ParallelSearch {
 
                         try {
                             System.out.println(queue.poll());
-                            Thread.sleep(50);
+                            Thread.sleep(1);
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
                         }
@@ -20,7 +20,7 @@ public class ParallelSearch {
         consumer.start();
         new Thread(
                 () -> {
-                    for (int index = 0; index != 10; index++) {
+                    for (int index = 0; index != 1000; index++) {
                         queue.offer(index);
                     }
                     consumer.interrupt();

@@ -65,13 +65,13 @@ public class SimpleBlockingQueueTest {
         SimpleBlockingQueue<Integer> simpleBlockingQueue = new SimpleBlockingQueue<>(100);
 
         Consumer consumer = new Consumer(simpleBlockingQueue);
-        Producer producer = new Producer(simpleBlockingQueue, 1000000);
+        Producer producer = new Producer(simpleBlockingQueue, 10000);
 
         producer.start();
         consumer.start();
         producer.join();
         consumer.interrupt();
         consumer.join();
-        Assert.assertThat(consumer.getResultSize(), is(1000000));
+        Assert.assertThat(consumer.getResultSize(), is(10000));
     }
 }

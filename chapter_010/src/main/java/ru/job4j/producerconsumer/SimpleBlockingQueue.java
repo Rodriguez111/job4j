@@ -8,18 +8,22 @@ import java.util.Queue;
 
 @ThreadSafe
 public class SimpleBlockingQueue<T> {
+    private final static int DEFAULT_BOUND = 100;
 
     @GuardedBy("this")
     private final Queue<T> queue = new LinkedList<>();
 
     private final int bound;
 
+    public SimpleBlockingQueue() {
+        this.bound = DEFAULT_BOUND;
+    }
+
     public SimpleBlockingQueue(int bound) {
         this.bound = bound;
     }
 
     public synchronized void offer(T value) {
-
         try {
             while (isFull()) {
                 this.wait();
