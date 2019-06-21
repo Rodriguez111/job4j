@@ -112,7 +112,7 @@ public class UserComputerBasicLogic implements BasicLogic {
 
     @Override
     public void printWhoMoves(char sign) {
-        if(!gameOver) {
+        if (!gameOver) {
           gameField.getOutput().printWhoMoves(sign);
         }
 
