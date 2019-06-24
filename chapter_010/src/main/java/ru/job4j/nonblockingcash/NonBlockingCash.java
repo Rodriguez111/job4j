@@ -100,8 +100,6 @@ public class NonBlockingCash {
             }
             return model;
         });
-
-
     }
 
     private boolean compareAndUpdate(int expectedVersion, Base oldModel, Base newModel) {
