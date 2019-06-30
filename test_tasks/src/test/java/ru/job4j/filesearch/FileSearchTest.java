@@ -14,13 +14,17 @@ import static org.junit.Assert.assertThat;
 
 public class FileSearchTest {
     private final String path = System.getProperty("java.io.tmpdir");
-    private final String source = path + "/00Test";
+    private final String source = path + "/000Test";
     private final String outputDir = path + "/00Output";
     private final String outputFile = outputDir + "/log.txt";
     private final String ls = System.lineSeparator();
 
     public void createTestFilesStructure() throws IOException {
-        new File(source).mkdirs();
+        File sourceDir = new File(source);
+        if (sourceDir.exists()) {
+            sourceDir.delete();
+        }
+        sourceDir.mkdirs();
         new File(outputDir).mkdirs();
         new File(outputFile).createNewFile();
         new File(source + "/text.pdf").createNewFile();

@@ -12,20 +12,20 @@
   <artifactId>chapter_007</artifactId>
 
   <dependencies>
-  <dependency>
-    <groupId>ru.job4j</groupId>
-    <artifactId>chapter_002</artifactId>
-    <version>2.0</version>
-  </dependency>
+    <dependency>
+      <groupId>ru.job4j</groupId>
+      <artifactId>chapter_002</artifactId>
+      <version>2.0</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
     <dependency>
       <groupId>org.xerial</groupId>
       <artifactId>sqlite-jdbc</artifactId>
       <version>3.21.0.1</version>
     </dependency>
+
   </dependencies>
-
-
   <build>
     <plugins>
       <plugin>
@@ -50,10 +50,6 @@
       </plugin>
     </plugins>
   </build>
-
-
-
-
 </project>
 
 

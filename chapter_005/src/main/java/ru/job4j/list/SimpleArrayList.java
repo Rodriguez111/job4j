@@ -24,7 +24,7 @@ public boolean add(E value) {
 
     public boolean addAll(Iterable<E> collection) {
         boolean result = false;
-        for(E eachElement : collection) {
+        for (E eachElement : collection) {
             result = add(eachElement);
         }
         return result;
