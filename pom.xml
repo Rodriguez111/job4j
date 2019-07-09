@@ -24,6 +24,7 @@
         <module>chapter_008</module>
 		<module>chapter_009</module>
 		<module>chapter_010</module>
+        <module>chapter_011</module>
         <module>chess</module>
         <module>tictactoe</module>
         <module>puzzle</module>
