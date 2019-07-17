@@ -3,7 +3,7 @@ package ru.job4j.crudservlet;
 import java.util.Objects;
 
 public class User {
-    private static int count;
+
     private int id;
 
     private String name;
@@ -15,15 +15,10 @@ public class User {
     private String createDate;
 
     public User(String name, String login, String email, String createDate) {
-        this.id = incrementCount();
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = createDate;
-    }
-
-    private synchronized int incrementCount() {
-       return this.id = count++;
     }
 
     public int getId() {
@@ -64,12 +59,16 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return name.equals(user.name) &&
-                login.equals(user.login) &&
-                email.equals(user.email);
+        return name.equals(user.name)
+                && login.equals(user.login)
+               && email.equals(user.email);
     }
 
     @Override
