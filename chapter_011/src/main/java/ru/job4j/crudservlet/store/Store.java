@@ -5,11 +5,11 @@ import ru.job4j.crudservlet.User;
 import java.util.List;
 
 public interface Store {
-    void add(User user);
+    boolean add(User user);
 
-    void update(User user);
+    void update(int id, User user);
 
-    void delete(User user);
+    boolean delete(User user);
 
     List<User> findAll();
 

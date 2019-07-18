@@ -7,7 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserStore implements Store {
-    private final List<User> listOfUsers = new CopyOnWriteArrayList<>();
+    private final CopyOnWriteArrayList<User> listOfUsers = new CopyOnWriteArrayList<>();
     private static final AtomicInteger COUNT = new AtomicInteger();
     private final static UserStore INSTANCE = new UserStore();
 
@@ -19,18 +19,22 @@ public class UserStore implements Store {
     }
 
     @Override
-    public void add(User user) {
+    public boolean add(User user) {
         user.setId(generateId());
-        listOfUsers.add(user);
+        return listOfUsers.addIfAbsent(user);
     }
 
     @Override
-    public void update(User user) {
+    public void update(int id, User user) {
+        User existingUser = findById(id);
+        existingUser.setName(user.getName());
+        existingUser.setLogin(user.getLogin());
+        existingUser.setEmail(user.getEmail());
     }
 
     @Override
-    public void delete(User user) {
-        listOfUsers.remove(user);
+    public boolean delete(User user) {
+        return listOfUsers.remove(user);
     }
 
     @Override

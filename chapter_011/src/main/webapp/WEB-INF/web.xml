@@ -5,12 +5,10 @@
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 
-
     <servlet>
         <servlet-name>UsersServlet</servlet-name>
-        <servlet-class>ru.job4j.crudservlet.presentation.UsersServlet</servlet-class>
+        <jsp-file>/WEB-INF/ru/job4j/crudservlet/index.jsp</jsp-file>
         <load-on-startup>0</load-on-startup>
-<!--        <jsp-file>/WEB-INF/ru/job4j/crudservlet/index.jsp</jsp-file>-->
     </servlet>
     <servlet>
         <servlet-name>UserAddServlet</servlet-name>
