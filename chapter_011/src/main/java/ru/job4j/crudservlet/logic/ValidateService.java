@@ -37,7 +37,6 @@ public class ValidateService implements Validator {
                 LOG.info("New user added successfully");
             }
         }
-
         return result;
     }
 

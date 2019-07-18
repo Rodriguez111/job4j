@@ -5,7 +5,10 @@
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 
-
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>ru.job4j.jsp.UserServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>UsersServlet</servlet-name>
         <servlet-class>ru.job4j.crudservlet.presentation.UsersServlet</servlet-class>
@@ -25,6 +28,10 @@
         <servlet-class>ru.job4j.crudservlet.presentation.UserDeleteServlet</servlet-class>
     </servlet>
 
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/echo</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UsersServlet</servlet-name>
         <url-pattern>/</url-pattern>
