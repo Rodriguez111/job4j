@@ -20,10 +20,14 @@ public class EchoServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(EchoServlet.class);
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        writer.append("Hello world");
-        writer.flush();
+    public void init() throws ServletException {
+        System.out.println("INIT------------------------------===========");
     }
+    //    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        resp.setContentType("text/html");
+//        PrintWriter writer = new PrintWriter(resp.getOutputStream());
+//        writer.append("Hello world");
+//        writer.flush();
+//    }
 }
