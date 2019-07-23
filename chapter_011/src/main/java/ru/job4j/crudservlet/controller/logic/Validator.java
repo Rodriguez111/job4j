@@ -1,4 +1,4 @@
-package ru.job4j.crudservlet.logic;
+package ru.job4j.crudservlet.controller.logic;
 
 import ru.job4j.crudservlet.User;
 

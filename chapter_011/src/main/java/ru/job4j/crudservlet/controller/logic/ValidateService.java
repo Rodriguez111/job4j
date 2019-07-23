@@ -1,11 +1,10 @@
-package ru.job4j.crudservlet.logic;
+package ru.job4j.crudservlet.controller.logic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.crudservlet.User;
-import ru.job4j.crudservlet.store.DBStore;
-import ru.job4j.crudservlet.store.Store;
-import ru.job4j.crudservlet.store.UserStore;
+import ru.job4j.crudservlet.model.DBStore;
+import ru.job4j.crudservlet.model.Store;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
@@ -52,7 +51,7 @@ public class ValidateService implements Validator {
             if (user != null) {
                 if (updateUser(request, user)) {
                     USER_STORE.update(id, user);
-                    LOG.info("User with ID = " + id + " updated successfully");
+                    LOG.info("TestUser with ID = " + id + " updated successfully");
                 }
             } else {
                 result = false;
@@ -79,7 +78,7 @@ public class ValidateService implements Validator {
             result = false;
         }
         if (result) {
-            LOG.info("User with ID = " + id + " deleted successfully");
+            LOG.info("TestUser with ID = " + id + " deleted successfully");
         }
         return result;
     }

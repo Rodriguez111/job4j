@@ -1,4 +1,4 @@
-package ru.job4j.crudservlet.store;
+package ru.job4j.crudservlet.model;
 
 import ru.job4j.crudservlet.User;
 

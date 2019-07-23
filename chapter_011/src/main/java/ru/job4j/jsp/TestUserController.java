@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 
 /**
@@ -18,10 +17,14 @@ import java.io.PrintWriter;
  * http://localhost:8080/chapter_011-2.0/echo
  * Для остановки запускаем скрипт shutdown.bat.
  */
-public class UserServlet extends HttpServlet {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserServlet.class);
+public class TestUserController extends HttpServlet {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestUserController.class);
 
-
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("users", TestUserStorage.getINSTANCE().getUsers());
+        req.getRequestDispatcher("/WEB-INF/view/TestUserView.jsp").forward(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,7 +32,8 @@ public class UserServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String login = req.getParameter("login");
         String email = req.getParameter("email");
-        UserStorage.getINSTANCE().add(new User(login, email));
-        resp.sendRedirect(String.format("%s/0index.jsp", req.getContextPath()));
+        TestUserStorage.getINSTANCE().add(new TestUser(login, email));
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
+
     }
 }

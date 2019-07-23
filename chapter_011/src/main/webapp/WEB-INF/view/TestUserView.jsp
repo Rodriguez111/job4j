@@ -1,6 +1,8 @@
-<%@ page import="ru.job4j.jsp.User" %>
-<%@ page import="ru.job4j.jsp.UserStorage" %>
+<%@ page import="ru.job4j.jsp.TestUser" %>
+<%@ page import="ru.job4j.jsp.TestUserStorage" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Title</title>
@@ -11,7 +13,7 @@
 
 
 
-<form action="<%=request.getContextPath()%>/echo" method="post">
+<form action="${pageContext.servletContext.contextPath}/" method="post">
     Login: <input type="text" name="login"><br/><br/>
     Email: <input type="text" name="email"><br/><br/>
     <input type="submit">
@@ -22,12 +24,13 @@
       <th>Login</th>
       <th>Email</th>
     </tr>
-    <% for (User eachUser : UserStorage.getINSTANCE().getUsers()) {%>
+    <c:forEach items="${users}" var="user">
+
     <tr>
-        <td><%=eachUser.getLogin()%></td>
-        <td><%=eachUser.getEmail()%></td>
+        <td><c:out value="${user.login}" /></td>
+        <td><c:out value="${user.email}" /></td>
     </tr>
-    <% } %>
+    </c:forEach>
 
 </table>
 
