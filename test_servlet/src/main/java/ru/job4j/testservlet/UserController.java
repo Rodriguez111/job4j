@@ -23,15 +23,10 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
-        synchronized (session) {
-            if (session == null || session.getAttribute("login") == null) {
-                resp.sendRedirect(String.format("%s/signin", req.getContextPath()));
-            } else {
+
                 req.setAttribute("users", UserStorage.getINSTANCE().getUsers());
                 req.getRequestDispatcher("/WEB-INF/ru/job4j/testservlet/view/User_view.jsp").forward(req, resp);
-            }
-        }
+
 
     }
 

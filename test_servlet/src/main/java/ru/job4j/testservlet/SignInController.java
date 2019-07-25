@@ -12,7 +12,7 @@ public class SignInController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/ru/job4j/testservlet/view/Signin_view.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/ru/job4j/testservlet/view/LogIn_view.jsp").forward(req, resp);
     }
 
     @Override
@@ -20,7 +20,6 @@ public class SignInController extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         if (UserStorage.getINSTANCE().isCredential(login, password)) {
-            //req.getRequestDispatcher("/WEB-INF/ru/job4j/testservlet/view/User_view.jsp").forward(req, resp);
             HttpSession session =  req.getSession();
             synchronized (session) {
                 session.setAttribute("login", login);
