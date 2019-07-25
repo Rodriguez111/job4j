@@ -10,13 +10,16 @@ public class User {
 
     private String login;
 
+    private String password;
+
     private String email;
 
     private String createDate;
 
-    public User(String name, String login, String email, String createDate) {
+    public User(String name, String login, String pass, String email, String createDate) {
         this.name = name;
         this.login = login;
+        this.password = pass;
         this.email = email;
         this.createDate = createDate;
     }

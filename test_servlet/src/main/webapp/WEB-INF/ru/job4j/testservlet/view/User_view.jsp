@@ -1,5 +1,3 @@
-<%@ page import="ru.job4j.jsp.TestUser" %>
-<%@ page import="ru.job4j.jsp.TestUserStorage" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
@@ -13,7 +11,7 @@
 
 
 
-<form action="${pageContext.servletContext.contextPath}/" method="post">
+<form action="${pageContext.servletContext.contextPath}/users" method="post">
     Login: <input type="text" name="login"><br/><br/>
     Email: <input type="text" name="email"><br/><br/>
     <input type="submit">

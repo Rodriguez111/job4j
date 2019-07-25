@@ -6,11 +6,7 @@
          version="2.4">
 
 
-<!--    <srvlet>-->
-<!--        <srvlet-name>TestUserController</srvlet-name>-->
-<!--        <srvlet-class>ru.job4j.jsp.TestUserController</srvlet-class>-->
-<!--        <load-on-startup>0</load-on-startup>-->
-<!--    </srvlet>-->
+
 
         <servlet>
             <servlet-name>UserMainPageServlet</servlet-name>
@@ -46,8 +42,5 @@
         <servlet-name>UserDeleteServlet</servlet-name>
         <url-pattern>/delete</url-pattern>
     </servlet-mapping>
-<!--    <srvlet-mapping>-->
-<!--        <srvlet-name>TestUserController</srvlet-name>-->
-<!--        <url-pattern>/</url-pattern>-->
-<!--    </srvlet-mapping>-->
+
 </web-app>

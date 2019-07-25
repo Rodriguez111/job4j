@@ -8,7 +8,9 @@ public enum Pages {
     UPDATE("/update"),
     UPDATE_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/update_view.jsp"),
     DELETE("/delete"),
-    DELETE_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/delete_view.jsp");
+    DELETE_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/delete_view.jsp"),
+    SIGN_IN("/signin"),
+    SIGN_IN_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/signin_view.jsp");
 
     public final String page;
 
