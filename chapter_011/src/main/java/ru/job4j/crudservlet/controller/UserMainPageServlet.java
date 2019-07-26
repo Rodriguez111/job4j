@@ -16,4 +16,9 @@ public class UserMainPageServlet extends HttpServlet {
         req.setAttribute("listOfUsers", ValidateService.getInstance().findAll());
         req.getRequestDispatcher(Pages.MAIN_JSP.page).forward(req, resp);
     }
+
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        doGet(req, resp);
+//    }
 }

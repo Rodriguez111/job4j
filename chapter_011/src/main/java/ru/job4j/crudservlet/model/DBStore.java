@@ -25,10 +25,10 @@ public class DBStore implements Store {
     @Override
     public boolean add(User user) {
         String query = "INSERT INTO users "
-                + "(name, login, email, create_date) "
-                + "VALUES (?, ?, ?, ?);";
+                + "(name, login, password, email, create_date) "
+                + "VALUES (?, ?, ?, ?, ?);";
         QueryManager queryManager = new QueryManager(SQL_MANAGER.getConnection());
-        List<Object> params = List.of(user.getName(), user.getLogin(), user.getEmail(), user.getCreateDate());
+        List<Object> params = List.of(user.getName(), user.getLogin(), user.getPassword(), user.getEmail(), user.getCreateDate());
         return queryManager.runQuery(query, params, ps -> {
             boolean success = false;
             int row = ps.executeUpdate();
@@ -41,9 +41,9 @@ public class DBStore implements Store {
 
     @Override
     public void update(int id, User user) {
-        String query = "UPDATE users SET name =?, login=?, email=? WHERE id=?";
+        String query = "UPDATE users SET name =?, login=?, password=?, email=? WHERE id=?";
         QueryManager queryManager = new QueryManager(SQL_MANAGER.getConnection());
-        List<Object> params = List.of(user.getName(), user.getLogin(), user.getEmail(), id);
+        List<Object> params = List.of(user.getName(), user.getLogin(), user.getPassword(), user.getEmail(), id);
         queryManager.runQuery(query, params, (Consumer<PreparedStatement>) PreparedStatement::executeUpdate);
     }
 
@@ -74,7 +74,8 @@ public class DBStore implements Store {
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 User user = new User(resultSet.getString("name"), resultSet.getString("login"),
-                        resultSet.getString("email"), resultSet.getString("create_date"));
+                        resultSet.getString("password"),   resultSet.getString("email"),
+                        resultSet.getString("create_date"));
                 user.setId(resultSet.getInt("id"));
                 resultList.add(user);
             }
@@ -92,7 +93,8 @@ public class DBStore implements Store {
             User resultUser = null;
             if (resultSet.next()) {
                 resultUser = new User(resultSet.getString("name"), resultSet.getString("login"),
-                        resultSet.getString("email"), resultSet.getString("create_date"));
+                        resultSet.getString("password"), resultSet.getString("email"),
+                        resultSet.getString("create_date"));
                 resultUser.setId(resultSet.getInt("id"));
             }
             return resultUser;

@@ -26,6 +26,7 @@
         <tr><td><label>New name: </label></td><td><label><input type='text' name='name'/></label></td></tr>
         <tr><td><label>Existing login: </label></td><td><label> ${param.login} </label></td></tr>
         <tr><td><label>New login: </label></td><td><label><input type='text' name='login'/></label></td></tr>
+        <tr><td><label>New password: </label></td><td><label><input type='password' name='password'/></label></td></tr>
         <tr><td><label>Existing e-mail: </label></td><td><label> ${param.email} </label></td></tr>
         <tr><td><label>New e-mail: </label></td><td><label><input type='text' name='email'/></label></td></tr>
         <tr><td></td><td><input type='submit' value='UPDATE'></td></tr>

@@ -98,10 +98,11 @@ public class ValidateService implements Validator {
         Optional<User> optionalUser = Optional.empty();
         String userName = request.getParameter("name");
         String userLogin = request.getParameter("login");
+        String userPass = request.getParameter("password");
         String userEmail = request.getParameter("email");
         String userCreateDate = formatDate();
-        if (nonNullCheck(userName) && nonNullCheck(userLogin) && nonNullCheck(userEmail)) {
-            optionalUser = Optional.of(new User(userName, userLogin, userEmail, userCreateDate));
+        if (nonNullCheck(userName) && nonNullCheck(userLogin) && nonNullCheck(userPass) && nonNullCheck(userEmail)) {
+            optionalUser = Optional.of(new User(userName, userLogin, userPass, userEmail, userCreateDate));
         }
         return optionalUser;
     }
@@ -114,12 +115,27 @@ public class ValidateService implements Validator {
         if (nonNullCheck(request.getParameter("login"))) {
             user.setLogin(request.getParameter("login"));
         }
+        if (nonNullCheck(request.getParameter("password"))) {
+            user.setLogin(request.getParameter("password"));
+        }
         if (nonNullCheck(request.getParameter("email"))) {
             user.setEmail(request.getParameter("email"));
         }
         List<User> listOfUsers = USER_STORE.findAll();
         if (listOfUsers.contains(user)) {
             result = false;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isCredential(String login, String password) {
+        boolean result = false;
+        for (User eachUser : USER_STORE.findAll()) {
+            if(eachUser.getLogin().equals(login) && eachUser.getPassword().equals(password)) {
+                result = true;
+                break;
+            }
         }
         return result;
     }
