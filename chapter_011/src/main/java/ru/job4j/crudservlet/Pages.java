@@ -10,7 +10,8 @@ public enum Pages {
     DELETE("/delete"),
     DELETE_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/delete_view.jsp"),
     LOGIN("/login"),
-    LOGIN_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/login_view.jsp");
+    LOGIN_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/login_view.jsp"),
+    LOGOUT("/logout");
 
     public final String page;
 

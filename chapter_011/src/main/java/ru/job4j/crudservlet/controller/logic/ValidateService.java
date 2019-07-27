@@ -140,13 +140,13 @@ public class ValidateService implements Validator {
         return result;
     }
 
-    private String formatDate() {
+    public String formatDate() {
         Date rawDate = new Date(System.currentTimeMillis());
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
         return dateFormat.format(rawDate);
     }
 
-    private boolean nonNullCheck(String field) {
+    public boolean nonNullCheck(String field) {
         return field != null && !field.isEmpty();
     }
 }

@@ -1,21 +1,24 @@
 <%@ page import="ru.job4j.crudservlet.Pages" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<style><%@include file="/resources/css/style.css"%></style>
 <html>
 <head>
-    <title>Title</title>
-    <h2> Creating new user </h2>
+    <title>Adding user</title>
+    <table>
+        <tr>
+            <td><h2>Adding user</h2></td>
+            <td class="logout">
+                <h2><form method='post' action="${pageContext.servletContext.contextPath}<%=Pages.LOGOUT.page%>">
+                    <input type='submit' value='Logout'>
+                </form></h2>
+            </td>
+
+        </tr>
+    </table>
 </head>
 <body>
 
-<style type='text/css'>
-    .block1 {
-        width: 300px;
-        background: #ccc;
-        padding: 5px;
-        border: solid 1px grey;
-        float: left;
-    }
-</style>
+
 
 <div class='block1'>
     <form method='post' action="${pageContext.servletContext.contextPath}<%=Pages.ADD.page%>" >

@@ -17,4 +17,8 @@ public interface Validator {
     User findById(int id);
 
     boolean isCredential(String login, String password);
+
+    boolean nonNullCheck(String field);
+
+    String formatDate();
 }

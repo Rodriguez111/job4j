@@ -29,14 +29,14 @@ public class QueryManager {
         });
     }
 
-//    public void executeQuery(String query, List<Object> params, ConsumeEx<PreparedStatement> consumeEx) {
-//        try {
-//            PreparedStatement ps = connection.prepareStatement(query);
-//            consumeEx.accept(ps);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void executeQuery(String query, ConsumeEx<PreparedStatement> consumeEx) {
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            consumeEx.accept(ps);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public <R> Optional<R> executeQuery(String query, List<Object> params, FuncEx<PreparedStatement, R> funcEx) {
         Optional<R> result = Optional.empty();

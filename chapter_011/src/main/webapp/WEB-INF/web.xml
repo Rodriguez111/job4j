@@ -5,12 +5,20 @@
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.job4j.crudservlet.controller.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
 
 
-        <servlet>
-            <servlet-name>UserMainPageServlet</servlet-name>
-            <servlet-class>ru.job4j.crudservlet.controller.UserMainPageServlet</servlet-class>
-        </servlet>
+    <servlet>
+        <servlet-name>UserMainPageServlet</servlet-name>
+        <servlet-class>ru.job4j.crudservlet.controller.UserMainPageServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>UserAddServlet</servlet-name>
         <servlet-class>ru.job4j.crudservlet.controller.UserAddServlet</servlet-class>
@@ -27,11 +35,15 @@
         <servlet-name>LogIn</servlet-name>
         <servlet-class>ru.job4j.crudservlet.controller.LogInServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogOut</servlet-name>
+        <servlet-class>ru.job4j.crudservlet.controller.LogOutServlet</servlet-class>
+    </servlet>
 
-        <servlet-mapping>
-            <servlet-name>UserMainPageServlet</servlet-name>
-            <url-pattern>/users</url-pattern>
-        </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserMainPageServlet</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserAddServlet</servlet-name>
         <url-pattern>/add</url-pattern>
@@ -47,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>LogIn</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogOut</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
 </web-app>

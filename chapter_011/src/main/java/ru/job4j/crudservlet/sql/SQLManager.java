@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class SQLManager {
@@ -13,7 +16,7 @@ public class SQLManager {
 
     public SQLManager() {
         initConnection();
-        prepareTable();
+        prepareDataStructure();
     }
 
     private static void initConnection() {
@@ -35,10 +38,13 @@ public class SQLManager {
         return connection;
     }
 
-    private void prepareTable() {
+    private void prepareDataStructure() {
         if (!checkTable()) {
-            createTable();
+            createRolesTable();
+            createUsersTable();
             addConstrain();
+            createDefaultRoles();
+            createDefaultUser();
         }
     }
 
@@ -56,10 +62,20 @@ public class SQLManager {
         }).orElse(false);
     }
 
-    private void createTable() {
+    private void createRolesTable() {
+        String createTable = "CREATE TABLE IF NOT EXISTS roles "
+                + "(id serial primary key, "
+                + "role character varying(60) UNIQUE NOT NULL)";
+        QueryManager queryManager = new QueryManager(getConnection());
+        List<Object> params = List.of();
+        queryManager.runQuery(createTable, params, (Consumer<PreparedStatement>) PreparedStatement::executeQuery);
+    }
+
+    private void createUsersTable() {
         String createTable = "CREATE TABLE IF NOT EXISTS users "
                 + "(id serial primary key, "
                 + "name character varying(200) NOT NULL, "
+                + "RoleId INTEGER REFERENCES roles (id) NOT NULL,"
                 + "login character varying(60) NOT NULL,"
                 + "password character varying(16) NOT NULL,"
                 + "email character varying(120) NOT NULL,"
@@ -76,4 +92,28 @@ public class SQLManager {
         List<Object> params = List.of();
         queryManager.runQuery(createTable, params, (Consumer<PreparedStatement>) PreparedStatement::executeQuery);
     }
+
+    private void createDefaultRoles() {
+        String createTable = "INSERT INTO roles "
+                + "(role) "
+                + "VALUES ('administrator'), ('user')";
+        QueryManager queryManager = new QueryManager(getConnection());
+        List<Object> params = List.of();
+        queryManager.runQuery(createTable, params, (Consumer<PreparedStatement>) PreparedStatement::executeQuery);
+    }
+
+    private void createDefaultUser() {
+        Date rawDate = new Date(System.currentTimeMillis());
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
+        String currentDate = dateFormat.format(rawDate);
+        System.out.println(currentDate);
+        String insertUser = "INSERT INTO users "
+                + "(name, RoleId, login, password, email, create_date) "
+                + "VALUES ('admin', (SELECT id FROM roles WHERE role = 'administrator'), 'admin', 'admin', 'admin@mail.com', '"+ currentDate + "')";
+        System.out.println(insertUser);
+        QueryManager queryManager = new QueryManager(getConnection());
+        List<Object> params = List.of();
+        queryManager.runQuery(insertUser, params, (Consumer<PreparedStatement>) PreparedStatement::executeQuery);
+    }
+
 }

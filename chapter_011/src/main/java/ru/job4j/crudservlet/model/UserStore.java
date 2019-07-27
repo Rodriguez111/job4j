@@ -57,6 +57,4 @@ public class UserStore implements Store {
     private int generateId() {
         return COUNT.incrementAndGet();
     }
-
-
 }

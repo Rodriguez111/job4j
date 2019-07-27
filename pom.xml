@@ -29,6 +29,7 @@
         <module>tictactoe</module>
         <module>puzzle</module>
         <module>test_tasks</module>
+        <module>test_servlet</module>
     </modules>
 
     <build>

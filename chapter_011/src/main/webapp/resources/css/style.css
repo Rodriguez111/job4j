@@ -1,0 +1,61 @@
+
+.logout {
+    padding-left: 100px;
+}
+
+.table_header {
+    background: rgba(51, 89, 130, 0.53); /* Цвет фона ячеек */
+    padding: 1px; /* Поля вокруг текста */
+    text-align: center;
+}
+
+.table_footer {
+    padding-top: 18px;
+    padding-left: 12px;
+}
+
+.forms {
+  margin: 0;
+}
+
+.main_table {
+    width: 100%;
+    background: #ccc;
+    border-radius: 12px;
+    border-spacing: 0;
+    border-collapse: collapse; /* Убираем двойные линии между ячейками */
+}
+
+th:first-child {
+    border-top-left-radius: 12px;
+}
+
+th:last-child {
+    border-top-right-radius: 12px;
+    border-right: none;
+}
+
+
+.row {
+    background: rgba(51, 89, 130, 0.27); /* Цвет фона ячеек */
+    padding: 5px; /* Поля вокруг текста */
+
+}
+
+.cell {
+    border: 1px solid #ebebeb;
+    text-align: left;
+}
+
+.main_block {
+    width: 1200px;
+}
+
+.block1 {
+    width: 300px;
+    background: #ccc;
+    border-radius: 12px;
+    padding: 5px;
+    border: solid 1px grey;
+    float: left;
+}
