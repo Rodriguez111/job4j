@@ -31,13 +31,11 @@ public class ValidateService implements Validator {
         Optional<User> optionalUser = createUser(request);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (!userExist(user)) {
-                USER_STORE.add(user);
+            if (USER_STORE.add(user)) {
                 result = true;
                 LOG.info("New user added successfully");
             }
         }
-
         return result;
     }
 
@@ -49,8 +47,13 @@ public class ValidateService implements Validator {
             id = Integer.valueOf(request.getParameter("id"));
             User user = findById(id);
             if (user != null) {
-                updateUser(request, user);
-                LOG.info("User with ID = " + id + " updated successfully");
+                User tempUser = new User(user.getName(), user.getLogin(), user.getEmail(), user.getCreateDate());
+                tempUser.setId(user.getId());
+                if (updateUser(request, tempUser)) {
+                    USER_STORE.update(id, tempUser);
+                    LOG.info("User with ID = " + id + " updated successfully");
+                }
+
             } else {
                 result = false;
             }
@@ -61,20 +64,22 @@ public class ValidateService implements Validator {
     }
 
     @Override
-    public synchronized boolean delete(HttpServletRequest request) {
+    public boolean delete(HttpServletRequest request) {
         boolean result = true;
         int id = 0;
         try {
             id = Integer.valueOf(request.getParameter("id"));
             User user = findById(id);
             if (user != null) {
-                USER_STORE.delete(user);
-                LOG.info("User with ID = " + id + " deleted successfully");
+                result = USER_STORE.delete(user);
             } else {
                 result = false;
             }
         } catch (NumberFormatException e) {
             result = false;
+        }
+        if (result) {
+            LOG.info("User with ID = " + id + " deleted successfully");
         }
         return result;
     }
@@ -105,7 +110,8 @@ public class ValidateService implements Validator {
         return optionalUser;
     }
 
-    private void updateUser(HttpServletRequest request, User user) {
+    private boolean updateUser(HttpServletRequest request, User user) {
+        boolean result = true;
         if (nonNullCheck(request.getParameter("name"))) {
             user.setName(request.getParameter("name"));
         }
@@ -115,6 +121,11 @@ public class ValidateService implements Validator {
         if (nonNullCheck(request.getParameter("email"))) {
             user.setEmail(request.getParameter("email"));
         }
+        List<User> listOfUsers = USER_STORE.findAll();
+        if (listOfUsers.contains(user)) {
+            result = false;
+        }
+        return result;
     }
 
     private String formatDate() {
