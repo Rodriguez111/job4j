@@ -56,7 +56,7 @@
                         <td>
                             <form method='get' action="${pageContext.servletContext.contextPath}<%=Pages.UPDATE.page%>">
                                 <input type='hidden' name='id' value='${eachUser.id}' />
-                                <input type='hidden' name='name' value='${eachUser.name}' />
+                                <input type='hidden' name='name' value='<c:set var="name" value="${eachUser.name}" scope="request"/>'/>
                                 <input type='hidden' name='login' value='${eachUser.login}' />
                                 <input type='hidden' name='email' value='${eachUser.email}' />
                                 <input type='submit' value='UPDATE'>
@@ -64,7 +64,7 @@
                         </td>
                         <td>
                             <form method='get' action="${pageContext.servletContext.contextPath}<%=Pages.DELETE.page%>">
-                                <input type='hidden' name='id' value='${eachUser.id}' />
+                                <input type='hidden' name='id' value='<c:set var="name" value="${eachUser.name}" scope="request"/>' />
                                 <input type='hidden' name='name' value='${eachUser.name}' />
                                 <input type='hidden' name='login' value='${eachUser.login}' />
                                 <input type='hidden' name='email' value='${eachUser.email}' />
@@ -87,6 +87,7 @@
         </td>
     </tr>
 </table>
+
 
 </body>
 </html>
