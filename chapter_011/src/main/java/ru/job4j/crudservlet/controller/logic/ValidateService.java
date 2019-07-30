@@ -1,10 +1,10 @@
-package ru.job4j.crudservlet.logic;
+package ru.job4j.crudservlet.controller.logic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.crudservlet.User;
-import ru.job4j.crudservlet.store.Store;
-import ru.job4j.crudservlet.store.UserStore;
+import ru.job4j.crudservlet.model.DBStore;
+import ru.job4j.crudservlet.model.Store;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class ValidateService implements Validator {
-    private final static Store USER_STORE = UserStore.getInstance();
+    // private final static Store USER_STORE = UserStore.getInstance();
+    private final static Store USER_STORE = DBStore.getInstance();
     private final static ValidateService INSTANCE = new ValidateService();
     private static final Logger LOG = LoggerFactory.getLogger(ValidateService.class);
 
@@ -26,7 +27,7 @@ public class ValidateService implements Validator {
     }
 
     @Override
-    public synchronized boolean add(HttpServletRequest request) {
+    public boolean add(HttpServletRequest request) {
         boolean result = false;
         Optional<User> optionalUser = createUser(request);
         if (optionalUser.isPresent()) {
@@ -39,21 +40,19 @@ public class ValidateService implements Validator {
         return result;
     }
 
+
     @Override
-    public synchronized boolean update(HttpServletRequest request) {
+    public boolean update(HttpServletRequest request) {
         boolean result = true;
         int id = 0;
         try {
             id = Integer.valueOf(request.getParameter("id"));
             User user = findById(id);
             if (user != null) {
-                User tempUser = new User(user.getName(), user.getLogin(), user.getEmail(), user.getCreateDate());
-                tempUser.setId(user.getId());
-                if (updateUser(request, tempUser)) {
-                    USER_STORE.update(id, tempUser);
-                    LOG.info("User with ID = " + id + " updated successfully");
+                if (updateUser(request, user)) {
+                    USER_STORE.update(id, user);
+                    LOG.info("TestUser with ID = " + id + " updated successfully");
                 }
-
             } else {
                 result = false;
             }
@@ -65,7 +64,7 @@ public class ValidateService implements Validator {
 
     @Override
     public boolean delete(HttpServletRequest request) {
-        boolean result = true;
+        boolean result;
         int id = 0;
         try {
             id = Integer.valueOf(request.getParameter("id"));
@@ -79,7 +78,7 @@ public class ValidateService implements Validator {
             result = false;
         }
         if (result) {
-            LOG.info("User with ID = " + id + " deleted successfully");
+            LOG.info("TestUser with ID = " + id + " deleted successfully");
         }
         return result;
     }
@@ -94,9 +93,6 @@ public class ValidateService implements Validator {
         return USER_STORE.findById(id);
     }
 
-    private boolean userExist(User user) {
-        return findAll().contains(user);
-    }
 
     private Optional<User> createUser(HttpServletRequest request) {
         Optional<User> optionalUser = Optional.empty();

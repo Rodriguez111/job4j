@@ -19,7 +19,6 @@ public class CommonConnection {
                     config.getProperty("username"),
                     config.getProperty("password")
             );
-
         } catch (Exception e) {
             throw new IllegalStateException();
         }

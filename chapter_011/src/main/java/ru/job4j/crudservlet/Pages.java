@@ -1,13 +1,14 @@
 package ru.job4j.crudservlet;
 
 public enum Pages {
-    MAIN("/chapter_011/users"),
-    ADD("/chapter_011/add"),
-    ADD_JSP("/WEB-INF/ru/job4j/crudservlet/add.jsp"),
-    UPDATE("/chapter_011/update"),
-    UPDATE_JSP("/WEB-INF/ru/job4j/crudservlet/update.jsp"),
-    DELETE("/chapter_011/delete"),
-    DELETE_JSP("/WEB-INF/ru/job4j/crudservlet/delete.jsp");
+    MAIN("/users"),
+    MAIN_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/main_page_view.jsp"),
+    ADD("/add"),
+    ADD_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/add_view.jsp"),
+    UPDATE("/update"),
+    UPDATE_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/update_view.jsp"),
+    DELETE("/delete"),
+    DELETE_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/delete_view.jsp");
 
     public final String page;
 

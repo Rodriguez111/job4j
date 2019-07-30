@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="ru.job4j.crudservlet.Pages" %>
 <%@ page import="ru.job4j.crudservlet.User" %>
-<%@ page import="ru.job4j.crudservlet.logic.ValidateService" %>
+<%@ page import="ru.job4j.crudservlet.controller.logic.ValidateService" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 
 <html>
@@ -23,7 +24,7 @@
 
 
 <table>
-    <% for (User eachUser : ValidateService.getInstance().findAll()) {%>
+    <c:forEach items="${listOfUsers}" var="eachUser">
     <tr>
         <td>
             <div class='block1'>
@@ -31,43 +32,43 @@
                     <tr><b>User info:</b></tr>
                     <tr>
                         <td><label>Name: </label></td>
-                        <td><label><%=eachUser.getName()%>
+                        <td><label>${eachUser.name}
                         </label></td>
                     </tr>
                     <tr>
                         <td><label>Login: </label></td>
-                        <td><label><%=eachUser.getLogin()%>
+                        <td><label>${eachUser.login}
                         </label></td>
                     </tr>
                     <tr>
                         <td><label>E-mail: </label></td>
-                        <td><label><%=eachUser.getEmail()%>
+                        <td><label>${eachUser.email}
                         </label></td>
                     </tr>
                     <tr>
                         <td><label>Create date: </label></td>
-                        <td><label><%=eachUser.getCreateDate()%>
+                        <td><label>${eachUser.createDate}
                         </label></td>
                     </tr>
                 </table>
                 <table>
                     <tr>
                         <td>
-                            <form method='get' action=<%=Pages.UPDATE.page%>>
-                                <input type='hidden' name='id' value='<%=eachUser.getId()%>' />
-                                <input type='hidden' name='name' value='<%=eachUser.getName()%>'/>
-                                <input type='hidden' name='login' value='<%=eachUser.getLogin()%>' />
-                                <input type='hidden' name='email' value='<%=eachUser.getEmail()%>' />
+                            <form method='get' action="${pageContext.servletContext.contextPath}<%=Pages.UPDATE.page%>">
+                                <input type='hidden' name='id' value='${eachUser.id}' />
+                                <input type='hidden' name='name' value='${eachUser.name}' />
+                                <input type='hidden' name='login' value='${eachUser.login}' />
+                                <input type='hidden' name='email' value='${eachUser.email}' />
                                 <input type='submit' value='UPDATE'>
                             </form>
                         </td>
                         <td>
-                            <form method='get' action=<%=Pages.DELETE.page%>>
-                                <input type='hidden' name='id' value='<%=eachUser.getId()%>' />
-                                <input type='hidden' name='name' value='<%=eachUser.getName()%>' />
-                                <input type='hidden' name='login' value='<%=eachUser.getLogin()%>' />
-                                <input type='hidden' name='email' value='<%=eachUser.getEmail()%>' />
-                                <input type='hidden' name='createDate' value='<%=eachUser.getCreateDate()%>' />
+                            <form method='get' action="${pageContext.servletContext.contextPath}<%=Pages.DELETE.page%>">
+                                <input type='hidden' name='id' value='${eachUser.id}' />
+                                <input type='hidden' name='name' value='${eachUser.name}' />
+                                <input type='hidden' name='login' value='${eachUser.login}' />
+                                <input type='hidden' name='email' value='${eachUser.email}' />
+                                <input type='hidden' name='createDate' value='${eachUser.createDate}' />
                                 <input type='submit' value='DELETE'>
                             </form>
                         </td>
@@ -76,17 +77,16 @@
             </div>
         </td>
     </tr>
-    <% } %>
+    </c:forEach>
 
     <tr>
         <td>
-            <form method='get' action=<%=Pages.ADD.page%>>
+            <form method='get' action="${pageContext.servletContext.contextPath}<%=Pages.ADD.page%>">
                 <input type='submit' value='ADD NEW USER'>
             </form>
         </td>
     </tr>
 </table>
-
 
 </body>
 </html>

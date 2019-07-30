@@ -18,7 +18,7 @@
 </style>
 
 <div class='block1'>
-    <form method='post' action=<%=Pages.ADD.page%>>
+    <form method='post' action="${pageContext.servletContext.contextPath}<%=Pages.ADD.page%>" >
         <table>
             <tr><td><label>Name: </label></td><td><label><input type='text' name='name'></label></td></tr>
             <tr><td><label>Login: </label></td><td><label><input type='text' name='login'></label></td></tr>
@@ -26,13 +26,10 @@
             <tr><td></td><td><input type='submit' value='ADD USER'></td></tr>
         </table>
     </form>
-
-    <form  action=<%=Pages.MAIN.page%>>
+    <form  action="${pageContext.servletContext.contextPath}<%=Pages.MAIN.page%>">
         <button>BACK</button>
         </form>
-
-   </div>
-
+</div>
 
 </body>
 </html>

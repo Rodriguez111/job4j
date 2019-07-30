@@ -5,28 +5,35 @@
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 
-    <servlet>
-        <servlet-name>UsersServlet</servlet-name>
-        <jsp-file>/WEB-INF/ru/job4j/crudservlet/index.jsp</jsp-file>
-        <load-on-startup>0</load-on-startup>
-    </servlet>
+
+<!--    <srvlet>-->
+<!--        <srvlet-name>TestUserController</srvlet-name>-->
+<!--        <srvlet-class>ru.job4j.jsp.TestUserController</srvlet-class>-->
+<!--        <load-on-startup>0</load-on-startup>-->
+<!--    </srvlet>-->
+
+        <servlet>
+            <servlet-name>UserMainPageServlet</servlet-name>
+            <servlet-class>ru.job4j.crudservlet.controller.UserMainPageServlet</servlet-class>
+            <load-on-startup>0</load-on-startup>
+        </servlet>
     <servlet>
         <servlet-name>UserAddServlet</servlet-name>
-        <servlet-class>ru.job4j.crudservlet.presentation.UserAddServlet</servlet-class>
+        <servlet-class>ru.job4j.crudservlet.controller.UserAddServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserUpdateServlet</servlet-name>
-        <servlet-class>ru.job4j.crudservlet.presentation.UserUpdateServlet</servlet-class>
+        <servlet-class>ru.job4j.crudservlet.controller.UserUpdateServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserDeleteServlet</servlet-name>
-        <servlet-class>ru.job4j.crudservlet.presentation.UserDeleteServlet</servlet-class>
+        <servlet-class>ru.job4j.crudservlet.controller.UserDeleteServlet</servlet-class>
     </servlet>
 
-    <servlet-mapping>
-        <servlet-name>UsersServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>UserMainPageServlet</servlet-name>
+            <url-pattern>/</url-pattern>
+        </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserAddServlet</servlet-name>
         <url-pattern>/add</url-pattern>
@@ -39,4 +46,8 @@
         <servlet-name>UserDeleteServlet</servlet-name>
         <url-pattern>/delete</url-pattern>
     </servlet-mapping>
+<!--    <srvlet-mapping>-->
+<!--        <srvlet-name>TestUserController</srvlet-name>-->
+<!--        <url-pattern>/</url-pattern>-->
+<!--    </srvlet-mapping>-->
 </web-app>

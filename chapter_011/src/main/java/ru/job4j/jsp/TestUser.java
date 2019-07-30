@@ -1,10 +1,10 @@
 package ru.job4j.jsp;
 
-public class User {
+public class TestUser {
     private String login;
     private String email;
 
-    public User(String login, String email) {
+    public TestUser(String login, String email) {
         this.login = login;
         this.email = email;
     }
