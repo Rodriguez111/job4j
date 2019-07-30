@@ -42,7 +42,6 @@ public class SQLManager {
         if (!checkTable()) {
             createRolesTable();
             createUsersTable();
-            addConstrain();
             createDefaultRoles();
             createDefaultUser();
         }
@@ -76,7 +75,7 @@ public class SQLManager {
                 + "(id serial primary key, "
                 + "name character varying(200) NOT NULL, "
                 + "RoleId INTEGER REFERENCES roles (id) NOT NULL,"
-                + "login character varying(60) NOT NULL,"
+                + "login character varying(60) UNIQUE NOT NULL,"
                 + "password character varying(16) NOT NULL,"
                 + "email character varying(120) NOT NULL,"
                 + "create_date character varying(19) NOT NULL)";
@@ -85,13 +84,6 @@ public class SQLManager {
         queryManager.runQuery(createTable, params, (Consumer<PreparedStatement>) PreparedStatement::executeQuery);
     }
 
-    private void addConstrain() {
-        String createTable = "ALTER TABLE users "
-                + "ADD CONSTRAINT unique_fields UNIQUE (name, login, email)";
-        QueryManager queryManager = new QueryManager(getConnection());
-        List<Object> params = List.of();
-        queryManager.runQuery(createTable, params, (Consumer<PreparedStatement>) PreparedStatement::executeQuery);
-    }
 
     private void createDefaultRoles() {
         String createTable = "INSERT INTO roles "
@@ -106,11 +98,9 @@ public class SQLManager {
         Date rawDate = new Date(System.currentTimeMillis());
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
         String currentDate = dateFormat.format(rawDate);
-        System.out.println(currentDate);
         String insertUser = "INSERT INTO users "
                 + "(name, RoleId, login, password, email, create_date) "
-                + "VALUES ('admin', (SELECT id FROM roles WHERE role = 'administrator'), 'admin', 'admin', 'admin@mail.com', '"+ currentDate + "')";
-        System.out.println(insertUser);
+                + "VALUES ('root', (SELECT id FROM roles WHERE role = 'administrator'), 'root', 'root', 'admin@mail.com', '" + currentDate + "')";
         QueryManager queryManager = new QueryManager(getConnection());
         List<Object> params = List.of();
         queryManager.runQuery(insertUser, params, (Consumer<PreparedStatement>) PreparedStatement::executeQuery);

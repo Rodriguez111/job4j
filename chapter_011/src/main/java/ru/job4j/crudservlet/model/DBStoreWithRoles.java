@@ -27,9 +27,13 @@ public class DBStoreWithRoles implements Store, RolesStore {
 
     @Override
     public boolean add(User user) {
-        AdvancedUser advancedUser = (AdvancedUser) user;
+        return false;
+    }
+
+    @Override
+    public boolean addAdvUser(AdvancedUser advancedUser) {
         String query = "INSERT INTO users "
-                + "(name, RoleId, login, password, email, create_date) "
+                + "(name, roleid, login, password, email, create_date) "
                 + "VALUES (?, ?, ?, ?, ?, ?);";
         int roleId = findIdByRole(advancedUser.getRole());
         QueryManager queryManager = new QueryManager(SQL_MANAGER.getConnection());
@@ -47,12 +51,15 @@ public class DBStoreWithRoles implements Store, RolesStore {
 
     @Override
     public void update(int id, User user) {
-        AdvancedUser advancedUser = (AdvancedUser) user;
+    }
+
+    @Override
+    public void updateAdvUser(int id, AdvancedUser advancedUser) {
         String query = "UPDATE users SET name=?, RoleId=?, login=?, password=?, email=? WHERE id=?";
         int roleId = findIdByRole(advancedUser.getRole());
         QueryManager queryManager = new QueryManager(SQL_MANAGER.getConnection());
-        List<Object> params = List.of(advancedUser.getName(), roleId, user.getLogin(),
-                user.getPassword(), user.getEmail(), id);
+        List<Object> params = List.of(advancedUser.getName(), roleId, advancedUser.getLogin(),
+                advancedUser.getPassword(), advancedUser.getEmail(), id);
         queryManager.runQuery(query, params, (Consumer<PreparedStatement>) PreparedStatement::executeUpdate);
     }
 
@@ -72,7 +79,7 @@ public class DBStoreWithRoles implements Store, RolesStore {
             while (resultSet.next()) {
                 String role = findRoleById(resultSet.getInt("RoleId"));
                 AdvancedUser user = new AdvancedUser(resultSet.getString("name"), resultSet.getString("login"),
-                        role, resultSet.getString("password"),   resultSet.getString("email"),
+                        role, resultSet.getString("password"), resultSet.getString("email"),
                         resultSet.getString("create_date"));
                 user.setId(resultSet.getInt("id"));
                 resultList.add(user);
@@ -83,21 +90,7 @@ public class DBStoreWithRoles implements Store, RolesStore {
 
     @Override
     public User findById(int id) {
-        String query = "SELECT * FROM users WHERE id = ?";
-        QueryManager queryManager = new QueryManager(SQL_MANAGER.getConnection());
-        List<Object> params = List.of(id);
-        return queryManager.runQuery(query, params, ps -> {
-            ResultSet resultSet = ps.executeQuery();
-            AdvancedUser resultUser = null;
-            if (resultSet.next()) {
-                String role = findRoleById(resultSet.getInt("RoleId"));
-                resultUser = new AdvancedUser(resultSet.getString("name"), resultSet.getString("login"),
-                        role, resultSet.getString("password"), resultSet.getString("email"),
-                        resultSet.getString("create_date"));
-                resultUser.setId(resultSet.getInt("id"));
-            }
-            return resultUser;
-        }).orElse(null);
+        return null;
     }
 
     @Override
@@ -117,7 +110,7 @@ public class DBStoreWithRoles implements Store, RolesStore {
 
     @Override
     public int findIdByRole(String role) {
-        String query = "SELECT RoleId FROM roles WHERE role = ?";
+        String query = "SELECT id FROM roles WHERE role = ?";
         QueryManager queryManager = new QueryManager(SQL_MANAGER.getConnection());
         List<Object> params = List.of(role);
         return queryManager.runQuery(query, params, ps -> {
@@ -128,5 +121,39 @@ public class DBStoreWithRoles implements Store, RolesStore {
             }
             return resultRole;
         }).orElse(-1);
+    }
+
+    @Override
+    public boolean userExists(String login) {
+        String query = "SELECT id FROM users WHERE login = ?";
+        QueryManager queryManager = new QueryManager(SQL_MANAGER.getConnection());
+        List<Object> params = List.of(login);
+        return queryManager.runQuery(query, params, ps -> {
+            ResultSet resultSet = ps.executeQuery();
+            boolean result = false;
+            if (resultSet.next()) {
+                result = true;
+            }
+            return result;
+        }).orElse(false);
+    }
+
+    @Override
+    public AdvancedUser findAdvUserById(int id) {
+        String query = "SELECT * FROM users WHERE id = ?";
+        QueryManager queryManager = new QueryManager(SQL_MANAGER.getConnection());
+        List<Object> params = List.of(id);
+        return queryManager.runQuery(query, params, ps -> {
+            ResultSet resultSet = ps.executeQuery();
+            AdvancedUser resultUser = null;
+            if (resultSet.next()) {
+                String role = findRoleById(resultSet.getInt("RoleId"));
+                resultUser = new AdvancedUser(resultSet.getString("name"), resultSet.getString("login"),
+                        role, resultSet.getString("password"), resultSet.getString("email"),
+                        resultSet.getString("create_date"));
+                resultUser.setId(resultSet.getInt("id"));
+            }
+            return resultUser;
+        }).orElse(null);
     }
 }

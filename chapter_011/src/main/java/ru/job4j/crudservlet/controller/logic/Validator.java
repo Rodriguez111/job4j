@@ -1,5 +1,6 @@
 package ru.job4j.crudservlet.controller.logic;
 
+import ru.job4j.crudservlet.AdvancedUser;
 import ru.job4j.crudservlet.User;
 
 import javax.servlet.http.HttpServletRequest;

@@ -2,6 +2,7 @@ package ru.job4j.crudservlet.controller;
 
 import ru.job4j.crudservlet.Pages;
 import ru.job4j.crudservlet.controller.logic.ValidateService;
+import ru.job4j.crudservlet.controller.logic.ValidateServiceWithRoles;
 import ru.job4j.crudservlet.controller.logic.Validator;
 
 import javax.servlet.ServletException;
@@ -11,12 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class UserDeleteServlet extends HttpServlet {
-    final Validator validateService = ValidateService.getInstance();
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(Pages.DELETE_JSP.page).forward(req, resp);
-    }
+    final Validator validateService = ValidateServiceWithRoles.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

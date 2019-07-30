@@ -74,7 +74,7 @@ public class DBStore implements Store {
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 User user = new User(resultSet.getString("name"), resultSet.getString("login"),
-                        resultSet.getString("password"),   resultSet.getString("email"),
+                        resultSet.getString("password"), resultSet.getString("email"),
                         resultSet.getString("create_date"));
                 user.setId(resultSet.getInt("id"));
                 resultList.add(user);

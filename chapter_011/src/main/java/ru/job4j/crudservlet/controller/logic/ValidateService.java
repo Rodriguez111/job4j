@@ -132,7 +132,7 @@ public class ValidateService implements Validator {
     public boolean isCredential(String login, String password) {
         boolean result = false;
         for (User eachUser : USER_STORE.findAll()) {
-            if(eachUser.getLogin().equals(login) && eachUser.getPassword().equals(password)) {
+            if (eachUser.getLogin().equals(login) && eachUser.getPassword().equals(password)) {
                 result = true;
                 break;
             }

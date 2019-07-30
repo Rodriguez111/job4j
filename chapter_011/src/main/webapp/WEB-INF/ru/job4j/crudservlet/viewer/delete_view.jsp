@@ -17,9 +17,6 @@
     </table>
 </head>
 <body>
-
-
-
 <div class='block1'>
 <form method='post' action="${pageContext.servletContext.contextPath}<%=Pages.DELETE.page%>" >
     <b>Are you sure you want to delete this user?</b>

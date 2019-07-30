@@ -39,6 +39,11 @@
         <servlet-name>LogOut</servlet-name>
         <servlet-class>ru.job4j.crudservlet.controller.LogOutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewsServlet</servlet-name>
+        <servlet-class>ru.job4j.crudservlet.controller.ViewsServlet</servlet-class>
+    </servlet>
+
 
     <servlet-mapping>
         <servlet-name>UserMainPageServlet</servlet-name>
@@ -63,6 +68,10 @@
     <servlet-mapping>
         <servlet-name>LogOut</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewsServlet</servlet-name>
+        <url-pattern>/views</url-pattern>
     </servlet-mapping>
 
 </web-app>

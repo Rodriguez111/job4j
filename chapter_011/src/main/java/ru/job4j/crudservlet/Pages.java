@@ -11,7 +11,8 @@ public enum Pages {
     DELETE_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/delete_view.jsp"),
     LOGIN("/login"),
     LOGIN_JSP("/WEB-INF/ru/job4j/crudservlet/viewer/login_view.jsp"),
-    LOGOUT("/logout");
+    LOGOUT("/logout"),
+    VIEWS("/views");
 
     public final String page;
 

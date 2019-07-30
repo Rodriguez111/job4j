@@ -5,27 +5,38 @@ import org.slf4j.LoggerFactory;
 import ru.job4j.crudservlet.AdvancedUser;
 import ru.job4j.crudservlet.User;
 import ru.job4j.crudservlet.model.DBStoreWithRoles;
-import ru.job4j.crudservlet.model.Store;
+import ru.job4j.crudservlet.model.RolesStore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class ValidateServiceWithRoles implements Validator {
+public class ValidateServiceWithRoles implements Validator, ValidatorWithRole {
 
     private static final Validator VALIDATOR = ValidateService.getInstance();
-    private final static Store USER_STORE = DBStoreWithRoles.getInstance();
+    private static final ValidateServiceWithRoles INSTANCE = new ValidateServiceWithRoles();
+    private final static RolesStore USER_STORE = DBStoreWithRoles.getInstance();
     private static final Logger LOG = LoggerFactory.getLogger(ValidateServiceWithRoles.class);
+
+    private ValidateServiceWithRoles() {
+    }
+
+    public static ValidateServiceWithRoles getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public boolean add(HttpServletRequest request) {
         boolean result = false;
-        Optional<AdvancedUser> optionalUser = createUser(request);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            if (USER_STORE.add(user)) {
-                result = true;
-                LOG.info("New user added successfully");
+        if (!USER_STORE.userExists(request.getParameter("login"))) {
+            Optional<AdvancedUser> optionalUser = createUser(request);
+            if (optionalUser.isPresent()) {
+                AdvancedUser user = optionalUser.get();
+                if (USER_STORE.addAdvUser(user)) {
+                    result = true;
+                    LOG.info("New user added successfully");
+                }
             }
         }
         return result;
@@ -37,10 +48,10 @@ public class ValidateServiceWithRoles implements Validator {
         int id = 0;
         try {
             id = Integer.valueOf(request.getParameter("id"));
-            AdvancedUser advancedUser = (AdvancedUser)findById(id);
+            AdvancedUser advancedUser = findAdvUserById(id);
             if (advancedUser != null) {
                 if (updateUser(request, advancedUser)) {
-                    USER_STORE.update(id, advancedUser);
+                    USER_STORE.updateAdvUser(id, advancedUser);
                     LOG.info("TestUser with ID = " + id + " updated successfully");
                 }
             } else {
@@ -54,7 +65,23 @@ public class ValidateServiceWithRoles implements Validator {
 
     @Override
     public boolean delete(HttpServletRequest request) {
-        return false;
+        boolean result;
+        int id = 0;
+        try {
+            id = Integer.valueOf(request.getParameter("id"));
+            AdvancedUser advancedUser = USER_STORE.findAdvUserById(id);
+            if (advancedUser != null) {
+                result = USER_STORE.delete(advancedUser);
+            } else {
+                result = false;
+            }
+        } catch (NumberFormatException e) {
+            result = false;
+        }
+        if (result) {
+            LOG.info("TestUser with ID = " + id + " deleted successfully");
+        }
+        return result;
     }
 
     @Override
@@ -72,6 +99,18 @@ public class ValidateServiceWithRoles implements Validator {
         return false;
     }
 
+    @Override
+    public String isCredentialWithRole(String login, String password) {
+        String role = "";
+        for (AdvancedUser eachUser : findAllAdvUsers()) {
+            if (eachUser.getLogin().equals(login) && eachUser.getPassword().equals(password)) {
+                role = eachUser.getRole();
+                break;
+            }
+        }
+        return role;
+    }
+
     private Optional<AdvancedUser> createUser(HttpServletRequest request) {
         Optional<AdvancedUser> optionalUser = Optional.empty();
         String userName = request.getParameter("name");
@@ -87,25 +126,26 @@ public class ValidateServiceWithRoles implements Validator {
     }
 
     private boolean updateUser(HttpServletRequest request, AdvancedUser user) {
-        boolean result = true;
+        boolean result = false;
         if (nonNullCheck(request.getParameter("name"))) {
             user.setName(request.getParameter("name"));
+            result = true;
         }
         if (nonNullCheck(request.getParameter("login"))) {
             user.setLogin(request.getParameter("login"));
-        }
-        if (nonNullCheck(request.getParameter("role"))) {
-            user.setRole(request.getParameter("role"));
+            result = true;
         }
         if (nonNullCheck(request.getParameter("password"))) {
             user.setLogin(request.getParameter("password"));
+            result = true;
         }
         if (nonNullCheck(request.getParameter("email"))) {
             user.setEmail(request.getParameter("email"));
+            result = true;
         }
-        List<User> listOfUsers = USER_STORE.findAll();
-        if (listOfUsers.contains(user)) {
-            result = false;
+        if (nonNullCheck(request.getParameter("role"))) {
+            user.setRole(request.getParameter("role"));
+            result = true;
         }
         return result;
     }
@@ -120,5 +160,13 @@ public class ValidateServiceWithRoles implements Validator {
         return VALIDATOR.formatDate();
     }
 
+    @Override
+    public List<AdvancedUser> findAllAdvUsers() {
+        return USER_STORE.findAll().stream().map(user -> ((AdvancedUser) user)).collect(Collectors.toList());
+    }
 
+    @Override
+    public AdvancedUser findAdvUserById(int id) {
+        return USER_STORE.findAdvUserById(id);
+    }
 }

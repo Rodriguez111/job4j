@@ -11,16 +11,11 @@
 </head>
 <body>
 
-
-
-
 <c:if test="${errorMessage != ''}">
 <div class='err_block' style="background-color: firebrick">
     <c:out value="${errorMessage}" />
 </div>
 </c:if>
-
-
 
 <div class='block1'>
     <form method='post' action="${pageContext.servletContext.contextPath}<%=Pages.LOGIN.page%>" >

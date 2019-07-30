@@ -22,12 +22,11 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
+
         if (!req.getRequestURI().contains("/login")) {
-            synchronized (session) {
-                if(session.getAttribute("login")== null) {
-                    resp.sendRedirect(String.format("%s/login", req.getContextPath()));
-                    return;
-                }
+            if (session.getAttribute("login") == null) {
+                resp.sendRedirect(String.format("%s/login", req.getContextPath()));
+                return;
             }
         }
         filterChain.doFilter(req, resp);
