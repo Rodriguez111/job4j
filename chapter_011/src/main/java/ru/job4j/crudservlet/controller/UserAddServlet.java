@@ -4,6 +4,7 @@ import ru.job4j.crudservlet.Pages;
 import ru.job4j.crudservlet.controller.logic.ValidateService;
 import ru.job4j.crudservlet.controller.logic.ValidateServiceWithRoles;
 import ru.job4j.crudservlet.controller.logic.Validator;
+import ru.job4j.crudservlet.controller.logic.ValidatorWithRole;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,7 @@ import java.io.IOException;
 
 public class UserAddServlet extends HttpServlet {
 
-    private final Validator validateService = ValidateServiceWithRoles.getInstance();
+    private final ValidatorWithRole validateService = ValidateServiceWithRoles.getInstance();
 
 
     @Override

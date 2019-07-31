@@ -12,17 +12,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ValidateServiceWithRoles implements Validator, ValidatorWithRole {
+public class ValidateServiceWithRoles implements ValidatorWithRole {
 
     private static final Validator VALIDATOR = ValidateService.getInstance();
-    private static final ValidateServiceWithRoles INSTANCE = new ValidateServiceWithRoles();
+    private static final ValidatorWithRole INSTANCE = new ValidateServiceWithRoles();
     private final static RolesStore USER_STORE = DBStoreWithRoles.getInstance();
     private static final Logger LOG = LoggerFactory.getLogger(ValidateServiceWithRoles.class);
 
     private ValidateServiceWithRoles() {
     }
 
-    public static ValidateServiceWithRoles getInstance() {
+    public static ValidatorWithRole getInstance() {
         return INSTANCE;
     }
 
@@ -84,20 +84,6 @@ public class ValidateServiceWithRoles implements Validator, ValidatorWithRole {
         return result;
     }
 
-    @Override
-    public List<User> findAll() {
-        return null;
-    }
-
-    @Override
-    public User findById(int id) {
-        return null;
-    }
-
-    @Override
-    public boolean isCredential(String login, String password) {
-        return false;
-    }
 
     @Override
     public String isCredentialWithRole(String login, String password) {
@@ -168,5 +154,21 @@ public class ValidateServiceWithRoles implements Validator, ValidatorWithRole {
     @Override
     public AdvancedUser findAdvUserById(int id) {
         return USER_STORE.findAdvUserById(id);
+    }
+
+
+    @Override
+    public List<User> findAll() {
+        return null;
+    }
+
+    @Override
+    public User findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean isCredential(String login, String password) {
+        return false;
     }
 }

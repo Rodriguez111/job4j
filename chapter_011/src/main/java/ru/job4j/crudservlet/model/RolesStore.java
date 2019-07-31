@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RolesStore extends Store {
 
-    String findRoleById (int roleId);
+    String findRoleById(int roleId);
 
     int findIdByRole(String role);
 
