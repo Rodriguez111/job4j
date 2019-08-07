@@ -6,23 +6,23 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<style><%@include file="/resources/css/style.css"%></style>
 <html>
 <head>
-    <title>Delete user</title>
-    <h2> Deleting user </h2>
+    <title>Deleting user</title>
+    <table>
+        <tr>
+            <td><h2>Deleting user</h2></td>
+            <td class="logout">
+                <h2><form method='post' action="${pageContext.servletContext.contextPath}<%=Pages.LOGOUT.page%>">
+                    <input type='submit' value='Logout'>
+                </form></h2>
+            </td>
+
+        </tr>
+    </table>
 </head>
 <body>
-
-<style type='text/css'>
-    .block1 {
-        width: 300px;
-        background: #ccc;
-        padding: 5px;
-        border: solid 1px grey;
-        float: left;
-    }
-</style>
-
 <div class='block1'>
 <form method='post' action="${pageContext.servletContext.contextPath}<%=Pages.DELETE.page%>" >
     <b>Are you sure you want to delete this user?</b>

@@ -50,8 +50,9 @@ public class EchoServlet extends HttpServlet {
         resp.setContentType("text/html");
         String name = req.getParameter("name");
         String login = req.getParameter("login");
+        String pass = req.getParameter("password");
         String email = req.getParameter("email");
-        this.users.add(new User(name, login, email, "no date"));
+        this.users.add(new User(name, login, pass, email, "no date"));
         doGet(req, resp);
 
     }

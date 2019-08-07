@@ -98,10 +98,11 @@ public class ValidateService implements Validator {
         Optional<User> optionalUser = Optional.empty();
         String userName = request.getParameter("name");
         String userLogin = request.getParameter("login");
+        String userPass = request.getParameter("password");
         String userEmail = request.getParameter("email");
         String userCreateDate = formatDate();
-        if (nonNullCheck(userName) && nonNullCheck(userLogin) && nonNullCheck(userEmail)) {
-            optionalUser = Optional.of(new User(userName, userLogin, userEmail, userCreateDate));
+        if (nonNullCheck(userName) && nonNullCheck(userLogin) && nonNullCheck(userPass) && nonNullCheck(userEmail)) {
+            optionalUser = Optional.of(new User(userName, userLogin, userPass, userEmail, userCreateDate));
         }
         return optionalUser;
     }
@@ -114,6 +115,9 @@ public class ValidateService implements Validator {
         if (nonNullCheck(request.getParameter("login"))) {
             user.setLogin(request.getParameter("login"));
         }
+        if (nonNullCheck(request.getParameter("password"))) {
+            user.setLogin(request.getParameter("password"));
+        }
         if (nonNullCheck(request.getParameter("email"))) {
             user.setEmail(request.getParameter("email"));
         }
@@ -124,13 +128,25 @@ public class ValidateService implements Validator {
         return result;
     }
 
-    private String formatDate() {
+    @Override
+    public boolean isCredential(String login, String password) {
+        boolean result = false;
+        for (User eachUser : USER_STORE.findAll()) {
+            if (eachUser.getLogin().equals(login) && eachUser.getPassword().equals(password)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public String formatDate() {
         Date rawDate = new Date(System.currentTimeMillis());
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
         return dateFormat.format(rawDate);
     }
 
-    private boolean nonNullCheck(String field) {
+    public boolean nonNullCheck(String field) {
         return field != null && !field.isEmpty();
     }
 }

@@ -1,33 +1,23 @@
 package ru.job4j.nonblocking;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class NonBlockingTest {
-    private static final int THREADS_AMOUNT = 200;
+    private static final int THREADS_AMOUNT = 2000;
     private static final int CYCLES_AMOUNT = 1_000_000;
     private static AtomicInteger atomicCount = new AtomicInteger();
     private static int simpleCount = 0;
 
-
     public static void nonBlockingIncrement() {
-        boolean result = false;
-        do{
-            int currentValue = atomicCount.get();
-            result = atomicCount.compareAndSet(currentValue, currentValue + 1);
-        } while (!result);
+        atomicCount.incrementAndGet();
     }
 
     public static synchronized void simpleIncrement() {
         simpleCount++;
     }
-
-
-
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -83,9 +73,5 @@ public class NonBlockingTest {
         System.out.println("result = " + atomicCount.get() + ", Simple algorithm took milliseconds: " + (end - start));
 
         executor.shutdown();
-
-
-
     }
-
 }

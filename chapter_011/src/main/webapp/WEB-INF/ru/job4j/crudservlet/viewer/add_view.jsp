@@ -35,7 +35,7 @@
                     <option value="<%=Roles.USER.getRole()%>">User</option>
                 </select>
             </label></td></tr>
-            <tr><td></td><td><input type='submit' value='Создать'></td></tr>
+            <tr><td></td><td><input type='submit' value='ADD USER'></td></tr>
         </table>
     </form>
     <form  action="${pageContext.servletContext.contextPath}<%=Pages.MAIN.page%>">
