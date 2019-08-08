@@ -34,10 +34,11 @@ public class UserController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         req.setCharacterEncoding("UTF-8");
+        String id = req.getParameter("id");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
-        UserStorage.getINSTANCE().add(new User(login, password, email));
+        UserStorage.getINSTANCE().add(new User(id, login, password, email));
         resp.sendRedirect(String.format("%s/users", req.getContextPath()));
 
     }

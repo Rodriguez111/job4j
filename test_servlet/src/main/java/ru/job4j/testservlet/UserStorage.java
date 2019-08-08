@@ -6,9 +6,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class UserStorage {
     private final static UserStorage INSTANCE = new UserStorage();
     private final List<User> users = new CopyOnWriteArrayList<>();
+    private static int count;
 
     private UserStorage() {
-        users.add(new User("root", "root", "root@mail.com"));
+        users.add(new User(generateId(),"root", "root", "root@mail.com"));
     }
 
     public static UserStorage getINSTANCE() {
@@ -33,4 +34,13 @@ public class UserStorage {
         }
         return result;
     }
+
+    private String generateId() {
+        int result = 1;
+        if (users.size() > 0) {
+            result = Integer.parseInt(users.get(users.size() - 1).getId()) + 1;
+        }
+        return String.valueOf(result);
+    }
+
 }

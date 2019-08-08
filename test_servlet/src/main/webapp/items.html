@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script>
+        function validate() {
+            var result = true;
+            var nameElement = document.getElementsByName("name")[0].value;
+            var passElement = document.getElementsByName("password")[0].value;
+            console.log(nameElement);
+
+            if (nameElement == '' || passElement == '') {
+                result = false;
+            }
+            if (!result) {
+                alert("Поле не должно быть пустым")
+            }
+            return result;
+        }
+    </script>
+</head>
+<body>
+
+Стартовая страница
+
+
+<div class="center">
+<form action="/items" method="post" onsubmit="return validate();">
+
+    <input type="hidden" name="id">
+    <div>Name: <input type="text" name="name"></div>
+    <div>Password: <input type="password" name="password"></div>
+    <div>Sex:  <input type="radio" name="sex"> Male
+     <input type="radio" name="sex"> Female</div>
+    <div>Resume: <input type="file" name="resume"></div>
+    Address: <select name="address">
+        <option value="Moscow">Moscow</option>
+        <option value="Kiev">Kiev</option>
+    </select>
+    <div><br>Description: <textarea name="description" ></textarea></div>
+    <div><br>Agreements: <input type="checkbox" name="agreements" ></div>
+    <div><input type="submit" value="Submit" ></div>
+</form>
+</div>
+<br>
+
+<div class="center">
+    <table style="border: 1px solid #000000 " border="1"; cellpadding="1"; cellspacing="0">
+        <tr>
+            <td>Login:</td>
+            <td>Email</td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+</html>

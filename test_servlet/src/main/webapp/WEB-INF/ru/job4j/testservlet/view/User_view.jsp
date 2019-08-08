@@ -39,7 +39,7 @@
     <c:forEach items="${users}" var="user">
 
     <tr>
-        <td><c:out value="${user.login}" /></td>
+        <td><a href="${pageContext.servletContext.contextPath}/items.html?id=${user.id}"><c:out value="${user.login}" /></a></td>
         <td><c:out value="${user.email}" /></td>
     </tr>
     </c:forEach>
