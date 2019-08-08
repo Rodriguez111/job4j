@@ -4,6 +4,7 @@ import ru.job4j.crudservlet.Pages;
 import ru.job4j.crudservlet.controller.logic.ValidateService;
 import ru.job4j.crudservlet.controller.logic.ValidateServiceWithRoles;
 import ru.job4j.crudservlet.controller.logic.Validator;
+import ru.job4j.crudservlet.controller.logic.ValidatorWithRole;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LogInServlet extends HttpServlet {
-    private static final ValidateServiceWithRoles VALIDATOR = ValidateServiceWithRoles.getInstance();
+    private static final ValidatorWithRole VALIDATOR = ValidateServiceWithRoles.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

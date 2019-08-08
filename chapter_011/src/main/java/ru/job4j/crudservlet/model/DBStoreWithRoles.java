@@ -14,7 +14,7 @@ import java.util.List;
 public class DBStoreWithRoles implements Store, RolesStore {
 
     private final static DBStoreWithRoles INSTANCE = new DBStoreWithRoles();
-    private final static Store simpleStore = DBStore.getInstance();
+    private final static Store SIMPLE_STORE = DBStore.getInstance();
     private final static SQLManager SQL_MANAGER = new SQLManager();
 
     private DBStoreWithRoles() {
@@ -65,7 +65,7 @@ public class DBStoreWithRoles implements Store, RolesStore {
 
     @Override
     public boolean delete(User user) {
-        return simpleStore.delete(user);
+        return SIMPLE_STORE.delete(user);
     }
 
     @Override
