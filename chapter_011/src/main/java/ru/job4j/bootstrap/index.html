@@ -6,11 +6,39 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        function validate() {
+            var result = true;
+            var name = $('#name');
+            var surname = $('#surname');
+            var sex = $("input:radio[name=state]:checked").val();
+            var description = $('#description');
+
+            if (name.val() == '') {
+                result = false;
+                alert("Поле " + name.attr('title') + " не должно быть пустым");
+            } else if (surname.val() == '') {
+
+                result = false;
+                alert("Поле " + surname.attr('title') + " не должно быть пустым");
+            } else if (sex != 'male' && sex != 'female') {
+                result = false;
+                alert("Нужно выбрать пол");
+            } else if (description.val() == '') {
+                result = false;
+                alert("Нужно заполнить описание");
+            }
+            return result;
+        }
+    </script>
+
+
 </head>
 <body>
 
 <div class="container-fluid">
-    <form action="/someaction">
+    <form action="/someaction" method="post" id="form">
         <div class="row">
             <div class="col-md-5">
             </div>
@@ -20,23 +48,23 @@
 
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input class="form-control" type="text" name="name" id="name">
+                    <input class="form-control" type="text" name="name" title="Name" id="name">
                 </div>
                 <div class="form-group">
                     <label for="surname">Surname:</label>
-                    <input class="form-control" type="text" name="surname" id="surname">
+                    <input class="form-control" type="text" name="surname" title="Surname" id="surname">
                 </div>
 
                 <div class="form-group">
                     <label for="sex1">Sex:</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sex" id="sex1" value="option1">
+                        <input class="form-check-input" type="radio" name="state" id="sex1" value="male"/>
                         <label class="form-check-label" for="sex1">
                             Male
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sex" id="sex2" value="option2">
+                        <input class="form-check-input" type="radio" name="state" id="sex2" value="female"/>
                         <label class="form-check-label" for="sex2">
                             Female
                         </label>
@@ -45,9 +73,10 @@
 
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <textarea class="form-control" type="text" name="surname" id="description"></textarea>
+                    <textarea class="form-control" type="text" name="surname" title="Description"
+                              id="description"></textarea>
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                <input type="button" onclick="return validate();" class="btn btn-default" value="Готово">
             </div>
 
             <div class="col-md-5">
@@ -55,13 +84,14 @@
         </div>
 
     </form>
-<hr><br>
+    <hr>
+    <br>
 
     <div class="row">
         <div class="col-md-2">
         </div>
         <div class="col-md-8">
-                <h3 class="text-center">All users information</h3>
+            <h3 class="text-center">All users information</h3>
 
             <table class="table table-striped">
                 <thead>
