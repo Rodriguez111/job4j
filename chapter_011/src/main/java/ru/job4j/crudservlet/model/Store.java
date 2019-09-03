@@ -11,8 +11,16 @@ public interface Store {
 
     boolean delete(User user);
 
-    List<User> findAll();
+    List<User> getAllUsers();
+
+    List<String> getAllRoles();
+
+    List<String> getAllCountries();
 
     User findById(int id);
+
+    int findIdByField(String fieldValue, String fieldName, String tableName);
+
+    List<String> getListOfValuesByField(String criteriaField, Object criteriaValue, String tableName, String searchField);
 
 }

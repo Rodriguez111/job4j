@@ -1,0 +1,22 @@
+body {
+    background-color: #f2f2f2;
+    font-family: Latha;
+    color: #555;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Adobe Caslon Pro";
+    font-weight: 300;
+    color: #333;
+}
+
+#button:hover {
+    color: #7b7b7b;
+}
+
+.form-control {
+    box-shadow: 0 0 5px 5px #ffeace;
+}
+

@@ -41,7 +41,7 @@ public class UserStore implements Store {
     }
 
     @Override
-    public List<User> findAll() {
+    public List<User> getAllUsers() {
         return this.listOfUsers;
     }
 
@@ -63,5 +63,25 @@ public class UserStore implements Store {
             result =  listOfUsers.get(listOfUsers.size() - 1).getId() + 1;
         }
         return result;
+    }
+
+    @Override
+    public int findIdByField(String fieldValue, String fieldName, String tableName) {
+        return 0;
+    }
+
+    @Override
+    public List<String> getListOfValuesByField(String criteriaField, Object criteriaValue, String tableName, String searchField) {
+        return null;
+    }
+
+    @Override
+    public List<String> getAllRoles() {
+        return null;
+    }
+
+    @Override
+    public List<String> getAllCountries() {
+        return null;
     }
 }

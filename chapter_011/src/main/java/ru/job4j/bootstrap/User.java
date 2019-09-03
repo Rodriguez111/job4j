@@ -12,6 +12,10 @@ public class User {
     private boolean isMale;
     @JsonProperty("description")
     private String description;
+    @JsonProperty("country")
+    private String country;
+    @JsonProperty("city")
+    private String city;
 
 
     public User() {

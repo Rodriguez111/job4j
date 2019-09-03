@@ -1,6 +1,5 @@
 package ru.job4j.crudservlet.controller.logic;
 
-import ru.job4j.crudservlet.AdvancedUser;
 import ru.job4j.crudservlet.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +16,11 @@ public interface Validator {
 
     User findById(int id);
 
-    boolean isCredential(String login, String password);
+    String isCredential(String login, String password);
 
     boolean nonNullCheck(String field);
 
     String formatDate();
+
+
 }

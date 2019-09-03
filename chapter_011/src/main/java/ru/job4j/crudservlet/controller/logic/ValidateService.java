@@ -14,39 +14,44 @@ import java.util.List;
 import java.util.Optional;
 
 public class ValidateService implements Validator {
-    // private final static Store USER_STORE = UserStore.getInstance();
+
+    private static final Validator INSTANCE = new ValidateService();
     private final static Store USER_STORE = DBStore.getInstance();
-    private final static ValidateService INSTANCE = new ValidateService();
     private static final Logger LOG = LoggerFactory.getLogger(ValidateService.class);
 
     private ValidateService() {
     }
 
-    public static ValidateService getInstance() {
+    public static Validator getInstance() {
         return INSTANCE;
     }
 
     @Override
     public boolean add(HttpServletRequest request) {
+        LOG.info("Enter method");
         boolean result = false;
-        Optional<User> optionalUser = createUser(request);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            if (USER_STORE.add(user)) {
-                result = true;
-                LOG.info("New user added successfully");
+        String login = request.getParameter("login");
+        if (USER_STORE.findIdByField(login, "login", "users") == -1) {
+            Optional<User> optionalUser = createUser(request);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                if (USER_STORE.add(user)) {
+                    result = true;
+                    LOG.info("New user added successfully");
+                }
             }
         }
+        LOG.info("Exit method");
         return result;
     }
 
-
     @Override
     public boolean update(HttpServletRequest request) {
+        LOG.info("Enter method");
         boolean result = true;
         int id = 0;
         try {
-            id = Integer.valueOf(request.getParameter("id"));
+            id = Integer.parseInt(request.getParameter("id"));
             User user = findById(id);
             if (user != null) {
                 if (updateUser(request, user)) {
@@ -59,18 +64,20 @@ public class ValidateService implements Validator {
         } catch (NumberFormatException e) {
             result = false;
         }
+        LOG.info("Exit method");
         return result;
     }
 
     @Override
     public boolean delete(HttpServletRequest request) {
+        LOG.info("Enter method");
         boolean result;
         int id = 0;
         try {
             id = Integer.valueOf(request.getParameter("id"));
-            User user = findById(id);
-            if (user != null) {
-                result = USER_STORE.delete(user);
+            User advancedUser = USER_STORE.findById(id);
+            if (advancedUser != null) {
+                result = USER_STORE.delete(advancedUser);
             } else {
                 result = false;
             }
@@ -80,12 +87,77 @@ public class ValidateService implements Validator {
         if (result) {
             LOG.info("TestUser with ID = " + id + " deleted successfully");
         }
+        LOG.info("Exit method");
         return result;
     }
 
+
+    private Optional<User> createUser(HttpServletRequest request) {
+        LOG.info("Enter method");
+        Optional<User> optionalUser = Optional.empty();
+        String name = request.getParameter("name");
+        String login = request.getParameter("login");
+        String role = request.getParameter("role");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String country = request.getParameter("country");
+        String city = request.getParameter("city");
+        String createDate = formatDate();
+        if (nonNullCheck(name) && nonNullCheck(login) && nonNullCheck(role) && nonNullCheck(password)
+                && nonNullCheck(email) && nonNullCheck(country) && nonNullCheck(city)) {
+            optionalUser = Optional.of(new User(name, login, password, email, role, country, city, createDate));
+        }
+        LOG.info("Exit method");
+        return optionalUser;
+    }
+
+    private boolean updateUser(HttpServletRequest request, User user) {
+        LOG.info("Enter method");
+        boolean result = false;
+        if (nonNullCheck(request.getParameter("name"))) {
+            user.setName(request.getParameter("name"));
+            result = true;
+        }
+        if (nonNullCheck(request.getParameter("login"))) {
+            user.setLogin(request.getParameter("login"));
+            result = true;
+        }
+        if (nonNullCheck(request.getParameter("password"))) {
+            user.setLogin(request.getParameter("password"));
+            result = true;
+        }
+        if (nonNullCheck(request.getParameter("email"))) {
+            user.setEmail(request.getParameter("email"));
+            result = true;
+        }
+        if (nonNullCheck(request.getParameter("role"))) {
+            user.setRole(request.getParameter("role"));
+            result = true;
+        }
+        if (nonNullCheck(request.getParameter("country"))) {
+            user.setCountry(request.getParameter("country"));
+            result = true;
+        }
+        if (nonNullCheck(request.getParameter("city"))) {
+            user.setCity(request.getParameter("city"));
+            result = true;
+        }
+        LOG.info("Exit method");
+        return result;
+    }
+
+    public String formatDate() {
+        LOG.info("Enter method");
+        Date rawDate = new Date(System.currentTimeMillis());
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
+        LOG.info("Exit method");
+        return dateFormat.format(rawDate);
+    }
+
+
     @Override
     public List<User> findAll() {
-        return USER_STORE.findAll();
+        return USER_STORE.getAllUsers();
     }
 
     @Override
@@ -94,56 +166,16 @@ public class ValidateService implements Validator {
     }
 
 
-    private Optional<User> createUser(HttpServletRequest request) {
-        Optional<User> optionalUser = Optional.empty();
-        String userName = request.getParameter("name");
-        String userLogin = request.getParameter("login");
-        String userPass = request.getParameter("password");
-        String userEmail = request.getParameter("email");
-        String userCreateDate = formatDate();
-        if (nonNullCheck(userName) && nonNullCheck(userLogin) && nonNullCheck(userPass) && nonNullCheck(userEmail)) {
-            optionalUser = Optional.of(new User(userName, userLogin, userPass, userEmail, userCreateDate));
-        }
-        return optionalUser;
-    }
-
-    private boolean updateUser(HttpServletRequest request, User user) {
-        boolean result = true;
-        if (nonNullCheck(request.getParameter("name"))) {
-            user.setName(request.getParameter("name"));
-        }
-        if (nonNullCheck(request.getParameter("login"))) {
-            user.setLogin(request.getParameter("login"));
-        }
-        if (nonNullCheck(request.getParameter("password"))) {
-            user.setLogin(request.getParameter("password"));
-        }
-        if (nonNullCheck(request.getParameter("email"))) {
-            user.setEmail(request.getParameter("email"));
-        }
-        List<User> listOfUsers = USER_STORE.findAll();
-        if (listOfUsers.contains(user)) {
-            result = false;
-        }
-        return result;
-    }
-
     @Override
-    public boolean isCredential(String login, String password) {
-        boolean result = false;
-        for (User eachUser : USER_STORE.findAll()) {
+    public String isCredential(String login, String password) {
+        String role = "";
+        for (User eachUser : USER_STORE.getAllUsers()) {
             if (eachUser.getLogin().equals(login) && eachUser.getPassword().equals(password)) {
-                result = true;
+                role = eachUser.getRole();
                 break;
             }
         }
-        return result;
-    }
-
-    public String formatDate() {
-        Date rawDate = new Date(System.currentTimeMillis());
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
-        return dateFormat.format(rawDate);
+        return role;
     }
 
     public boolean nonNullCheck(String field) {

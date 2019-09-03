@@ -26,6 +26,7 @@ public class JsonServlet extends HttpServlet {
         }
         String jsonString = USER_VALIDATOR.getAllUsers();
         resp.setContentType("text/json");
+        resp.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
         writer.print(jsonString);
         writer.flush();

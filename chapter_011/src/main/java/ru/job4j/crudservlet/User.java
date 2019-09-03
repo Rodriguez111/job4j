@@ -14,13 +14,23 @@ public class User {
 
     private String email;
 
+    private String role;
+
+    private String country;
+
+    private String city;
+
     private String createDate;
 
-    public User(String name, String login, String password, String email, String createDate) {
+    public User(String name, String login, String password, String email,
+                String role, String country, String city, String createDate) {
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.role = role;
+        this.country = country;
+        this.city = city;
         this.createDate = createDate;
     }
 
@@ -32,24 +42,20 @@ public class User {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getLogin() {
         return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -64,26 +70,41 @@ public class User {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public String getCreateDate() {
         return createDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        User user = (User) o;
-        return name.equals(user.name)
-                && login.equals(user.login)
-               && email.equals(user.email);
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, login, email);
-    }
+
 }

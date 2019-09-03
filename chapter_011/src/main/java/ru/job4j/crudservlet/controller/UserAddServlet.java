@@ -2,9 +2,7 @@ package ru.job4j.crudservlet.controller;
 
 import ru.job4j.crudservlet.Pages;
 import ru.job4j.crudservlet.controller.logic.ValidateService;
-import ru.job4j.crudservlet.controller.logic.ValidateServiceWithRoles;
 import ru.job4j.crudservlet.controller.logic.Validator;
-import ru.job4j.crudservlet.controller.logic.ValidatorWithRole;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,12 +12,13 @@ import java.io.IOException;
 
 public class UserAddServlet extends HttpServlet {
 
-    private final ValidatorWithRole validateService = ValidateServiceWithRoles.getInstance();
+    private final Validator validateService = ValidateService.getInstance();
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        System.out.println("UserAddServlet");
         validateService.add(req);
         resp.sendRedirect(req.getContextPath() + Pages.MAIN.page);
     }

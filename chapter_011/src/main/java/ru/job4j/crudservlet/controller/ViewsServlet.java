@@ -35,13 +35,6 @@ public class ViewsServlet extends HttpServlet {
                 e.printStackTrace();
             }
         });
-        dispatcher.put("delete", (request, response) -> {
-            try {
-                request.getRequestDispatcher(Pages.DELETE_JSP.page).forward(request, response);
-            } catch (ServletException | IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
 

@@ -1,6 +1,5 @@
 package ru.job4j.crudservlet.controller.logic;
 
-import ru.job4j.crudservlet.AdvancedUser;
 import ru.job4j.crudservlet.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ValidateStub implements ValidatorWithRole {
-    private final Map<Integer, AdvancedUser> store = new HashMap<>();
+public class ValidateStub implements Validator {
+    private final Map<Integer, User> store = new HashMap<>();
     private int ids = 0;
 
     @Override
@@ -20,7 +19,8 @@ public class ValidateStub implements ValidatorWithRole {
         String role = request.getParameter("role");
         String password = request.getParameter("password");
 
-        AdvancedUser advancedUser = new AdvancedUser(name, login, role, password, "", "");
+
+        User advancedUser = new User(name, login, password, "",  role, "", "", "");
         advancedUser.setId(this.ids++);
         this.store.put(advancedUser.getId(), advancedUser);
         return true;
@@ -42,7 +42,7 @@ public class ValidateStub implements ValidatorWithRole {
         boolean result = false;
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
-        AdvancedUser advancedUser = store.remove(id);
+        User advancedUser = store.remove(id);
         if (advancedUser.getName().equals(name)) {
             result = true;
         }
@@ -61,19 +61,19 @@ public class ValidateStub implements ValidatorWithRole {
     }
 
     @Override
-    public List<AdvancedUser> findAllAdvUsers() {
+    public List<User> findAll() {
         return new ArrayList<>(this.store.values());
     }
 
     @Override
-    public AdvancedUser findAdvUserById(int id) {
+    public User findById(int id) {
         return store.get(id);
     }
 
     @Override
-    public String isCredentialWithRole(String login, String password) {
+    public String isCredential(String login, String password) {
         String role = "";
-        for (Map.Entry<Integer, AdvancedUser> entry : store.entrySet()) {
+        for (Map.Entry<Integer, User> entry : store.entrySet()) {
             if (entry.getValue().getLogin().equals(login) && entry.getValue().getPassword().equals(password)) {
                 role = entry.getValue().getRole();
                 break;
@@ -82,18 +82,4 @@ public class ValidateStub implements ValidatorWithRole {
         return role;
     }
 
-    @Override
-    public List<User> findAll() {
-        return null;
-    }
-
-    @Override
-    public User findById(int id) {
-        return null;
-    }
-
-    @Override
-    public boolean isCredential(String login, String password) {
-        return false;
-    }
 }

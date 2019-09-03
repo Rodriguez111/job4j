@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserStorage implements Storage {
 
-    private final static AtomicInteger count = new AtomicInteger();
+    private final static AtomicInteger COUNT = new AtomicInteger();
 
     private final static ConcurrentHashMap<Integer, User> MAP = new ConcurrentHashMap();
 
@@ -36,6 +36,6 @@ public class UserStorage implements Storage {
     }
 
     private int generateId() {
-        return count.incrementAndGet();
+        return COUNT.incrementAndGet();
     }
 }
