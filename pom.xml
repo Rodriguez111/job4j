@@ -25,11 +25,13 @@
 		<module>chapter_009</module>
 		<module>chapter_010</module>
         <module>chapter_011</module>
+        <module>chapter_012</module>
         <module>chess</module>
         <module>tictactoe</module>
         <module>puzzle</module>
         <module>test_tasks</module>
         <module>test_servlet</module>
+        <module>cinema</module>
     </modules>
 
     <build>
