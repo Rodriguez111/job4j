@@ -1,0 +1,20 @@
+
+td {
+    /*Запрет выделения:*/
+    -moz-user-select: none; /* Mozilla Firefox */
+    -ms-user-select: none; /* Internet Explorer (не поддерживается) */
+    -o-user-select: none; /* Opera Presto (не поддерживается) */
+    -webkit-user-select: none; /* Google Chrome, Opera Next, Safari */
+
+}
+
+
+td:hover {
+    background-color: #c8d2dd;
+}
+
+
+td:active {
+    background-color: #335982;
+
+}

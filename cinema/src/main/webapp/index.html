@@ -1,0 +1,330 @@
+<!doctype html>
+
+<html lang="rus">
+<head>
+
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="resources/css/hall.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/confirm_popup.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/error_popup.css">
+    <script src="resources/js/jquery-3.4.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Required meta tags -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Cinema</title>
+</head>
+<body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<div class="container">
+    <div class="row pt-1">
+        <h4>
+            Бронирование мест на сеанс
+        </h4>
+        <table id="tableOfPlaces" class="table table-hover table-bordered">
+
+        </table>
+    </div>
+    <div class="row float-left">
+        <button type="button" class="btn btn-danger" onclick="clearHall()">Очистить зал</button>
+    </div>
+    <div class="row float-right">
+        <button id="pay-cancel" type="button" class="btn btn-success" onclick="handleRightButtonClick()">Оплатить билет</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-md-4">
+    </div>
+    <div id="infoBlock" class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+
+
+<div class="confirm-modal-overlay" id="confirm-modal-overlay">
+    <div class="confirm-modal-wrapper" id="confirm-modal-wrapper">
+        <div class="confirm-modal-header">
+            <div class="header-content">
+                Очистка зала
+            </div>
+        </div>
+        <div class="confirm-modal-body" id="confirm-modal-body">
+            <div class="confirm-info-field" id="confirm-info-field">
+            </div>
+        </div>
+        <div class="confirm-modal-footer">
+            <button id="ok-button" class="ok-button">Ok</button>
+            <button id="cancel-button" class="cancel-button">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div class="error-modal-overlay" id="error-modal-overlay">
+    <div class="error-modal-wrapper" id="error-modal-wrapper">
+        <div class="error-modal-header">
+            <div class="header-content">
+                Ошибка!
+            </div>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="error-info-field" id="error-info-field">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="ok-error" class="ok-error">Ok</button>
+        </div>
+    </div>
+</div>
+
+</body>
+
+
+<script>
+
+    var selectedCell;
+    var rightButtonIsForPay = true;
+        window.onload = function() {
+       sendAjaxRequest('./hall', "getHallInfo", refreshHall);
+    };
+
+    window.setInterval(function(){
+        refreshPage();
+    }, 3000);
+
+
+
+    function refreshPage() {
+        sendAjaxRequest('./hall', "getHallInfo", refreshHall);
+    }
+
+
+    function refreshHall(listOfPlaces) {
+        var array = $.map(listOfPlaces, function(el) { return el });
+
+        var table = "";
+        for (var i = 0; i < array.length; i++) {
+            var row = array[i].row;
+            var place = array[i].place;
+            var engaged = array[i].engaged;
+            var cost = array[i].cost;
+            if(place === 1) {
+                if(row !== 1) {
+                    table += "</tr>";
+                }
+                if(engaged) {
+                    table += "<tr><th>" + row + "</th><td bgcolor='red' onclick=\"cancelTicket(this, " + row +", " + place + ") \">" +  place + "</td>";
+                } else {
+                    table += "<tr><th>" + row + "</th><td onclick=\"buyTicket(this, " + row +", " + place + ", " + engaged + ", " + cost + ")\">" +  place + "<div class='price' style=\"font-size:10px\">" + cost + "</div>" + "</td>";
+                }
+
+            } else {
+                if(engaged) {
+                    table += "<td bgcolor='red' onclick=\"cancelTicket(this, " + row +", " + place + ") \">" +  place + "</td>";
+                } else {
+                    table += "<td onclick=\"buyTicket(this, " + row +", " + place + ", " + engaged + ", " + cost + ")\">" +  place + "<div class='price' style=\"font-size:10px\">" + cost + "</div>" +  "</td>";
+                }
+            }
+        }
+        table += "</tr>";
+        var htmlTable = document.getElementById("tableOfPlaces");
+        htmlTable.innerHTML = table;
+    }
+
+
+
+    function sendAjaxRequest(url, dataToSend, callback) {
+        $.ajax(url, {
+            method: 'post',
+            data: dataToSend,
+            contentType: 'text/json; charset=utf-8',
+            dataType: 'json',
+            success: function(data){
+                callback(data);
+            }
+        })
+    }
+
+    function sendAjaxRequest2(url, dataToSend, callback) {
+        $.ajax(url, {
+            method: 'post',
+            data: dataToSend,
+            contentType: 'text/json; charset=utf-8',
+            dataType: 'json',
+            success: callback
+        })
+    }
+
+
+    function buyTicket(cell, row, place, engaged, cost) {
+        if(!engaged) {
+            makeRightButtonForPay();
+
+            if(selectedCell != null) {
+                selectedCell.style.backgroundColor = "";
+            }
+            selectedCell = cell;
+            selectedCell.style.backgroundColor = "rgba(51,89,130,0.67)";
+        }
+        generateVirtualFormCreate(row, place, cost);
+    }
+
+    function generateVirtualFormCreate(row, place, cost) {
+        var context = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+        var  virtualForm=document.createElement('FORM');
+        virtualForm.id='virtualCreateForm';
+        virtualForm.method='POST';
+        virtualForm.action=context + "\\ticket.jsp";
+
+        var my_tb=document.createElement('INPUT');
+        my_tb.type='hidden';
+        my_tb.name='row';
+        my_tb.value=row;
+        virtualForm.appendChild(my_tb);
+
+        my_tb=document.createElement('INPUT');
+        my_tb.type='hidden';
+        my_tb.name='place';
+        my_tb.value=place;
+        virtualForm.appendChild(my_tb);
+
+        my_tb=document.createElement('INPUT');
+        my_tb.type='hidden';
+        my_tb.name='cost';
+        my_tb.value=cost;
+        virtualForm.appendChild(my_tb);
+        document.body.appendChild(virtualForm);
+    }
+
+    function generateVirtualFormCancel(row, place) {
+        var context = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+        var  virtualForm=document.createElement('FORM');
+        virtualForm.id='virtualCancelForm';
+        virtualForm.method='POST';
+        virtualForm.action=context + "\\cancel_ticket";
+
+        var my_tb=document.createElement('INPUT');
+        my_tb.type='hidden';
+        my_tb.name='row';
+        my_tb.value=row;
+        virtualForm.appendChild(my_tb);
+
+        my_tb=document.createElement('INPUT');
+        my_tb.type='hidden';
+        my_tb.name='place';
+        my_tb.value=place;
+        virtualForm.appendChild(my_tb);
+        document.body.appendChild(virtualForm);
+    }
+
+    function handleRightButtonClick() {
+        if (rightButtonIsForPay) {
+            submitPayForm();
+        } else {
+            submitCancelForm();
+        }
+
+    }
+
+
+    function submitPayForm() {
+        var form = document.getElementById('virtualCreateForm');
+        if(form == null) {
+            var errorWindow = document.getElementById("error-modal-overlay");
+            document.getElementById("error-info-field").innerHTML = "Не выбрано место";
+            errorWindow.style.display = "flex";
+        } else {
+            form.submit();
+        }
+    }
+
+    function submitCancelForm() {
+        var errorWindow = document.getElementById("confirm-modal-overlay");
+        document.getElementById("confirm-info-field").innerHTML = "Вы уверены, что хотите отменить этот билет?";
+        errorWindow.style.display = "flex";
+
+        var okButton = document.getElementById("ok-button");
+        okButton.addEventListener('click', function () {
+            var form = document.getElementById('virtualCancelForm');
+            form.submit();
+            var errorWindow = document.getElementById("confirm-modal-overlay");
+            errorWindow.style.display = "none";
+            makeRightButtonForPay();
+        });
+
+        var cancelButton = document.getElementById("cancel-button");
+        cancelButton.addEventListener('click', function () {
+            var errorWindow = document.getElementById("confirm-modal-overlay");
+            errorWindow.style.display = "none";
+        });
+
+    }
+
+
+
+    function cancelTicket(cell, row, place) {
+        rightButtonIsForPay = false;
+        var pay_cancel_button = document.getElementById("pay-cancel");
+        pay_cancel_button.innerText = "Отменить билет";
+        pay_cancel_button.className = "btn btn-warning";
+
+        if(selectedCell != null) {
+            selectedCell.style.backgroundColor = "";
+        }
+        selectedCell = cell;
+        selectedCell.style.backgroundColor = "rgb(255,207,33)";
+
+        generateVirtualFormCancel(row, place);
+    }
+
+
+    function clearHall() {
+        document.getElementById("confirm-info-field").innerHTML = "Вы действительно хотите очистить зал?";
+        var errorWindow = document.getElementById("confirm-modal-overlay");
+        errorWindow.style.display = "flex";
+
+        var okButton = document.getElementById("ok-button");
+        okButton.addEventListener('click', function () {
+            sendAjaxRequest2('./hall', "clearHall", refreshPage);
+            var errorWindow = document.getElementById("confirm-modal-overlay");
+            errorWindow.style.display = "none";
+
+        });
+
+        var cancelButton = document.getElementById("cancel-button");
+        cancelButton.addEventListener('click', function () {
+            var errorWindow = document.getElementById("confirm-modal-overlay");
+            errorWindow.style.display = "none";
+        });
+    }
+
+
+
+    var okErrorButton = document.getElementById("ok-error");
+    okErrorButton.addEventListener('click', function () {
+        var errorWindow = document.getElementById("error-modal-overlay");
+        errorWindow.style.display = "none";
+    });
+
+    function makeRightButtonForPay() {
+        rightButtonIsForPay = true;
+        var pay_cancel_button = document.getElementById("pay-cancel");
+        pay_cancel_button.innerText = "Оплатить билет";
+        pay_cancel_button.className = "btn btn-success";
+    }
+
+</script>
+
+</html>
