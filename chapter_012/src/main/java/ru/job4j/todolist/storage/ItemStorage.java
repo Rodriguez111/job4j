@@ -1,16 +1,14 @@
 package ru.job4j.todolist.storage;
 
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.todolist.models.Item;
-
 import java.util.List;
-
+import java.util.function.Function;
 
 public class ItemStorage implements Storage {
     private static final Logger LOG = LoggerFactory.getLogger(ItemStorage.class);
@@ -40,26 +38,21 @@ public class ItemStorage implements Storage {
 
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Item> getAllItems(boolean onlyUndone) {
         LOG.info("Enter method");
-        Session session = getSession();
-        List<Item> list =
-                onlyUndone ? session.createQuery("from Item WHERE done=false").list() : session.createQuery("from Item").list();
-        session.close();
         LOG.info("Exit method");
-        return list;
+        return onlyUndone ? transaction(session -> session.createQuery("from Item WHERE done=false").list())
+                : transaction(session -> session.createQuery("from Item").list());
     }
 
     @Override
     public void addItem(Item item) {
         LOG.info("Enter method");
-        Session session = getSession();
-        session.beginTransaction();
-        session.save(item);
-        session.getTransaction().commit();
-        session.close();
+        transaction(session -> session.save(item));
         LOG.info("Exit method");
     }
+
 
     private void createTable() {
         String createTable = "CREATE table items" +
@@ -67,10 +60,24 @@ public class ItemStorage implements Storage {
                 "description character varying(500) NOT NULL," +
                 "create_date character varying(19) NOT NULL," +
                 "done boolean  NOT NULL)";
-        Session session = getSession();
-        session.beginTransaction();
-        session.createSQLQuery(createTable).executeUpdate();
-        session.getTransaction().commit();
-        session.close();
+        transaction(session -> session.createSQLQuery(createTable).executeUpdate());
+    }
+
+    private <T> T transaction(Function<Session, T> command) {
+        final Session session = getSession();
+        final Transaction transaction = session.beginTransaction();
+        T result = null;
+        try{
+            result = command.apply(session);
+            transaction.commit();
+
+        } catch (Exception e) {
+            transaction.rollback();
+            LOG.error(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return result;
     }
 }

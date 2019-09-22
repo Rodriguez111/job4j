@@ -30,7 +30,7 @@ public class ValidateItems implements Validator {
     }
 
     private String formatTime(Timestamp timestamp) {
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(timestamp);
     }
 
