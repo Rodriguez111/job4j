@@ -52,11 +52,11 @@ public class ItemStorage implements Storage {
     }
 
     private void createTable() {
-        String createTable = "CREATE table items" +
-                "(id serial primary key," +
-                "description character varying(500) NOT NULL," +
-                "create_date character varying(19) NOT NULL," +
-                "done boolean  NOT NULL)";
+        String createTable = "CREATE table items"
+                + "(id serial primary key,"
+                + "description character varying(500) NOT NULL,"
+                + "create_date character varying(19) NOT NULL,"
+                + "done boolean  NOT NULL)";
         transaction(session -> session.createSQLQuery(createTable).executeUpdate());
     }
 
@@ -64,7 +64,7 @@ public class ItemStorage implements Storage {
         final Session session = getSession();
         final Transaction transaction = session.beginTransaction();
         T result = null;
-        try{
+        try {
             result = command.apply(session);
             transaction.commit();
 

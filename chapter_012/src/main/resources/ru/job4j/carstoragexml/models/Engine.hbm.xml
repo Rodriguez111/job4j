@@ -1,0 +1,9 @@
+<hibernate-mapping xmlns="http://www.hibernate.org/xsd/hibernate-mapping">
+    <class name="ru.job4j.carstoragexml.models.Engine" table="engine">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="engineType" column="engine_type"/>
+
+    </class>
+</hibernate-mapping>
