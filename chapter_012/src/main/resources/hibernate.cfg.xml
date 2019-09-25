@@ -1,17 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-configuration>
-    <session-factory>
+<!--    <session-factory>-->
 
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/todolist</property>
+<!--        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/todolist</property>-->
+<!--        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>-->
+<!--        <property name="hibernate.connection.username">postgres</property>-->
+<!--        <property name="hibernate.connection.password">password</property>-->
+<!--        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>-->
+
+<!--        <mapping resource="ru/job4j/todolist/models/Item.hbm.xml"/>-->
+
+
+
+<!--    </session-factory>-->
+
+<!--    <session-factory>-->
+<!--        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/cars</property>-->
+<!--        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>-->
+<!--        <property name="hibernate.connection.username">postgres</property>-->
+<!--        <property name="hibernate.connection.password">password</property>-->
+<!--        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>-->
+
+
+<!--        <mapping resource="ru/job4j/carstoragexml/models/CarBody.hbm.xml"/>-->
+<!--        <mapping resource="ru/job4j/carstoragexml/models/Engine.hbm.xml"/>-->
+<!--        <mapping resource="ru/job4j/carstoragexml/models/Transmission.hbm.xml"/>-->
+<!--        <mapping resource="ru/job4j/carstoragexml/models/Car.hbm.xml"/>-->
+
+
+<!--    </session-factory>-->
+
+    <session-factory>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/cars</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">password</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
 
-<!--        <property name="hibernate.hbm2ddl.auto">create</property>-->
 
-        <mapping resource="ru/job4j/todolist/models/Item.hbm.xml"/>
+        <mapping class="ru.job4j.carstorageannot.models.CarBody"/>
+        <mapping class="ru.job4j.carstorageannot.models.Engine"/>
+        <mapping class="ru.job4j.carstorageannot.models.Transmission"/>
+        <mapping class="ru.job4j.carstorageannot.models.Car"/>
+
 
 
     </session-factory>
+
+
+
 </hibernate-configuration>
