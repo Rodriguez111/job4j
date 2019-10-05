@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="resources/css/error_popup_window.css">
+    <script src="resources/js/jquery-3.4.1.min.js"></script>
+    <title>TODO list</title>
+</head>
+<body>
+
+<div class="form-container">
+    <form method="post" action="./todo" id="add" >
+        <textarea id="textarea" class="textarea" name="description"></textarea> <br>
+    </form>
+    <button name="add" onclick="validate()" >Создать задание</button>
+</div>
+<hr>
+
+
+<div class="table-container">
+    <h3>Список заданий</h3>
+    <div class="checkbox">
+         <label for="checkbox">Показать только невыполненные:</label> <input id="checkbox" type="checkbox" name="checkbox"/>
+    </div>
+<table class="main-table">
+    <thead>
+    <th>Дата создания</th>
+    <th>Описание</th>
+    <th>Выполнено</th>
+    </thead>
+    <tbody id="tableBody">
+    </tbody>
+</table>
+</div>
+
+
+
+<div class="error-modal-overlay" id="error-modal-overlay">
+    <div class="error-modal-wrapper" id="error-modal-wrapper">
+        <div class="error-modal-header">
+            <div class="header-content">
+                Ошибка!
+            </div>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="error-info-field" id="error-info-field">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button style="margin-left: 30px" id="ok-error" class="ok-error">Ok</button>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    window.onload = function () {
+        getListOfItems("getAll");
+    };
+
+    var checkBox = document.getElementById("checkbox");
+    checkBox.addEventListener('change', function () {
+        if(this.checked) {
+            getListOfItems("getOnlyUndone");
+
+        } else {
+            getListOfItems("getAll");
+        }
+    });
+
+    var modalErrorWindow = document.getElementById("error-modal-overlay");
+
+    var okErrorButton = document.getElementById("ok-error");
+    okErrorButton.addEventListener('click', function () {
+        modalErrorWindow.style.display = 'none';
+    });
+
+    function getListOfItems(condition) {
+            $.ajax("./todo", {
+                method: 'post',
+                data: condition,
+                contentType:'text/json; charset=utf-8',
+                dataType:'json',
+                success:function (data) {
+                    showItems(data);
+                }
+            })
+    }
+
+
+
+    function addItem(description, condition) {
+            $.ajax("./todo", {
+                method: 'post',
+                data: description,
+                contentType:'text/json; charset=utf-8',
+                dataType:'json',
+                success:function () {
+                    getListOfItems(condition);
+                }
+            })
+    }
+
+
+
+    function showItems(listOfItems) {
+        var array = $.map(listOfItems, function(el) { return el });
+
+        var table = "";
+        for(var i = 0; i < array.length; i++) {
+            table += "<tr><td>" + array[i].createDate + "</td>"
+            table +=  "<td width=\"75%\">" + array[i].description + "</td>"
+            table +=  array[i].done? "<td>Yes</td></tr>" :  "<td>No</td></tr>";
+        }
+        console.log(table);
+        document.getElementById("tableBody").innerHTML = table;
+    }
+
+    function validate() {
+        var form = document.getElementById("add");
+        var description = form.description.value;
+        var result = true;
+        if (description === '') {
+            result = false;
+        }
+        if (description.length >500) {
+            result = false;
+            modalErrorWindow.style.display = "flex";
+            document.getElementById("error-info-field").innerHTML = "Описание не должно превышать 500 символов"
+        }
+        if (result) {
+           var json = JSON.stringify({"addItem" : "add", description : description});
+           var condition =  document.getElementById("checkbox").checked ? "getOnlyUndone" : "getAll";
+             addItem(json, condition) ;
+            document.getElementById("textarea").value = "";
+
+        }
+    }
+
+</script>
+
+</body>
+</html>

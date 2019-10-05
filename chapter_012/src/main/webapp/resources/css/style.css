@@ -1,0 +1,42 @@
+body {
+    background-color: antiquewhite;
+}
+
+.form-container {
+    margin: auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+.textarea {
+    width: 300px;
+    height: 150px;
+}
+
+.checkbox {
+    float: right;
+    font-weight: bold;
+}
+
+.table-container {
+    margin: auto;
+    max-width: 1000px;
+    text-align: center;
+}
+
+.main-table {
+    width: 100%;
+    /*border: solid thin #c8d2dd;*/
+    border-collapse: collapse;
+}
+
+th, td {
+    border: solid thin #959faa;
+
+}
+
+td {
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 5px;
+}
