@@ -1,0 +1,332 @@
+body{
+    background-color: #E1F5FF;
+}
+
+
+
+.main_container {
+    position: relative;
+    width: 850px;
+    height: 800px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #E49500;
+    border-radius: 10px;
+    font-family: Tahoma;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.photo_container {
+    width: 830px;
+    height: 500px;
+    position: relative;
+    margin: auto;
+    display: block;
+    overflow: hidden;
+    margin-bottom: 7px;
+    margin-top: 7px;
+    background-color: #121212;
+
+    border-radius: 10px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #13e427;
+
+
+}
+
+.image {
+    position: absolute;
+    width: 840px;
+    margin: auto;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+}
+
+.number_text {
+    margin: auto;
+    text-align: center;
+    font-size: 13px;
+    text-shadow: #000 1px 0 0px, #000 0 1px 0px, #000 -1px 0 0px, #000 0 -1px 0px;
+    z-index: 1;
+    position	: absolute;
+    top		: 10px;
+    left		: 0;
+    width		: 100%;
+    color: #fefff6;
+
+}
+
+
+
+.previous, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 06s ease;
+    border-radius: 0 3px 3px 0;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.previous:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.text {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top:0;
+}
+.dots_div {
+    text-align: center;
+    bottom: 20px;
+    position: absolute;
+    width: 100%;
+    margin: auto;
+    padding: 2px;
+
+
+}
+
+.dot {
+    cursor: pointer;
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    background-color: #fefff6;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 04s ease;
+
+
+}
+
+.active, .dot:hover {
+    background-color: #717171;
+}
+
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1s;
+    animation-name: fade;
+    animation-duration: 1s;
+}
+@-webkit-keyframes fade {
+    from{opacity: .4}
+    to{opacity: 1}
+}
+
+@keyframes fade {
+    from{opacity: .4}
+    to{opacity: 1}
+}
+
+
+.left_button_container {
+    position: absolute;
+    height: 30px;
+    width: 150px;
+    left: 50px;
+
+}
+
+#checkbox_container {
+    margin-top: 5px;
+    width: 220px;
+    float:left;
+}
+
+
+
+
+.right_button_container {
+    position: absolute;
+    display: none;
+    right: 20px;
+    height: 30px;
+    width: 280px;
+    font-size: 13px;
+    font-weight: bold;
+
+
+}
+
+
+
+#submit_button {
+    height: 30px;
+    width: 50px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #5da5cd;
+    border-radius: 10px;
+    padding: 7px;
+    border: none;
+    outline: none;
+    box-shadow: -2px -2px rgb(64, 128, 205) inset;
+
+}
+
+#submit_button:hover {
+    background: #5499cd;
+    color: #121212;
+}
+#submit_button:active {
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+#back_button {
+    height: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #c5a6c3;
+    border-radius: 10px;
+    padding: 7px;
+    border: none;
+    outline: none;
+    box-shadow: -2px -2px #b193af inset;
+
+}
+
+#back_button:hover {
+    background: #a284a0;
+    color: #121212;
+}
+#back_button:active {
+    margin-left: 2px;
+    margin-top: 2px;
+}
+.info_panel {
+    margin-top: 60px;
+    font-weight: bold;
+    color: #DB1013;
+    width: 90%;
+    height: 30px;
+    text-align: center;
+}
+
+.car_info_container {
+    position: relative;
+    margin-top: 50px;
+    /*background-color: #0ecd00;*/
+    width: 850px;
+    height: 400px;
+    font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+    font-size: 20px;
+}
+
+.car_brand_container {
+    display: inline-block;
+    height: 25px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.car_model_container, .body_type_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 20px;
+    height: 25px;
+
+}
+
+.engine_type_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 15px;
+    height: 25px;
+}
+
+.engine_volume_container, .transmission_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 20px;
+    height: 25px;
+}
+
+.vin_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 15px;
+    height: 25px;
+}
+
+.mileage_container, .year_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 20px;
+    height: 25px;
+}
+
+.color_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-left: 15px;
+    height: 25px;
+}
+
+.price_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 200px;
+    height: 25px;
+}
+
+.seller_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 15px;
+    height: 25px;
+    font-size: 18px;
+}
+
+.date_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 20px;
+    height: 25px;
+    font-size: 18px;
+}
+
+.phone_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 15px;
+    height: 25px;
+    font-size: 18px;
+}
+
+.email_container {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 20px;
+    height: 25px;
+    font-size: 18px;
+}
+
+.sold_container {
+    position: absolute;
+    left: 275px;
+    height: 40px;
+    width: 300px;
+    font-size: 32px;
+    text-align: center;
+}

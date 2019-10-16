@@ -1,0 +1,148 @@
+body{
+    background-color: #E1F5FF;
+}
+
+.user_block {
+    width: 100%;
+    height: 60px;
+    border: thin solid #F9C37B;
+}
+
+.login_block {
+    position: absolute;
+    font-size: 12px;
+    right: 60px;
+
+}
+
+.logout_form {
+    position: absolute;
+    font-size: 12px;
+    right: 60px;
+    top: 14px;
+}
+
+.register_block {
+    position: absolute;
+    top: 35px;
+}
+
+.register_form {
+    position: absolute;
+    left: 135px;
+    top: -3px;
+}
+
+#register_button {
+    height: 20px;
+    font-size: 12px;
+}
+
+#login_field, #password_field {
+    width: 90px;
+    height: 16px;
+    margin-top: 6px;
+}
+
+#login_field {
+    margin-right: 10px;
+}
+
+#enter_button {
+    margin-left: 8px;
+    height: 19px;
+
+}
+
+
+.issue_advert_button {
+    position: absolute;
+    left: 60px;
+    top: 18px;
+    width: 180px;
+    padding:10px;
+    font-size: 15px;
+    font-weight: bold;
+    color:#FFFFFF;
+    background:#FF7733;
+    display: block;
+    text-align: center;
+    border-radius:5px;
+    -moz-user-select: none; /* Mozilla Firefox */
+    -ms-user-select: none; /* Internet Explorer (не поддерживается) */
+    -o-user-select: none; /* Opera Presto (не поддерживается) */
+    -webkit-user-select: none; /* Google Chrome, Opera Next, Safari */
+}
+
+.issue_advert_button:hover {
+    background-color: #CB4908;
+}
+
+.issue_advert_button:active {
+    background-color: #A73801;
+}
+
+.main_table_container {
+    border: thin solid #F9C37B;
+    padding: 5px;
+}
+
+.main_table {
+    width: 900px;
+    border: thin solid #4E4A45;
+    margin: auto;
+    background-color: rgba(245, 245, 245, 0.81);
+}
+
+.first_column {
+    width: 20%;
+}
+.second_column {
+    width: 40%;
+}
+.third_column {
+    width: 15%;
+}
+.fourth_column {
+    width: 15%;
+}
+.fifth_column {
+    width: 10%;
+}
+
+.info_block {
+    position: absolute;
+    color: #0ecd00;
+    font-weight: bold;
+    right: 430px;
+    top: 25px;
+    width: 280px;
+    font-size: 18px;
+    vertical-align:middle;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+thead tr {
+    height: 60px;
+    text-align: center;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+tr {
+    border: #F9C37B solid thin;
+    height: 80px;
+
+}
+
+tbody td {
+    border-left: #F9C37B solid thin;
+    padding: 5px;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+
+}
