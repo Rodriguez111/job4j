@@ -1,5 +1,10 @@
 package sellcars.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,6 +23,7 @@ public class Advert {
     @Column(name = "date", length = 19, nullable = false)
     private String date;
 
+
     @ManyToOne
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
@@ -25,6 +31,7 @@ public class Advert {
     @Column(name = "price", nullable = false)
     private double price;
 
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -32,6 +39,8 @@ public class Advert {
     @Column(name = "sold", nullable = false)
     private boolean sold;
 
+
+    @Fetch(FetchMode.SELECT)
     @OneToMany(mappedBy = "advertId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     //mappedBy = "advertId" - ссылка на поле advertId класса Photo;
     private List<Photo> photos = new ArrayList<>();
@@ -102,6 +111,5 @@ public class Advert {
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
     }
-
 
 }

@@ -62,10 +62,41 @@
 <hr>
 
 
-<div class="main_table_container">
+<div class="left_margin">
+    <div class="filters_container">
+        <div class="filters_title">
+            Фильтры:
+        </div>
+        <div class="last_day_container">
+            <div class="for_last_day_title">За последний день</div>
+            <input type="checkbox" id="for_last_day_input">
+        </div>
+        <div class="only_with_photo_container">
+            <div class="only_with_photo_title">Только с фото</div>
+            <input type="checkbox" id="only_with_photo_input">
+        </div>
+        <div class="brand_selector_container">
+            <div class="brand_selector_title">По марке</div>
+            <select id="brand_selector"></select>
+        </div>
+        <div class="price_container">
+            <div class="price_title_from">Цена от</div>
+            <input id="price_from"/>
+            <div class="price_title_to">до</div>
+            <input id="price_to"/>
+        </div>
+        <button id="apply_filter_button">Применить</button>
+        <button id="reset_filter_button">Сбросить фильтры</button>
+
+
+    </div>
+
+</div>
+
+<div class="central_container">
     <table class="main_table">
         <thead>
-        <tr>
+        <tr class="header_row">
             <td class="first_column">Фото</td>
             <td class="second_column">Описание</td>
             <td class="third_column">Цена</td>
@@ -79,19 +110,158 @@
 </div>
 
 
+<div class="right_margin">
+
+</div>
+
+
 <script>
+
+    window.onload = function () {
+        loadAll();
+        loadCarBrandList();
+        addListenerForPriceFields();
+        addApplyFilterButtonListener();
+        addResetFilterButtonListener();
+    };
+
+    var lastDayCheckBox = document.getElementById("for_last_day_input");
+    var onlyWithPhotoCheckBox = document.getElementById("only_with_photo_input");
+    var brandSelector = document.getElementById("brand_selector");
+    var priceFrom = document.getElementById("price_from");
+    var priceTo = document.getElementById("price_to");
+    var applyFilterButton = document.getElementById("apply_filter_button");
+    var resetFilterButton = document.getElementById("reset_filter_button");
+
+
+    function loadCarBrandList() {
+        sendAjaxRequest("getListOfCarBrands", getCarBrandList);
+
+    }
+
+    function sendAjaxRequest(dataToSend, callback) {
+        $.ajax('./json', {
+            method: 'post',
+            data: dataToSend,
+            contentType: 'text/json; charset=utf-8',
+            dataType: 'json',
+            success: function (data) {
+                callback(data);
+            }
+        })
+    }
+
+    function getCarBrandList(listOfBrands) {
+        var options = '<option selected value="none">Нет</option>';
+        for (var i = 0; i < listOfBrands.length; i++) {
+            options += "<option value='" + listOfBrands[i].carBrand + "'>"
+                + listOfBrands[i].carBrand + "</option>\r\n";
+        }
+        var brandSelector = document.getElementById("brand_selector");
+        brandSelector.innerHTML = options;
+    }
+
+    function addApplyFilterButtonListener() {
+        applyFilterButton.addEventListener('click', function () {
+            if (filterControlsNotChecked()) {
+                loadAll();
+            } else {
+                sendFilterParametersToServer();
+            }
+        })
+
+    }
+
+    function sendFilterParametersToServer() {
+        var dataToSend = composeJsonForQuery();
+        sendAjaxRequest(dataToSend, loadAllAdverts)
+    }
+
+
+    function addResetFilterButtonListener() {
+        resetFilterButton.addEventListener('click', function () {
+            lastDayCheckBox.checked = false;
+            onlyWithPhotoCheckBox.checked = false;
+            brandSelector.value = 'none';
+            priceFrom.value = '';
+            priceTo.value = '';
+        })
+    }
+
+    function filterControlsNotChecked() {
+        return !lastDayCheckBox.checked && !onlyWithPhotoCheckBox.checked
+            && brandSelector.value === 'none' && priceFrom.value === "" && priceTo.value === "";
+    }
+
+
+    function composeJsonForQuery() {
+        var dataToSend = {};
+        dataToSend["filterSelect"] = {};
+        if (lastDayCheckBox.checked) {
+            dataToSend["filterSelect"]["lastDay"] = "true";
+        }
+        if (onlyWithPhotoCheckBox.checked) {
+            dataToSend["filterSelect"]["photos"] = "true";
+        }
+        if (brandSelector.value !== 'none') {
+            dataToSend["filterSelect"]["carBrand"] = brandSelector.value;
+        }
+        if(priceFrom.value !== "") {
+            dataToSend["filterSelect"]["priceFrom"] = priceFrom.value;
+        }
+        if(priceTo.value !== "") {
+            dataToSend["filterSelect"]["priceTo"] = priceTo.value;
+        }
+        return JSON.stringify(dataToSend);
+    }
+
+    function addListenerForPriceFields() { //запрет ввода нецифровых значений
+        priceFrom.addEventListener('input', function () {
+            var value = priceFrom.value;
+
+            if (!onlyDigitsCheck(value)) {
+                value = removeAllNonDigits(value);
+                priceFrom.value = value;
+            }
+        });
+        priceTo.addEventListener('input', function () {
+            var value = priceTo.value;
+            if (!onlyDigitsCheck(value)) {
+                value = removeAllNonDigits(value);
+                priceTo.value = value;
+            }
+        });
+
+    }
+
+    function onlyDigitsCheck(string) {
+        var regex = new RegExp("^[0-9]*$");
+        return regex.test(string);
+    }
+
+    function removeAllNonDigits(string) {
+        return string.replace(/[^0-9]/gim, '');
+    }
+
+
+</script>
+
+
+<script>
+
+
     function submitIssueForm() {
         var form = document.getElementById("issue_advert_form");
         form.submit();
     }
 
+    function loadAll() {
+        sendAjaxRequest("getAllAdverts", loadAllAdverts);
+    }
 
-    sendAjaxRequest("getAllAdverts", loadAllAdverts);
 
-    function loadAllAdverts(data) {
-        console.log(data);
+    function loadAllAdverts(allAdverts) {
         var pathToDefaultImg = "${pageContext.servletContext.contextPath}/picture?folder=&fileName=NoPhoto.jpg";
-        var allAdverts = data.allAdverts;
         var tableBody = document.getElementById("table_body");
         var lines = "";
         for (var i = 0; i < allAdverts.length; i++) {
@@ -99,7 +269,7 @@
             var photoName = allAdverts[i].photos.length > 0 ? allAdverts[i].photos[0].fileName : "";
             lines += "<tr onclick='link(" + allAdverts[i].id + ")'><td><img src=${pageContext.servletContext.contextPath}/picture?folder="
                 + allAdverts[i].car.id + "&fileName=" + photoName + " height=90 onerror=\"this.src='" + pathToDefaultImg + "'\">" + "</td>"
-                + "<td>" + allAdverts[i].car.carBrand.carBrand + " "
+                + "<td class='inner_cell'>" + allAdverts[i].car.carBrand.carBrand + " "
                 + allAdverts[i].car.carModel + "<br>"
                 + allAdverts[i].car.bodyType.bodyType + "<br>"
                 + allAdverts[i].car.color + "<br>"
@@ -107,8 +277,8 @@
                 + allAdverts[i].car.transmission.transmissionType + "<br>"
                 + allAdverts[i].car.year + "<br>"
                 + "</td>"
-                + "<td>" + allAdverts[i].price + "</td>"
-                + "<td>" + allAdverts[i].date + "</td>"
+                + "<td class='inner_cell'>" + allAdverts[i].price + "</td>"
+                + "<td class='inner_cell'>" + allAdverts[i].date + "</td>"
                 + "<td>" + sold + "</td>"
                 + "</tr>"
 
@@ -146,8 +316,6 @@
         document.body.appendChild(virtual_form);
         virtual_form.submit();
     }
-
-
 </script>
 
 

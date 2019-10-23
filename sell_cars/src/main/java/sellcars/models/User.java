@@ -1,5 +1,8 @@
 package sellcars.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +36,7 @@ public class User {
     @Column(name = "email", length = 60, nullable = false)
     private String email;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //user - имя поля в классе Advert
     //FetchType.LAZY - загрузка коллекции только по требованию
     private Set<Advert> adverts = new HashSet<>();

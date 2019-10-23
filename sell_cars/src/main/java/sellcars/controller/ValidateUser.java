@@ -1,10 +1,15 @@
 package sellcars.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import sellcars.models.User;
 import sellcars.persistent.UserDB;
 import sellcars.persistent.UserStorage;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.jar.JarEntry;
 
 public class ValidateUser implements UserValidator {
@@ -28,12 +33,11 @@ public class ValidateUser implements UserValidator {
         String phone = jsonFromClient.getString("phone");
         String email = jsonFromClient.getString("email");
         User user = new User(login, password, name, surname, phone, email);
-        String result = userStorage.add(user);
-        return result;
+        return userStorage.add(user);
     }
 
     @Override
-    public String updateUser(JSONObject jsonFromClient) {
+    public String updateUser(String jsonFromClient) {
         return null;
     }
 

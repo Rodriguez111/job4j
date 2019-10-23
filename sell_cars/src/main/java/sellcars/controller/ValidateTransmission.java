@@ -1,6 +1,7 @@
 package sellcars.controller;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import sellcars.models.Transmission;
 import sellcars.persistent.GetModel;
 import sellcars.persistent.ModelGetter;
@@ -20,7 +21,7 @@ public class ValidateTransmission implements ModelValidator {
     }
 
     @Override
-    public JSONObject getModels() {
+    public String getModels() {
         List<Transmission> list = MODEL_GETTER.getAll("Transmission");
         list.sort(new Comparator<Transmission>() {
             @Override
@@ -28,9 +29,13 @@ public class ValidateTransmission implements ModelValidator {
                 return o1.getTransmissionType().compareTo(o2.getTransmissionType());
             }
         });
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("listOfTransmissions", list);
-        return jsonObject;
+        String result = "";
+        try {
+            result = new ObjectMapper().writeValueAsString(list);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }

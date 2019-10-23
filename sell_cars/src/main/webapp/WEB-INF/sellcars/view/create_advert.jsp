@@ -254,10 +254,10 @@
         fileSizeIsValidated = true;
         if (inputElement.files.length > 0) {
             var fileSize = inputElement.files[0].size;
-            if (fileSize > 204_800) {
+            if (fileSize > 307_200) {
                 result = false;
                 fileSizeIsValidated = false;
-                info_panel.innerHTML = "Размер файла превышает 200 КБ!";
+                info_panel.innerHTML = "Размер файла превышает 300 КБ!";
                 var id = inputElement.id;
                 var parentElement = inputElement.parentNode;
                 inputElement.parentNode.removeChild(inputElement);
@@ -293,42 +293,41 @@
         })
     }
 
-    function getCarBrandList(list) {
-        var lst = list.listOfCarBrands;
+    function getCarBrandList(listOfCarBrands) {
         var options = '<option selected disabled value="">Выберите бренд</option>';
-        for (var i = 0; i < lst.length; i++) {
-            options += "<option value='" + lst[i].carBrand + "'>"
-                + lst[i].carBrand + "</option>\r\n";
+        for (var i = 0; i < listOfCarBrands.length; i++) {
+            options += "<option value='" + listOfCarBrands[i].carBrand + "'>"
+                + listOfCarBrands[i].carBrand + "</option>\r\n";
         }
         carBrandSelector.html(options);
     }
 
-    function getCarBodyList(list) {
-        var lst = list.listOfCarBodies;
+    function getCarBodyList(listOfCarBodies) {
+
         var options = '<option selected disabled value="">Выберите тип кузова</option>';
-        for (var i = 0; i < lst.length; i++) {
-            options += "<option value='" + lst[i].bodyType + "'>"
-                + lst[i].bodyType + "</option>\r\n";
+        for (var i = 0; i < listOfCarBodies.length; i++) {
+            options += "<option value='" + listOfCarBodies[i].bodyType + "'>"
+                + listOfCarBodies[i].bodyType + "</option>\r\n";
         }
         carBodySelector.html(options);
     }
 
-    function getTransmissionList(list) {
-        var lst = list.listOfTransmissions;
+    function getTransmissionList(listOfTransmissions) {
+
         var options = '<option selected disabled value="">Выберите тип передачи</option>';
-        for (var i = 0; i < lst.length; i++) {
-            options += "<option value='" + lst[i].transmissionType + "'>"
-                + lst[i].transmissionType + "</option>\r\n";
+        for (var i = 0; i < listOfTransmissions.length; i++) {
+            options += "<option value='" + listOfTransmissions[i].transmissionType + "'>"
+                + listOfTransmissions[i].transmissionType + "</option>\r\n";
         }
         transmissionSelector.html(options);
     }
 
-    function getEngineList(list) {
-        var lst = list.listOfEngines;
+    function getEngineList(listOfEngines) {
+
         var options = '<option selected disabled value="">Выберите тип двигателя</option>';
-        for (var i = 0; i < lst.length; i++) {
-            options += "<option value='" + lst[i].engineType + "'>"
-                + lst[i].engineType + "</option>\r\n";
+        for (var i = 0; i < listOfEngines.length; i++) {
+            options += "<option value='" + listOfEngines[i].engineType + "'>"
+                + listOfEngines[i].engineType + "</option>\r\n";
         }
         engineSelector.html(options);
     }

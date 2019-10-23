@@ -36,4 +36,5 @@ public class CarBrand {
     public void setCarBrand(String carBrand) {
         this.carBrand = carBrand;
     }
+
 }

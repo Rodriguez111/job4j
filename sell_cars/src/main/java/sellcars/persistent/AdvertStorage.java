@@ -4,6 +4,7 @@ import sellcars.models.Advert;
 import sellcars.models.CarBody;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AdvertStorage {
 
@@ -16,5 +17,7 @@ public interface AdvertStorage {
     Advert findById(int id);
 
     List<Advert> getAll();
+
+    List<Advert> findByFilter(Map<String, List<String>> params);
 
 }

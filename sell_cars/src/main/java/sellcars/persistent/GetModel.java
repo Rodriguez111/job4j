@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sellcars.models.CarBrand;
 
-import java.util.List;
+import java.util.*;
 
 public class GetModel<T> implements ModelGetter<T> {
 
@@ -33,5 +33,7 @@ public class GetModel<T> implements ModelGetter<T> {
             return (T) query.getSingleResult();
         }).get();
     }
+
+
 
 }

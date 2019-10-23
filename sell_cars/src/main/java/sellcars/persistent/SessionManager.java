@@ -98,14 +98,14 @@ public class SessionManager {
     }
 
     private static void initCarBodyData() {
-        List<String> values = List.of("Hatchback", "Sedan", "Crossover", "Coupe", "MPV");
+        List<String> values = List.of("Hatchback", "Sedan", "Crossover", "Coupe", "MPV", "Fastback", "SUV");
         values.forEach(each -> SessionManager.handleQuery(session -> {
             return session.merge(new CarBody(each));
         }));
     }
 
     private static void initTransmissionData() {
-        List<String> values = List.of("Traditional Automatic", "Automated-Manual", "Continuously Variable",
+        List<String> values = List.of("Automatic", "Automated-Manual", "Manual",
                 "Dual-Clutch", "Direct Shift Gearbox", "Tiptronic");
         values.forEach(each -> SessionManager.handleQuery(session -> {
             return session.merge(new Transmission(each));
@@ -121,10 +121,21 @@ public class SessionManager {
     }
 
     private static void initEngineData() {
-        List<String> values = List.of("VEE", "INLINE", "STRAIGHT",
-                "VR and W", "Boxer");
+        List<String> values = List.of("VEE", "INLINE", "Boxer");
         values.forEach(each -> SessionManager.handleQuery(session -> {
             return session.merge(new Engine(each));
         }));
     }
+
+    /*
+    drop table cars cascade;
+    drop table car_body cascade;
+    drop table car_brand cascade;
+    drop table engine cascade;
+    drop table photos cascade;
+    drop table users cascade;
+    drop table transmission cascade;
+    drop table adverts cascade;
+    */
+
 }
