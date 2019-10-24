@@ -37,12 +37,16 @@ public class CarDB implements CarStorage {
 
     @Override
     public void update(Car car) {
-
+         SessionManager.handleQuery(session -> {
+             session.merge(car);
+        });
     }
 
     @Override
     public void delete(Car car) {
-
+        SessionManager.handleQuery(session -> {
+            session.remove(car);
+        });
     }
 
     @Override

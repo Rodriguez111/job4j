@@ -306,9 +306,11 @@
         virtual_form.action = "${pageContext.servletContext.contextPath}/forward";
         virtual_form.method = "post";
         var action_input = document.createElement("input");
+        action_input.type = 'hidden';
         action_input.name = "action";
         action_input.value = "show_advert";
         var id_input = document.createElement("input");
+        id_input.type = 'hidden';
         id_input.name = "id";
         id_input.value = id;
         virtual_form.appendChild(action_input);

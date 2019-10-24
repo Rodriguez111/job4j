@@ -35,5 +35,4 @@ public class GetModel<T> implements ModelGetter<T> {
     }
 
 
-
 }
