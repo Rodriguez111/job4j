@@ -1,9 +1,11 @@
 package sellcars.controller;
 
-import org.json.JSONObject;
+
+import sellcars.models.Advert;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface AdvertValidator {
 
@@ -13,8 +15,10 @@ public interface AdvertValidator {
 
     String deleteAdvert(int id);
 
-    JSONObject getAllAdverts();
+    String getAllAdverts();
 
-    JSONObject getAdvertById(int id);
+    String getAdvertById(int id);
+
+    String getAdvertByFilters(String jsonFromClient);
 
 }

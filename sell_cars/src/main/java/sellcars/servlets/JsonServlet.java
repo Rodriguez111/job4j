@@ -1,7 +1,8 @@
 package sellcars.servlets;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sellcars.controller.*;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JsonServlet extends HttpServlet {
     private final static Logger LOG = LoggerFactory.getLogger(JsonServlet.class);
@@ -32,36 +35,45 @@ public class JsonServlet extends HttpServlet {
             sb.append(read);
         }
         String requestFromClient = sb.toString();
-        JSONObject jsonObject = new JSONObject();
+        String jsonStringToClient = "";
 
         if (requestFromClient.equals("getListOfCarBrands")) {
-            jsonObject = CAR_BRAND.getModels();
+            jsonStringToClient = CAR_BRAND.getModels();
         } else if (requestFromClient.equals("getListOfCarBodies")) {
-            jsonObject = CAR_BODY.getModels();
+            jsonStringToClient = CAR_BODY.getModels();
         } else if (requestFromClient.equals("getListOfTransmissions")) {
-            jsonObject = CAR_TRANSMISSION.getModels();
+            jsonStringToClient = CAR_TRANSMISSION.getModels();
         } else if (requestFromClient.equals("getListOfEngines")) {
-            jsonObject = CAR_ENGINE.getModels();
+            jsonStringToClient = CAR_ENGINE.getModels();
         } else if (requestFromClient.equals("getAllAdverts")) {
-            jsonObject = ADVERT_VALIDATOR.getAllAdverts();
-
+            jsonStringToClient = ADVERT_VALIDATOR.getAllAdverts();
         } else if (requestFromClient.contains("getAdvert")) {
-            JSONObject jsonFromClient = new JSONObject(requestFromClient);
-            int id = jsonFromClient.getInt("getAdvert");
-            jsonObject = ADVERT_VALIDATOR.getAdvertById(id);
+            ObjectMapper mapper = new ObjectMapper();
+            TypeReference<HashMap<String, Integer>> typeRef = new TypeReference<>() { };
+            Map<String, Integer> mapFromJson = mapper.readValue(requestFromClient, typeRef);
+            int id = mapFromJson.get("getAdvert");
+            jsonStringToClient = ADVERT_VALIDATOR.getAdvertById(id);
             req.setAttribute("userLogin", req.getSession().getAttribute("userLogin"));
         } else if (requestFromClient.contains("setSoldStatus")) {
-            JSONObject jsonFromClient = new JSONObject(requestFromClient);
-            int id = jsonFromClient.getInt("setSoldStatus");
+            ObjectMapper mapper = new ObjectMapper();
+            TypeReference<HashMap<String, Integer>> typeRef = new TypeReference<>() { };
+            Map<String, Integer> mapFromJson = mapper.readValue(requestFromClient, typeRef);
+            int id = mapFromJson.get("setSoldStatus");
             String result = ADVERT_VALIDATOR.setSoldStatus(id);
-            jsonObject.put("result", result);
-
+            Map<String, String> map = Map.of("result", result);
+            try {
+                jsonStringToClient = new ObjectMapper().writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        } else if (requestFromClient.contains("filterSelect")) {
+            jsonStringToClient = ADVERT_VALIDATOR.getAdvertByFilters(requestFromClient);
         }
 
         resp.setContentType("text/json");
         resp.setCharacterEncoding("UTF-8");
         PrintWriter printWriter = resp.getWriter();
-        printWriter.print(jsonObject);
+        printWriter.print(jsonStringToClient);
         printWriter.flush();
         LOG.info("Exit method");
 

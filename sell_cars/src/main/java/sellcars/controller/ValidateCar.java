@@ -1,12 +1,13 @@
 package sellcars.controller;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sellcars.models.*;
 import sellcars.persistent.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ValidateCar implements CarValidator {
@@ -52,7 +53,7 @@ public class ValidateCar implements CarValidator {
     }
 
     @Override
-    public String updateCar(JSONObject jsonFromClient) {
+    public String updateCar(String jsonFromClient) {
         return null;
     }
 
@@ -61,5 +62,21 @@ public class ValidateCar implements CarValidator {
         return null;
     }
 
+    @Override
+    public List<Car> getCarsByFilter(Map<String, List<String>> parameters) {
+        List<Car> listOfCars = new ArrayList<>();
+        for (String key : parameters.keySet()) {
+            if (key.equals("carBrand")) {
+                Map<String, List<String>> params = new HashMap<>();
+                params.put("carBrand", parameters.get(key));
+                //List<CarBrand> listOfCarBrands = new GetModel<CarBrand>().getListByFilter("CarBrand", params);
+            }
+        }
 
+        return null;
+    }
+
+    public static void main(String[] args) {
+
+    }
 }

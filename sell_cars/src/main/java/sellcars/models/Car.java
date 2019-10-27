@@ -153,6 +153,7 @@ public class Car {
         this.engineVolume = engineVolume;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -177,4 +178,5 @@ public class Car {
     public int hashCode() {
         return Objects.hash(mileage, year, vin, color, carBrand, carModel, bodyType, engine, transmission);
     }
+
 }

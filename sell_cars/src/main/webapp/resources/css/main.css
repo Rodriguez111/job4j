@@ -82,17 +82,54 @@ body{
     background-color: #A73801;
 }
 
-.main_table_container {
-    border: thin solid #F9C37B;
-    padding: 5px;
-}
+
 
 .main_table {
-    width: 900px;
-    border: thin solid #4E4A45;
+    width: 100%;
     margin: auto;
     background-color: rgba(245, 245, 245, 0.81);
+    border-collapse: collapse;
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border: #F9C37B solid thin;
+    display: block;
 }
+
+
+
+.left_margin {
+    width: 28%;
+    height: 50px;
+    display: inline-block;
+    position: relative;
+    margin-left: -1px;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-size: 14px ;
+    font-weight: bold ;
+
+}
+
+.central_container {
+    position: relative;
+    width: 44%;
+    height: 50px;
+    display: inline-block;
+    margin-left: -4px;
+
+}
+
+.right_margin {
+    position: relative;
+    width: 28%;
+    height: 50px;
+    display: inline-block;
+    margin-left: -4px;
+
+
+}
+
 
 .first_column {
     width: 20%;
@@ -121,28 +158,102 @@ body{
     vertical-align:middle;
 }
 
-table {
-    border-collapse: collapse;
-}
 
 thead tr {
     height: 60px;
     text-align: center;
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-size: 13px;
     font-weight: bold;
+    color: #6199c1;
 }
 
 tr {
-    border: #F9C37B solid thin;
+    /*border: #F9C37B solid thin;*/
+    /*border-radius: 25px;*/
     height: 80px;
+    border-top: #F9C37B solid thin;
+}
 
+.inner_cell {
+    border-right: #F9C37B solid thin;
+    border-left: #F9C37B solid thin;
 }
 
 tbody td {
-    border-left: #F9C37B solid thin;
+
     padding: 5px;
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
     font-size: 13px;
     font-weight: bold;
 
+}
+
+.header_row {
+    border-top: none;
+}
+
+
+
+.filters_container {
+    position: absolute;
+    width: 230px;
+    height: 240px;
+    background-color: #c8dce6;
+    right: 10px;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.filters_title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.last_day_container, .only_with_photo_container, .brand_selector_container, .price_container {
+    position: relative;
+    margin-top: 15px;
+}
+
+
+
+
+
+#for_last_day_input {
+    position: absolute;
+    top: 0;
+    left: 150px;
+}
+
+#only_with_photo_input {
+    position: absolute;
+    top: 0;
+    left: 120px;
+}
+
+#brand_selector {
+    position: absolute;
+    top: 0;
+    left: 80px;
+    width: 100px;
+}
+
+#apply_filter_button {
+    position: absolute;
+    bottom: 25px;
+
+}
+
+#reset_filter_button {
+    margin-top: 20px;
+    right: 20px;
+}
+
+.price_title_from, .price_title_to, #price_from, #price_to {
+    display: inline-block;
+}
+
+#price_from, #price_to {
+    width: 70px;
 }

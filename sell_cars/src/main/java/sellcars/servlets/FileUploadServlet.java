@@ -28,7 +28,7 @@ public class FileUploadServlet extends HttpServlet {
     private static final AdvertValidator ADVERT_VALIDATOR = ValidateAdvert.getINSTANCE();
     private static final String UPLOAD_DIRECTORY = "uploaded_photos/";
 
-    private static final int MAX_FILE_SIZE = 1024 * 200; // 200 KB
+    private static final int MAX_FILE_SIZE = 1024 * 300; // 300 KB
 
     private Map<String, String> parameters;
 
