@@ -12,6 +12,5 @@ public interface ModelGetter<T> {
 
      T getByName(String entityName, String fieldName, String fieldValue);
 
-//     List<T> getListByFilter(String entityName, Map<String, List<String>> parameters);
 
 }

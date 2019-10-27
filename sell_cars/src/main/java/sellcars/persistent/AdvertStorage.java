@@ -12,8 +12,6 @@ public interface AdvertStorage {
 
     void update(Advert advert);
 
-    void delete(Advert advert);
-
     Advert findById(int id);
 
     List<Advert> getAll();

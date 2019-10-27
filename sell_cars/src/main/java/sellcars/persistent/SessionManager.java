@@ -21,8 +21,6 @@ import java.util.function.Function;
 
 public class SessionManager {
     private final static Logger LOG = LoggerFactory.getLogger(SessionManager.class);
-    private static int opened = 0;
-    private static int closed = 0;
 
     static {
         initData();
@@ -48,8 +46,6 @@ public class SessionManager {
             transaction.commit();
             session.close();
             factory.close();
-            closed++;
-            LOG.info("Close session: " + closed);
             LOG.info("Exit method");
         }
         return result;
@@ -74,8 +70,6 @@ public class SessionManager {
             transaction.commit();
             session.close();
             factory.close();
-            closed++;
-            LOG.info("Close session: " + closed);
             LOG.info("Exit method");
         }
     }
@@ -98,8 +92,10 @@ public class SessionManager {
     }
 
     private static void initCarBodyData() {
+        LOG.info("Init carBody data");
         List<String> values = List.of("Hatchback", "Sedan", "Crossover", "Coupe", "MPV", "Fastback", "SUV");
         values.forEach(each -> SessionManager.handleQuery(session -> {
+            LOG.info("Exit carBody data");
             return session.merge(new CarBody(each));
         }));
     }

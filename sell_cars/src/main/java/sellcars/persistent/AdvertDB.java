@@ -48,11 +48,6 @@ public class AdvertDB implements AdvertStorage {
     }
 
     @Override
-    public void delete(Advert advert) {
-        SessionManager.handleQuery((Consumer<Session>) session -> session.delete(advert));
-    }
-
-    @Override
     public List<Advert> getAll() {
         LOG.info("Enter method");
         return SessionManager.handleQuery(session -> {
