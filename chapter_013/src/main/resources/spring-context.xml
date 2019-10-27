@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="user" class="ru.job4j.training.mapping.User"/>
+    <bean id="storage_memory" class="ru.job4j.training.mapping.StorageMemory"/>
+    <bean id="storage_db" class="ru.job4j.training.mapping.StorageDB"/>
+    <bean id="storage" class="ru.job4j.training.mapping.UserStorage">
+    <constructor-arg name="storage" ref="storage_memory"></constructor-arg>
+    </bean>
+
+ <context:component-scan base-package="ru.job4j.training.componentscan"/>
+
+</beans>
