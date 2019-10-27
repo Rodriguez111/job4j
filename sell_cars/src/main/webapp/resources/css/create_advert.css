@@ -1,0 +1,231 @@
+body{
+    background-color: #E1F5FF;
+}
+
+.selects {
+    width: 150px;
+}
+
+.main_container {
+    position: relative;
+    width: 700px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+
+form fieldset {
+    width: 700px;
+    padding: 10px;
+    border-color: #E49500;
+    border-radius: 10px;
+    font-family: Tahoma;
+}
+
+.first_line, .second_line {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.third_line {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+
+.car_brand_container, .car_model_container {
+    display: inline;
+    font-weight: bold;
+}
+
+.car_model_container {
+    margin-left: 60px;
+}
+
+.body_type_container, .transmission_container {
+    display: inline;
+    font-weight: bold;
+}
+
+.transmission_container {
+    margin-left: 60px;
+}
+
+.engine_container {
+    margin-top: 12px;
+    font-weight: bold;
+}
+.engine_volume_container {
+    margin-left: 40px;
+}
+
+.engine_volume_container input {
+    width: 40px;
+}
+
+.vin_container input {
+    width: 180px;
+}
+
+.vin_description {
+    width: 200px;
+    margin-left: 60px;
+    font-size: 11px;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.color_container input {
+    width: 150px;
+}
+
+.engine_type_container, .engine_volume_container {
+    display: inline;
+}
+
+.vin_container, .color_container {
+    display: inline;
+    font-weight: bold;
+}
+
+.mileage_container, .year_container {
+    display: inline;
+    font-weight: bold;
+}
+
+.color_container {
+    margin-left: 60px;
+}
+
+.subline_two {
+    margin-top: 20px;
+}
+
+.year_container {
+    margin-left: 80px;
+}
+.photo_container, .price_container {
+    font-weight: bold;
+}
+
+#year {
+    width: 50px;
+}
+
+#body_type {
+    width: 190px;
+}
+
+#transmission {
+    width: 200px;
+}
+
+#engine_type {
+    width: 190px;
+}
+
+.input_photo {
+    width: 240px;
+    border: none;
+}
+
+.file_input_container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.buttons_container {
+    position: relative;
+    bottom: 90px;
+    height: 30px;
+    width: 100%;
+    padding: 7px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.left_button_container {
+    position: absolute;
+    height: 30px;
+    width: 150px;
+    left: 50px;
+
+}
+
+.right_button_container {
+    position: absolute;
+    right: 30px;
+    height: 30px;
+    width: 150px;
+}
+
+#submit_button {
+    height: 40px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #D38609;
+    border-radius: 10px;
+    padding: 7px;
+    border: none;
+    outline: none;
+    box-shadow: -2px -2px rgba(155,115,0,1.00) inset;
+}
+
+#submit_button:hover {
+    background: #BF7804;
+    color: #121212;
+}
+#submit_button:active {
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+#back_button {
+    height: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #ED4710;
+    border-radius: 10px;
+    padding: 7px;
+    border: none;
+    outline: none;
+    box-shadow: -2px -2px #CC3C0C inset;
+
+}
+
+#back_button:hover {
+    background: #C63B0D;
+    color: #121212;
+}
+#back_button:active {
+    margin-left: 2px;
+    margin-top: 2px;
+}
+
+
+form select,  form input {
+    margin-left: 10px;
+    border-radius: 5px;
+    width: 80px;
+    height: 30px;
+    outline: none;
+    border: solid 2px #FFAE00;
+    font-size: 14px;
+}
+
+
+
+
+
+.info_panel {
+    margin-top: 60px;
+    font-weight: bold;
+    color: #DB1013;
+    width: 90%;
+    height: 30px;
+    text-align: center;
+}
