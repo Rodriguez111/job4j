@@ -32,8 +32,10 @@
         <module>puzzle</module>
         <module>test_tasks</module>
         <module>test_servlet</module>
+        <module>test_servlet_spring</module>
         <module>cinema</module>
         <module>sell_cars</module>
+        <module>sell_cars_spring</module>
     </modules>
 
     <build>
