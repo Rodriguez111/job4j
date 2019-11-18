@@ -1,5 +1,9 @@
 package sellcars.servlets;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,16 +12,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-public class PictureServlet extends HttpServlet {
+@Controller
+public class PictureController {
     private static final String UPLOAD_DIRECTORY = "uploaded_photos/";
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    @RequestMapping(value = "/picture", method = RequestMethod.GET)
+    protected void showPictures(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String appPath = req.getServletContext().getRealPath("");
         String pathToPhotos = appPath + UPLOAD_DIRECTORY;
         String folder = req.getParameter("folder");

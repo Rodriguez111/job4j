@@ -1,6 +1,9 @@
 package sellcars.servlets;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import sellcars.controller.UserValidator;
 import sellcars.controller.ValidateUser;
 
@@ -14,14 +17,13 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
-
-public class RegisterServlet extends HttpServlet {
+@Controller
+public class RegisterController {
 
       private final static UserValidator USER_VALIDATOR = ValidateUser.getINSTANCE();
 
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    protected void registerUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         BufferedReader bufferedReader = req.getReader();
         StringBuilder sb = new StringBuilder();
         String read;

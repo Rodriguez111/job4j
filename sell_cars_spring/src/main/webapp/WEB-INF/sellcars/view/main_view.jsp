@@ -36,8 +36,7 @@
             </form>
             <div class="register_block">
                 Не зарегестрированы?
-                <form class="register_form" action="${pageContext.servletContext.contextPath}/forward" method="post">
-                    <input type='hidden' name='action' value='register'/>
+                <form class="register_form" action="${pageContext.servletContext.contextPath}/show_register" method="get">
                     <input type='submit' value="Зарегистрироваться" id="register_button"/>
                 </form>
             </div>
@@ -46,7 +45,7 @@
     </c:if>
 
     <c:if test="${sessionScope.userName != null}">
-        <form id="issue_advert_form" action="${pageContext.servletContext.contextPath}/forward" method="post">
+        <form id="issue_advert_form" action="${pageContext.servletContext.contextPath}/create" method="post">
             <input id="issue" type="hidden" name='action' value="issue">
             <button class="issue_advert_button" onclick="submitIssueForm()">Подать объявление</button>
         </form>
@@ -303,17 +302,17 @@
 
     function link(id) {
         var virtual_form = document.createElement("form");
-        virtual_form.action = "${pageContext.servletContext.contextPath}/forward";
+        virtual_form.action = "${pageContext.servletContext.contextPath}/show_advert";
         virtual_form.method = "post";
-        var action_input = document.createElement("input");
-        action_input.type = 'hidden';
-        action_input.name = "action";
-        action_input.value = "show_advert";
-        var id_input = document.createElement("input");
-        id_input.type = 'hidden';
-        id_input.name = "id";
-        id_input.value = id;
-        virtual_form.appendChild(action_input);
+      //  var action_input = document.createElement("input");
+        //action_input.type = 'hidden';
+       // action_input.name = "action";
+       // action_input.value = "show_advert";
+         var id_input = document.createElement("input");
+         id_input.type = 'hidden';
+         id_input.name = "id";
+         id_input.value = id;
+        //virtual_form.appendChild(action_input);
         virtual_form.appendChild(id_input);
         document.body.appendChild(virtual_form);
         virtual_form.submit();

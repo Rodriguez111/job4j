@@ -4,6 +4,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import sellcars.controller.AdvertValidator;
 import sellcars.controller.CarValidator;
 import sellcars.controller.ValidateAdvert;
@@ -22,8 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-public class FileUploadServlet extends HttpServlet {
+@Controller
+public class IssueAdvertController {
     private static final CarValidator CAR_VALIDATOR = ValidateCar.getINSTANCE();
     private static final AdvertValidator ADVERT_VALIDATOR = ValidateAdvert.getINSTANCE();
     private static final String UPLOAD_DIRECTORY = "uploaded_photos/";
@@ -32,10 +35,15 @@ public class FileUploadServlet extends HttpServlet {
 
     private Map<String, String> parameters;
 
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String showCreateAdvertForm() {
+        return "create_advert";
+    }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+    @RequestMapping(value = "/issue_advert", method = RequestMethod.POST)
+    public String issueAdvert(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String res = "main_view";
         parameters = new HashMap<>();
         List<FileItem> listOfFileItems = new ArrayList<>();
         List<String> listOfPhotos = new ArrayList<>();
@@ -44,9 +52,7 @@ public class FileUploadServlet extends HttpServlet {
         String pathToPhotos = appPath + UPLOAD_DIRECTORY;
         DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
 
-
         ServletFileUpload sfu = new ServletFileUpload(diskFileItemFactory);
-
 
         List<FileItem> files = null;
         try {
@@ -104,13 +110,11 @@ public class FileUploadServlet extends HttpServlet {
         }
 
 
-        if (result.equals("OK")) {
-            resp.sendRedirect(req.getContextPath());
-        } else {
+        if (!result.equals("OK")) {
             req.setAttribute("messageFromServer", result);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/sellcars/view/create_advert.jsp");
-            dispatcher.forward(req, resp);
+            res = "create_advert";
         }
+        return res;
     }
 
 

@@ -5,10 +5,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import sellcars.controller.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -17,16 +18,17 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsonServlet extends HttpServlet {
-    private final static Logger LOG = LoggerFactory.getLogger(JsonServlet.class);
+@Controller
+public class JsonController {
+    private final static Logger LOG = LoggerFactory.getLogger(JsonController.class);
     private final static ModelValidator CAR_BRAND = ValidateCarBrand.getINSTANCE();
     private final static ModelValidator CAR_BODY = ValidateCarBody.getINSTANCE();
     private final static ModelValidator CAR_TRANSMISSION = ValidateTransmission.getINSTANCE();
     private final static ModelValidator CAR_ENGINE = ValidateEngine.getINSTANCE();
     private final static AdvertValidator ADVERT_VALIDATOR = ValidateAdvert.getINSTANCE();
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @RequestMapping(value = "/json", method = RequestMethod.POST)
+    protected void handleJson(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         LOG.info("Enter method");
         BufferedReader br = req.getReader();
         StringBuilder sb = new StringBuilder();

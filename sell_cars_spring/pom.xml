@@ -13,33 +13,6 @@
 
     </parent>
 
-
-    <build>
-        <defaultGoal>validate</defaultGoal>
-        <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.liquibase</groupId>-->
-<!--                <artifactId>liquibase-maven-plugin</artifactId>-->
-<!--                <version>3.6.2</version>-->
-<!--                <configuration>-->
-<!--                    <changeLogFile>${basedir}/db/master.xml</changeLogFile>-->
-<!--                    <url>jdbc:postgresql://127.0.0.1:5432/users</url>-->
-<!--                    <driver>org.postgresql.Driver</driver>-->
-<!--                    <username>postgres</username>-->
-<!--                    <password>password</password>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>process-resources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>update</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-        </plugins>
-    </build>
-
     <dependencies>
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
@@ -171,29 +144,122 @@
             <artifactId>spring-web</artifactId>
             <version>5.2.0.RELEASE</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>5.2.0.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>5.2.0.RELEASE</version>
+            <version>5.2.1.RELEASE</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>5.2.0.RELEASE</version>
+            <version>5.2.1.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.2.1.RELEASE</version>
+        </dependency>
+
+
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-test &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-test</artifactId>-->
+<!--            <version>5.2.0.RELEASE</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
 
     </dependencies>
 
 
+
+<profiles>
+
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <db.url>jdbc:postgresql://127.0.0.1:5432/spring_carsell</db.url>
+                <db.username>postgres</db.username>
+                <db.password>password</db.password>
+                <db.driver>org.postgresql.Driver</db.driver>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <db.url>jdbc:postgresql://127.0.0.1:5432/spring_carsell</db.url>
+                <db.username>postgres</db.username>
+                <db.password>password</db.password>
+                <db.driver>org.postgresql.Driver</db.driver>
+            </properties>
+        </profile>
+
+
+
+</profiles>
+
+
+<!--<build>-->
+<!--    <defaultGoal>validate</defaultGoal>-->
+<!--<plugins>-->
+<!--    <plugin>-->
+<!--        <groupId>org.liquibase</groupId>-->
+<!--        <artifactId>liquibase-maven-plugin</artifactId>-->
+<!--        <version>3.6.2</version>-->
+<!--        <configuration>-->
+<!--            <changeLogFile>${basedir}/db/master.xml</changeLogFile>-->
+<!--            <url>jdbc:postgresql://127.0.0.1:5432/spring_carsell</url>-->
+<!--            <driver>org.postgresql.Driver</driver>-->
+<!--            <username>postgres</username>-->
+<!--            <password>password</password>-->
+<!--        </configuration>-->
+<!--        <executions>-->
+<!--            <execution>-->
+<!--                <phase>process-resources</phase>-->
+<!--                <goals>-->
+<!--                    <goal>update</goal>-->
+<!--                </goals>-->
+<!--            </execution>-->
+<!--        </executions>-->
+<!--    </plugin>-->
+<!--</plugins>-->
+<!--</build>-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.6.2</version>
+                <configuration>
+                    <changeLogFile>${basedir}/db/master.xml</changeLogFile>
+                    <url>jdbc:postgresql://127.0.0.1:5432/spring_carsell</url>
+                    <driver>org.postgresql.Driver</driver>
+                    <username>postgres</username>
+                    <password>password</password>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

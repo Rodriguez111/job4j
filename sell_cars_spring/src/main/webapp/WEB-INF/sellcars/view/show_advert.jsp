@@ -248,17 +248,16 @@ ${sessionScope.get("advert").id}
         showAdvertInfo(data);
     }
 
-    function showUpdateButton(user) {
-        var advertLogin = user.login;
+    function showUpdateButton(advert) {
+        var advertLogin = advert.user.login;
         var userLogin1 = "${userLogin}";
-        if (advertLogin === userLogin1 && !user.sold) {
+        if (advertLogin === userLogin1 && !advert.sold) {
             var editButton = document.getElementById("right_button_container");
             editButton.style.display = "block";
         }
     }
 
     function showAdvertInfo(data) {
-        console.log(data);
         advertId = data.id;
         document.getElementById("car_brand_container").innerHTML = "<b>Марка:</b> " + data.car.carBrand.carBrand;
         document.getElementById("car_model_container").innerHTML = "<b>Модель:</b> " + data.car.carModel;

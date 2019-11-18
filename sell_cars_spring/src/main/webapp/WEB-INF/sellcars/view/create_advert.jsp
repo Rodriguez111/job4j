@@ -24,7 +24,7 @@
 
 <div class="main_container">
 
-    <form method="post" action="${pageContext.servletContext.contextPath}/fileupload" enctype="multipart/form-data"
+    <form method="post" action="${pageContext.servletContext.contextPath}/issue_advert" enctype="multipart/form-data"
           id="issue_form">
         <fieldset>
             <legend>Создание нового объявления:</legend>

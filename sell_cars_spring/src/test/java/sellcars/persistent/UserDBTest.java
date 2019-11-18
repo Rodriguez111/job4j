@@ -44,7 +44,7 @@ class UserDBTest {
     }
 
     @Test
-    void WhenLoginExistsThenGetUser() {
+    void whenLoginExistsThenGetUser() {
         UserStorage userStorage = UserDB.getINSTANCE();
         userStorage.add(generateTestUser1());
         User resultUser = userStorage.findUserByLogin("testLogin");
@@ -54,7 +54,7 @@ class UserDBTest {
     }
 
     @Test
-    void WhenLoginNotExistsThenGetEmptyUser() {
+    void whenLoginNotExistsThenGetEmptyUser() {
         UserStorage userStorage = UserDB.getINSTANCE();
         userStorage.add(generateTestUser1());
         User resultUser = userStorage.findUserByLogin("notExistingLogin");
@@ -64,7 +64,7 @@ class UserDBTest {
     }
 
     @Test
-    void WhenIdExistsThenGetUser() {
+    void whenIdExistsThenGetUser() {
         UserStorage userStorage = UserDB.getINSTANCE();
         userStorage.add(generateTestUser1());
         User resultUser = userStorage.findById(1);

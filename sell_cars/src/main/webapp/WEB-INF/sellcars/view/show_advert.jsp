@@ -248,10 +248,10 @@ ${sessionScope.get("advert").id}
         showAdvertInfo(data);
     }
 
-    function showUpdateButton(user) {
-        var advertLogin = user.login;
+    function showUpdateButton(advert) {
+        var advertLogin = advert.user.login;
         var userLogin1 = "${userLogin}";
-        if (advertLogin === userLogin1 && !user.sold) {
+        if (advertLogin === userLogin1 && !advert.sold) {
             var editButton = document.getElementById("right_button_container");
             editButton.style.display = "block";
         }

@@ -2,6 +2,9 @@ package sellcars.servlets;
 
 import org.hibernate.Session;
 import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import sellcars.controller.UserValidator;
 import sellcars.controller.ValidateUser;
 
@@ -11,15 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+@Controller
+public class LogoutController {
 
-public class LogoutServlet extends HttpServlet {
-
-private final static UserValidator USER_VALIDATOR = ValidateUser.getINSTANCE();
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    protected String logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
         session.invalidate();
-        resp.sendRedirect(req.getContextPath());
+        return "main_view";
     }
 }
