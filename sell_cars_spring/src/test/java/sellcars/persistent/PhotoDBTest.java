@@ -2,6 +2,9 @@ package sellcars.persistent;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import sellcars.config.CoreConfig;
 import sellcars.models.Advert;
 import sellcars.models.Car;
 import sellcars.models.Photo;
@@ -11,6 +14,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PhotoDBTest {
+    private ApplicationContext context = new AnnotationConfigApplicationContext(CoreConfig.class);
 
     @AfterEach
     public void clear() {
@@ -30,7 +34,7 @@ class PhotoDBTest {
 
     @Test
     void whenAddPhotoThenReturnId() {
-        PhotoStorage photoStorage = PhotoDB.getINSTANCE();
+        PhotoStorage photoStorage = context.getBean(PhotoDB.class);
         Photo photo = new Photo("testFileName");
         Advert advert = addAdvert1ToDBAndGetIt();
         photo.setAdvertId(advert.getId());
@@ -41,7 +45,7 @@ class PhotoDBTest {
 
     @Test
     void whenFindPhotoByAdvertIdThenCanGetPhotoFileName() {
-        PhotoStorage photoStorage = PhotoDB.getINSTANCE();
+        PhotoStorage photoStorage = context.getBean(PhotoDB.class);
         Photo photo = new Photo("testFileName");
         Advert advert = addAdvert1ToDBAndGetIt();
         photo.setAdvertId(advert.getId());
@@ -54,7 +58,7 @@ class PhotoDBTest {
 
     @Test
     void whenDeletePhotoThenWeCanNotGetItFromDBAndExceptionIsThrow() {
-        PhotoStorage photoStorage = PhotoDB.getINSTANCE();
+        PhotoStorage photoStorage = context.getBean(PhotoDB.class);
         Photo photo = new Photo("testFileName");
         Advert advert = addAdvert1ToDBAndGetIt();
         photo.setAdvertId(advert.getId());
@@ -68,7 +72,7 @@ class PhotoDBTest {
     public Advert addAdvert1ToDBAndGetIt() {
         AdvertDBTest advertDBTest = new AdvertDBTest();
         Advert advert = advertDBTest.generateAdvert1();
-        AdvertStorage advertStorage = AdvertDB.getINSTANCE();
+        AdvertStorage advertStorage = context.getBean(AdvertDB.class);
         advertStorage.add(advert);
         return advert;
     }

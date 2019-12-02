@@ -1,16 +1,20 @@
 package sellcars.persistent;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import sellcars.config.CoreConfig;
 import sellcars.models.User;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 class UserDBTest {
+    private ApplicationContext context = new AnnotationConfigApplicationContext(CoreConfig.class);
 
     @Test
     void whenAddUserThenWeCanGetItFromDB() {
-        UserStorage userStorage = UserDB.getINSTANCE();
+        UserStorage userStorage = context.getBean(UserDB.class);
         userStorage.add(generateTestUser1());
         User resultUser = userStorage.findUserByLogin("testLogin");
         String actual = resultUser.getLogin();
@@ -20,7 +24,7 @@ class UserDBTest {
 
     @Test
     void whenUpdateUserThenWeCanGetUpdatedUserFromDB() {
-        UserStorage userStorage = UserDB.getINSTANCE();
+        UserStorage userStorage = context.getBean(UserDB.class);
         userStorage.add(generateTestUser1());
         User resultUser = userStorage.findUserByLogin("testLogin");
         resultUser.setName("NewName");
@@ -33,7 +37,7 @@ class UserDBTest {
 
     @Test
     void whenDeleteUserThenWeCanNotGetItFromDBAndLoginIsNull() {
-        UserStorage userStorage = UserDB.getINSTANCE();
+        UserStorage userStorage = context.getBean(UserDB.class);
         userStorage.add(generateTestUser1());
         User resultUser = userStorage.findUserByLogin("testLogin");
         userStorage.delete(resultUser);
@@ -45,7 +49,7 @@ class UserDBTest {
 
     @Test
     void whenLoginExistsThenGetUser() {
-        UserStorage userStorage = UserDB.getINSTANCE();
+        UserStorage userStorage = context.getBean(UserDB.class);
         userStorage.add(generateTestUser1());
         User resultUser = userStorage.findUserByLogin("testLogin");
         String actual = resultUser.getLogin();
@@ -55,7 +59,7 @@ class UserDBTest {
 
     @Test
     void whenLoginNotExistsThenGetEmptyUser() {
-        UserStorage userStorage = UserDB.getINSTANCE();
+        UserStorage userStorage = context.getBean(UserDB.class);
         userStorage.add(generateTestUser1());
         User resultUser = userStorage.findUserByLogin("notExistingLogin");
         String actual = resultUser.getLogin();
@@ -65,7 +69,7 @@ class UserDBTest {
 
     @Test
     void whenIdExistsThenGetUser() {
-        UserStorage userStorage = UserDB.getINSTANCE();
+        UserStorage userStorage = context.getBean(UserDB.class);
         userStorage.add(generateTestUser1());
         User resultUser = userStorage.findById(1);
         String actual = resultUser.getLogin();

@@ -4,21 +4,21 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import sellcars.models.User;
 
 import java.util.List;
 import java.util.function.Consumer;
-
+@Component
 public class UserDB implements UserStorage {
     private final static Logger LOG = LoggerFactory.getLogger(UserDB.class);
-    private final static UserStorage INSTANCE = new UserDB();
+
 
     private UserDB() {
     }
 
-    public static UserStorage getINSTANCE() {
-        return INSTANCE;
-    }
+
 
     @Override
     public String add(User user) {
@@ -74,6 +74,4 @@ public class UserDB implements UserStorage {
             return (User) query.getSingleResult();
         }).orElse(new User());
     }
-
-
 }

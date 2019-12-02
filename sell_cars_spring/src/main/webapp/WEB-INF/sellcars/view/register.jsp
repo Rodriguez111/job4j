@@ -147,6 +147,7 @@
     }
 
     function handleSysMessage(jsonMessage) {
+        console.log(jsonMessage)
         var infoPanel = document.getElementById("info_panel");
         if (jsonMessage.messageFromServer === "OK") {
             infoPanel.style.color = '#0d9c01';

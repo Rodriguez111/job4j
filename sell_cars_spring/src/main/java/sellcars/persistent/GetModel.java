@@ -3,10 +3,12 @@ package sellcars.persistent;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import sellcars.models.CarBrand;
 
 import java.util.*;
 
+@Component
 public class GetModel<T> implements ModelGetter<T> {
 
     private final static Logger LOG = LoggerFactory.getLogger(GetModel.class);

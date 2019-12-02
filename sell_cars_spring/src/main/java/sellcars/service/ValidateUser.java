@@ -1,29 +1,28 @@
-package sellcars.controller;
+package sellcars.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import sellcars.models.User;
 import sellcars.persistent.UserDB;
 import sellcars.persistent.UserStorage;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.jar.JarEntry;
-
+@Component
 public class ValidateUser implements UserValidator {
 
-    private final static UserValidator INSTANCE = new ValidateUser();
-    private final UserStorage userStorage = UserDB.getINSTANCE();
+
+    private UserStorage userStorage;
+
+    private PasswordEncoder passwordEncoder;
 
     private ValidateUser() {
     }
 
-    public static UserValidator getINSTANCE() {
-        return INSTANCE;
-    }
 
+    @Transactional
     @Override
     public String addUser(JSONObject jsonFromClient) {
         String login = jsonFromClient.getString("login");
@@ -32,6 +31,8 @@ public class ValidateUser implements UserValidator {
         String surname = jsonFromClient.getString("surname");
         String phone = jsonFromClient.getString("phone");
         String email = jsonFromClient.getString("email");
+
+        password = passwordEncoder.encode(password);
         User user = new User(login, password, name, surname, phone, email);
         return userStorage.add(user);
     }
@@ -61,5 +62,15 @@ public class ValidateUser implements UserValidator {
             jsonObject.put("errorLogin", "Пользователя с таким логином не существует");
         }
         return jsonObject;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Autowired
+    public void setUserStorage(UserStorage userStorage) {
+        this.userStorage = userStorage;
     }
 }

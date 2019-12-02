@@ -1,10 +1,13 @@
 package sellcars.persistent;
 
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import sellcars.models.Car;
 
 import java.util.List;
 import java.util.Map;
+
 
 public interface CarStorage {
 

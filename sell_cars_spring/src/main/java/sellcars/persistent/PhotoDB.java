@@ -3,19 +3,17 @@ package sellcars.persistent;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import sellcars.models.*;
 
 import java.util.List;
 
+@Component
 public class PhotoDB implements PhotoStorage {
     private final static Logger LOG = LoggerFactory.getLogger(PhotoDB.class);
-    private final static PhotoStorage INSTANCE = new PhotoDB();
+
 
     private PhotoDB() {
-    }
-
-    public static PhotoStorage getINSTANCE() {
-        return INSTANCE;
     }
 
 

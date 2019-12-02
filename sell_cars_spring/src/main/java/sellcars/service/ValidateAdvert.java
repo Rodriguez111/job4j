@@ -1,13 +1,12 @@
-package sellcars.controller;
+package sellcars.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
-import org.jsoup.select.Collector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sellcars.models.*;
 import sellcars.persistent.*;
 
@@ -18,20 +17,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class ValidateAdvert implements AdvertValidator {
     private final static Logger LOG = LoggerFactory.getLogger(ValidateAdvert.class);
-    private final static AdvertValidator INSTANCE = new ValidateAdvert();
-    private final CarStorage carStorage = CarDB.getINSTANCE();
-    private final UserStorage userStorage = UserDB.getINSTANCE();
-    private final AdvertStorage advertStorage = AdvertDB.getINSTANCE();
-    private final PhotoStorage photoStorage = PhotoDB.getINSTANCE();
+
+    private CarStorage carStorage;
+    private UserStorage userStorage;
+    private AdvertStorage advertStorage;
+    private PhotoStorage photoStorage;
 
     private ValidateAdvert() {
     }
 
-    public static AdvertValidator getINSTANCE() {
-        return INSTANCE;
-    }
+
 
     @Override
     public String addAdvert(int carId, double price, List<String> listOfPhotos, String userLogin) {
@@ -187,5 +185,23 @@ public class ValidateAdvert implements AdvertValidator {
         }
     }
 
+    @Autowired
+    public void setCarStorage(CarStorage carStorage) {
+        this.carStorage = carStorage;
+    }
 
+    @Autowired
+    public void setUserStorage(UserStorage userStorage) {
+        this.userStorage = userStorage;
+    }
+
+    @Autowired
+    public void setAdvertStorage(AdvertStorage advertStorage) {
+        this.advertStorage = advertStorage;
+    }
+
+    @Autowired
+    public void setPhotoStorage(PhotoStorage photoStorage) {
+        this.photoStorage = photoStorage;
+    }
 }

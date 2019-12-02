@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <style>
     <%@include file="/resources/css/show_advert.css" %>
     <%@include file="/resources/css/sold_popup.css" %>
@@ -250,8 +251,8 @@ ${sessionScope.get("advert").id}
 
     function showUpdateButton(advert) {
         var advertLogin = advert.user.login;
-        var userLogin1 = "${userLogin}";
-        if (advertLogin === userLogin1 && !advert.sold) {
+        var currentUserLogin = "<sec:authentication property="principal.login" />";
+        if (advertLogin === currentUserLogin && !advert.sold) {
             var editButton = document.getElementById("right_button_container");
             editButton.style.display = "block";
         }

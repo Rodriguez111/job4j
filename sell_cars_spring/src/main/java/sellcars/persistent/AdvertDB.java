@@ -6,6 +6,8 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sellcars.models.*;
 
 import java.util.ArrayList;
@@ -15,18 +17,16 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+@Component
 public class AdvertDB implements AdvertStorage {
     private final static Logger LOG = LoggerFactory.getLogger(AdvertDB.class);
-    private final static AdvertStorage INSTANCE = new AdvertDB();
-    private final UserStorage userStorage = UserDB.getINSTANCE();
-    private final CarStorage carStorage = CarDB.getINSTANCE();
+
+
+    private CarStorage carStorage;
 
     private AdvertDB() {
     }
 
-    public static AdvertStorage getINSTANCE() {
-        return INSTANCE;
-    }
 
     @Override
     public String add(Advert advert) {
@@ -54,12 +54,6 @@ public class AdvertDB implements AdvertStorage {
             Query query = session.createQuery("from Advert");
             LOG.info("Exit method");
             List<Advert> list = (List<Advert>) query.getResultList();
-//            list.stream().forEach(adv -> {
-//                int userId = adv.getUser().getId();
-//                User user = userStorage.findById(userId);
-//                user.setAdverts(null);
-//                adv.setUser(user);
-//            });
             return list;
         }).get();
     }
@@ -70,10 +64,6 @@ public class AdvertDB implements AdvertStorage {
             Query query = session.createQuery("from Advert where id = :id");
             query.setParameter("id", id);
             Advert advert = (Advert) query.getSingleResult();
-//            int userId = advert.getUser().getId();
-//            User user = userStorage.findById(userId);
-//            user.setAdverts(null);
-//            advert.setUser(user);
             return advert;
         }).orElse(new Advert());
     }
@@ -121,7 +111,10 @@ public class AdvertDB implements AdvertStorage {
                     }
                 }
             }
-            result.addAll(advertsCriteria.list());
+            if (listOfCars.size() > 0) {
+                result.addAll(advertsCriteria.list());
+            }
+
         });
 
         return result;
@@ -147,4 +140,8 @@ public class AdvertDB implements AdvertStorage {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    @Autowired
+    public void setCarStorage(CarStorage carStorage) {
+        this.carStorage = carStorage;
+    }
 }

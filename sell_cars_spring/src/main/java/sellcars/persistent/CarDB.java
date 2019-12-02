@@ -4,6 +4,8 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import sellcars.models.*;
 
 import java.util.ArrayList;
@@ -12,16 +14,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
+@Component
 public class CarDB implements CarStorage {
     private final static Logger LOG = LoggerFactory.getLogger(CarDB.class);
-    private final static CarStorage INSTANCE = new CarDB();
 
     private CarDB() {
     }
 
-    public static CarStorage getINSTANCE() {
-        return INSTANCE;
-    }
 
     @Override
     public String add(Car car) {

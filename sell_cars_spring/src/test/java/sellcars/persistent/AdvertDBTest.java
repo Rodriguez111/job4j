@@ -2,6 +2,9 @@ package sellcars.persistent;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import sellcars.config.CoreConfig;
 import sellcars.models.Advert;
 import sellcars.models.Car;
 import sellcars.models.User;
@@ -18,6 +21,7 @@ import static org.hamcrest.Matchers.is;
 class AdvertDBTest {
     private static final CarDBTest CAR_DB_TEST = new CarDBTest();
     private static final UserDBTest USER_DB_TEST = new UserDBTest();
+    private ApplicationContext context = new AnnotationConfigApplicationContext(CoreConfig.class);
 
     @AfterEach
     public void clear() {
@@ -39,7 +43,7 @@ class AdvertDBTest {
 
     @Test
     void whenAddAdvertThenWeCanGetItFromDB() {
-        AdvertStorage advertStorage = AdvertDB.getINSTANCE();
+        AdvertStorage advertStorage = context.getBean(AdvertDB.class);
         Advert advert = generateAdvert1();
         advertStorage.add(advert);
         Advert foundAdvert = advertStorage.findById(1);
@@ -52,7 +56,7 @@ class AdvertDBTest {
 
     @Test
     void whenUpdateAdvertThenWeCanGetUpdatedAdvertFromDB() {
-        AdvertStorage advertStorage = AdvertDB.getINSTANCE();
+        AdvertStorage advertStorage = context.getBean(AdvertDB.class);
         Advert advert = generateAdvert1();
         advertStorage.add(advert);
         Advert foundAdvert = advertStorage.findById(1);
@@ -70,7 +74,7 @@ class AdvertDBTest {
 
     @Test
     void whenAdd2AdvertsThenGetAll2() {
-        AdvertStorage advertStorage = AdvertDB.getINSTANCE();
+        AdvertStorage advertStorage = context.getBean(AdvertDB.class);
         Advert advert1 = generateAdvert1();
         Advert advert2 = generateAdvert2();
         advertStorage.add(advert1);
@@ -83,7 +87,7 @@ class AdvertDBTest {
 
     @Test
     void whenIdExistsThenGetCar() {
-        AdvertStorage advertStorage = AdvertDB.getINSTANCE();
+        AdvertStorage advertStorage = context.getBean(AdvertDB.class);
         Advert advert1 = generateAdvert1();
         advertStorage.add(advert1);
         Advert foundAdvert = advertStorage.findById(1);
@@ -94,7 +98,7 @@ class AdvertDBTest {
 
     @Test
     void whenFindByModelThenReturn1AdvertOf2() {
-        AdvertStorage advertStorage = AdvertDB.getINSTANCE();
+        AdvertStorage advertStorage = context.getBean(AdvertDB.class);
         Advert advert1 = generateAdvert1();
         Advert advert2 = generateAdvert2();
         advertStorage.add(advert1);
@@ -110,7 +114,7 @@ class AdvertDBTest {
 
     @Test
     void whenFindByModelThenReturn2AdvertOf2() {
-        AdvertStorage advertStorage = AdvertDB.getINSTANCE();
+        AdvertStorage advertStorage = context.getBean(AdvertDB.class);
         Advert advert1 = generateAdvert1();
         Advert advert2 = generateAdvert2();
         advertStorage.add(advert1);
@@ -126,7 +130,7 @@ class AdvertDBTest {
 
     @Test
     void whenFindByPriceThenReturn1AdvertOf2() {
-        AdvertStorage advertStorage = AdvertDB.getINSTANCE();
+        AdvertStorage advertStorage = context.getBean(AdvertDB.class);
         Advert advert1 = generateAdvert1();
         Advert advert2 = generateAdvert2();
         advertStorage.add(advert1);
@@ -142,7 +146,7 @@ class AdvertDBTest {
 
     @Test
     void whenFindByPriceThenReturn2AdvertOf2() {
-        AdvertStorage advertStorage = AdvertDB.getINSTANCE();
+        AdvertStorage advertStorage = context.getBean(AdvertDB.class);
         Advert advert1 = generateAdvert1();
         Advert advert2 = generateAdvert2();
         advertStorage.add(advert1);
@@ -190,28 +194,28 @@ class AdvertDBTest {
     }
 
     public Car addCar1ToDBAndGetIt() {
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         Car car = CAR_DB_TEST.generateCar1();
         carStorage.add(car);
         return car;
     }
 
     public Car addCar2ToDBAndGetIt() {
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         Car car = CAR_DB_TEST.generateCar2();
         carStorage.add(car);
         return car;
     }
 
     public User addUser1ToDBAndGetIt() {
-        UserStorage userStorage = UserDB.getINSTANCE();
+        UserStorage userStorage = context.getBean(UserDB.class);
         User user = USER_DB_TEST.generateTestUser1();
         userStorage.add(user);
         return user;
     }
 
     public User addUser2ToDBAndGetIt() {
-        UserStorage userStorage = UserDB.getINSTANCE();
+        UserStorage userStorage = context.getBean(UserDB.class);
         User user = USER_DB_TEST.generateTestUser2();
         userStorage.add(user);
         return user;

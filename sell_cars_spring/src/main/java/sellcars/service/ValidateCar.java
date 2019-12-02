@@ -1,7 +1,9 @@
-package sellcars.controller;
+package sellcars.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sellcars.models.*;
 import sellcars.persistent.*;
 
@@ -10,18 +12,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class ValidateCar implements CarValidator {
     private final static Logger LOG = LoggerFactory.getLogger(ValidateCar.class);
-    private final static CarValidator INSTANCE = new ValidateCar();
-    private final CarStorage carStorage = CarDB.getINSTANCE();
+
+    private CarStorage carStorage;
 
 
     private ValidateCar() {
     }
 
-    public static CarValidator getINSTANCE() {
-        return INSTANCE;
-    }
 
     @Override
     public String addCar(Map<String, String> parameters) {
@@ -76,7 +76,8 @@ public class ValidateCar implements CarValidator {
         return null;
     }
 
-    public static void main(String[] args) {
-
+    @Autowired
+    public void setCarStorage(CarStorage carStorage) {
+        this.carStorage = carStorage;
     }
 }

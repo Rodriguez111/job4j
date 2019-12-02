@@ -3,6 +3,9 @@ package sellcars.persistent;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import sellcars.config.CoreConfig;
 import sellcars.models.*;
 
 import java.util.HashMap;
@@ -14,6 +17,8 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CarDBTest {
+
+   private ApplicationContext context = new AnnotationConfigApplicationContext(CoreConfig.class);
 
 
     @AfterEach
@@ -37,7 +42,7 @@ class CarDBTest {
     @Test
     void whenAddCarThenReturnThisCar() {
         Car car = generateCar1();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car);
         Car foundCar = carStorage.findCarById(1);
         String actual = foundCar.getCarModel();
@@ -49,7 +54,7 @@ class CarDBTest {
     @Test
     void whenAddCarThenReturnUpdatedCar() {
         Car car = generateCar1();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car);
         Car foundCar = carStorage.findCarById(1);
         String updatedCarModel = "updatedModel";
@@ -64,7 +69,7 @@ class CarDBTest {
     @Test
     void whenDeleteCarThenWeCanNotGetItFromDBAndExceptionIsThrow() {
         Car car = generateCar1();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car);
         Car foundCar = carStorage.findCarById(1);
         carStorage.delete(foundCar);
@@ -76,7 +81,7 @@ class CarDBTest {
     @Test
     void whenIdExistsThenGetCar() {
         Car car = generateCar1();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car);
         Car foundCar = carStorage.findCarById(1);
         String actual = foundCar.getCarModel();
@@ -88,7 +93,7 @@ class CarDBTest {
     void whenFindByModelThenReturn1CarOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car1);
         carStorage.add(car2);
         Map<String, List<String>> params = new HashMap<>();
@@ -103,7 +108,7 @@ class CarDBTest {
     void whenFindByModelThenReturn2CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car1);
         carStorage.add(car2);
         Map<String, List<String>> params = new HashMap<>();
@@ -118,7 +123,7 @@ class CarDBTest {
     void whenFindByModelThenReturn0CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car1);
         carStorage.add(car2);
         Map<String, List<String>> params = new HashMap<>();
@@ -133,7 +138,7 @@ class CarDBTest {
     void whenFindByMileageThenReturn1CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car1);
         carStorage.add(car2);
         Map<String, List<String>> params = new HashMap<>();
@@ -148,7 +153,7 @@ class CarDBTest {
     void whenFindByMileageThenReturn2CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car1);
         carStorage.add(car2);
         Map<String, List<String>> params = new HashMap<>();
@@ -163,7 +168,7 @@ class CarDBTest {
     void whenFindByEngineVolumeThenReturn1CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car1);
         carStorage.add(car2);
         Map<String, List<String>> params = new HashMap<>();
@@ -178,7 +183,7 @@ class CarDBTest {
     void whenFindByEngineVolumeThenReturn2CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
-        CarStorage carStorage = CarDB.getINSTANCE();
+        CarStorage carStorage = context.getBean(CarStorage.class);
         carStorage.add(car1);
         carStorage.add(car2);
         Map<String, List<String>> params = new HashMap<>();

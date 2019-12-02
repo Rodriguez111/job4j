@@ -1,14 +1,15 @@
-package sellcars.servlets;
+package sellcars.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import sellcars.controller.*;
+import sellcars.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,11 +22,11 @@ import java.util.Map;
 @Controller
 public class JsonController {
     private final static Logger LOG = LoggerFactory.getLogger(JsonController.class);
-    private final static ModelValidator CAR_BRAND = ValidateCarBrand.getINSTANCE();
-    private final static ModelValidator CAR_BODY = ValidateCarBody.getINSTANCE();
-    private final static ModelValidator CAR_TRANSMISSION = ValidateTransmission.getINSTANCE();
-    private final static ModelValidator CAR_ENGINE = ValidateEngine.getINSTANCE();
-    private final static AdvertValidator ADVERT_VALIDATOR = ValidateAdvert.getINSTANCE();
+    private ModelValidator carBrand;
+    private ModelValidator carBody;
+    private ModelValidator carTransmission;
+    private ModelValidator carEngine;
+    private AdvertValidator advertValidator;
 
     @RequestMapping(value = "/json", method = RequestMethod.POST)
     protected void handleJson(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -40,28 +41,28 @@ public class JsonController {
         String jsonStringToClient = "";
 
         if (requestFromClient.equals("getListOfCarBrands")) {
-            jsonStringToClient = CAR_BRAND.getModels();
+            jsonStringToClient = carBrand.getModels();
         } else if (requestFromClient.equals("getListOfCarBodies")) {
-            jsonStringToClient = CAR_BODY.getModels();
+            jsonStringToClient = carBody.getModels();
         } else if (requestFromClient.equals("getListOfTransmissions")) {
-            jsonStringToClient = CAR_TRANSMISSION.getModels();
+            jsonStringToClient = carTransmission.getModels();
         } else if (requestFromClient.equals("getListOfEngines")) {
-            jsonStringToClient = CAR_ENGINE.getModels();
+            jsonStringToClient = carEngine.getModels();
         } else if (requestFromClient.equals("getAllAdverts")) {
-            jsonStringToClient = ADVERT_VALIDATOR.getAllAdverts();
+            jsonStringToClient = advertValidator.getAllAdverts();
         } else if (requestFromClient.contains("getAdvert")) {
             ObjectMapper mapper = new ObjectMapper();
             TypeReference<HashMap<String, Integer>> typeRef = new TypeReference<>() { };
             Map<String, Integer> mapFromJson = mapper.readValue(requestFromClient, typeRef);
             int id = mapFromJson.get("getAdvert");
-            jsonStringToClient = ADVERT_VALIDATOR.getAdvertById(id);
+            jsonStringToClient = advertValidator.getAdvertById(id);
             req.setAttribute("userLogin", req.getSession().getAttribute("userLogin"));
         } else if (requestFromClient.contains("setSoldStatus")) {
             ObjectMapper mapper = new ObjectMapper();
             TypeReference<HashMap<String, Integer>> typeRef = new TypeReference<>() { };
             Map<String, Integer> mapFromJson = mapper.readValue(requestFromClient, typeRef);
             int id = mapFromJson.get("setSoldStatus");
-            String result = ADVERT_VALIDATOR.setSoldStatus(id);
+            String result = advertValidator.setSoldStatus(id);
             Map<String, String> map = Map.of("result", result);
             try {
                 jsonStringToClient = new ObjectMapper().writeValueAsString(map);
@@ -69,7 +70,7 @@ public class JsonController {
                 e.printStackTrace();
             }
         } else if (requestFromClient.contains("filterSelect")) {
-            jsonStringToClient = ADVERT_VALIDATOR.getAdvertByFilters(requestFromClient);
+            jsonStringToClient = advertValidator.getAdvertByFilters(requestFromClient);
         }
 
         resp.setContentType("text/json");
@@ -79,5 +80,26 @@ public class JsonController {
         printWriter.flush();
         LOG.info("Exit method");
 
+    }
+
+    @Autowired
+    public void setCarBrand(ValidateCarBrand carBrand) {
+        this.carBrand = carBrand;
+    }
+    @Autowired
+    public void setCarBody(ValidateCarBody carBody) {
+        this.carBody = carBody;
+    }
+    @Autowired
+    public void setCarTransmission(ValidateTransmission carTransmission) {
+        this.carTransmission = carTransmission;
+    }
+    @Autowired
+    public void setCarEngine(ValidateEngine carEngine) {
+        this.carEngine = carEngine;
+    }
+    @Autowired
+    public void setAdvertValidator(AdvertValidator advertValidator) {
+        this.advertValidator = advertValidator;
     }
 }

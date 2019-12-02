@@ -10,6 +10,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <style>
     <%@include file="/resources/css/main.css" %>
 </style>
@@ -21,13 +22,15 @@
 </head>
 <body>
 <div class="user_block">
+
     <div class="info_block" <c:if test="${errorMessage != null}">style="color: #DB1013; font-size: 13px" </c:if>>
         <c:if test="${errorMessage != null}">${errorMessage}</c:if>
-        <c:if test="${sessionScope.userLogin != null}">Вы вошли как ${sessionScope.userLogin} </c:if>
+        <sec:authorize access="isAuthenticated()">Вы вошли как  <sec:authentication property="principal.login" /> </sec:authorize>
     </div>
-    <c:if test="${sessionScope.userName == null}">
+
+    <sec:authorize access="!isAuthenticated()">
         <div class="login_block">
-            <form class="login_form" action="${pageContext.servletContext.contextPath}/login" method="post">
+            <form class="login_form" action="${pageContext.servletContext.contextPath}/login/process" method="post">
                 <label for="login_field" class="login_label">Login: </label>
                 <input type='text' name='login' id="login_field">
                 <label for="password_field" class="password_label">Password: </label>
@@ -42,9 +45,10 @@
             </div>
 
         </div>
-    </c:if>
 
-    <c:if test="${sessionScope.userName != null}">
+    </sec:authorize>
+
+    <sec:authorize access="isAuthenticated()">
         <form id="issue_advert_form" action="${pageContext.servletContext.contextPath}/create" method="post">
             <input id="issue" type="hidden" name='action' value="issue">
             <button class="issue_advert_button" onclick="submitIssueForm()">Подать объявление</button>
@@ -53,8 +57,8 @@
         <form class="logout_form" action="${pageContext.servletContext.contextPath}/logout" method="post">
             <input type='submit' value="Выйти" id="logout_button"/>
         </form>
-    </c:if>
 
+    </sec:authorize>
 
 </div>
 

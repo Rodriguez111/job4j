@@ -1,24 +1,22 @@
-package sellcars.controller;
+package sellcars.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 import sellcars.models.Transmission;
 import sellcars.persistent.GetModel;
 import sellcars.persistent.ModelGetter;
 
 import java.util.Comparator;
 import java.util.List;
-
+@Component
 public class ValidateTransmission implements ModelValidator {
-    private final static ModelValidator INSTANCE = new ValidateTransmission();
+
     private final static ModelGetter<Transmission> MODEL_GETTER = new GetModel<>();
 
     private ValidateTransmission() {
     }
 
-    public static ModelValidator getINSTANCE() {
-        return INSTANCE;
-    }
 
     @Override
     public String getModels() {
