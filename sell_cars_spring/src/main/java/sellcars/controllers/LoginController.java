@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     @RequestMapping("/login")
-    public String showMainPage(@RequestParam(name = "error", required = false) Boolean error, Model model) {
-        if (Boolean.TRUE.equals(error)) {
-            model.addAttribute("errorMessage", "НЕВЕРНЫЙ логин/пароль");
-        }
+    public String showMainPage() {
         return "main_view";
     }
 

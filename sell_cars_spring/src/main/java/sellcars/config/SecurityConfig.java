@@ -18,7 +18,6 @@ import sellcars.security.AuthProviderImpl;
 @ComponentScan("sellcars.security")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     private AuthProviderImpl authProvider;
 
     @Override
@@ -39,7 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error=true")
                 .and().exceptionHandling().accessDeniedPage("/") //авторизованный пользователь редиректится сюда при попытке попасть на страницу, которая служит только для неавторизованных
                 .and().logout();
-
     }
 
 

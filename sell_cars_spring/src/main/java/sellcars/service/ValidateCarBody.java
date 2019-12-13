@@ -2,26 +2,25 @@ package sellcars.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import sellcars.models.CarBody;
-import sellcars.persistent.GetModel;
-import sellcars.persistent.ModelGetter;
+import sellcars.repository.CarBodyRepository;
 
 import java.util.Comparator;
 import java.util.List;
-@Component
+
+@Service
 public class ValidateCarBody implements ModelValidator {
 
-    private final static ModelGetter<CarBody> MODEL_GETTER = new GetModel<>();
+    private CarBodyRepository carBodyRepository;
 
     private ValidateCarBody() {
     }
 
-
-
     @Override
     public String getModels() {
-        List<CarBody> list = MODEL_GETTER.getAll("CarBody");
+        List<CarBody> list = (List<CarBody>) carBodyRepository.findAll();
         list.sort(new Comparator<CarBody>() {
             @Override
             public int compare(CarBody o1, CarBody o2) {
@@ -37,4 +36,8 @@ public class ValidateCarBody implements ModelValidator {
         return result;
     }
 
+    @Autowired
+    public void setCarBodyRepository(CarBodyRepository carBodyRepository) {
+        this.carBodyRepository = carBodyRepository;
+    }
 }

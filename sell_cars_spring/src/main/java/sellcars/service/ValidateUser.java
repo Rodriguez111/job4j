@@ -1,30 +1,34 @@
 package sellcars.service;
 
+import javassist.ClassPath;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sellcars.config.CoreConfig;
 import sellcars.models.User;
-import sellcars.persistent.UserDB;
-import sellcars.persistent.UserStorage;
 
-@Component
+import sellcars.repository.UserRepository;
+
+
+@Service
 public class ValidateUser implements UserValidator {
 
-
-    private UserStorage userStorage;
-
     private PasswordEncoder passwordEncoder;
+
+    private UserRepository userRepository;
 
     private ValidateUser() {
     }
 
-
     @Transactional
     @Override
     public String addUser(JSONObject jsonFromClient) {
+        String result = "Пользователь с таким логином уже существует";
         String login = jsonFromClient.getString("login");
         String password = jsonFromClient.getString("password");
         String name = jsonFromClient.getString("name");
@@ -33,8 +37,15 @@ public class ValidateUser implements UserValidator {
         String email = jsonFromClient.getString("email");
 
         password = passwordEncoder.encode(password);
-        User user = new User(login, password, name, surname, phone, email);
-        return userStorage.add(user);
+
+        User existingUser = userRepository.findByLogin(login);
+        if (existingUser == null) {
+
+            User user = new User(login, password, name, surname, phone, email);
+            userRepository.save(user);
+            result = "OK";
+        }
+        return result;
     }
 
     @Override
@@ -42,26 +53,10 @@ public class ValidateUser implements UserValidator {
         return null;
     }
 
+
     @Override
     public String deleteUser(int id) {
         return null;
-    }
-
-    @Override
-    public JSONObject authorizeUser(String login, String password) {
-        JSONObject jsonObject = new JSONObject();
-        User user = userStorage.findUserByLogin(login);
-        if (user.getLogin() != null) {
-            if (!password.equals(user.getPassword())) {
-                jsonObject.put("errorPassword", "Неверный пароль");
-            } else {
-                jsonObject.put("userName", user.getName());
-                jsonObject.put("userSurname", user.getSurname());
-            }
-        } else {
-            jsonObject.put("errorLogin", "Пользователя с таким логином не существует");
-        }
-        return jsonObject;
     }
 
     @Autowired
@@ -69,8 +64,10 @@ public class ValidateUser implements UserValidator {
         this.passwordEncoder = passwordEncoder;
     }
 
+
     @Autowired
-    public void setUserStorage(UserStorage userStorage) {
-        this.userStorage = userStorage;
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
+
 }

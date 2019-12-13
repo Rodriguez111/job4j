@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 @Controller
 public class RegisterController {
 
-      private  ValidateUser validateUser;
+    private UserValidator userValidator;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     protected void registerUser(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -29,20 +29,19 @@ public class RegisterController {
         }
         String stringFromClient = sb.toString();
         JSONObject jsonObject = new JSONObject(stringFromClient);
-        String result = validateUser.addUser(jsonObject);
-            JSONObject jsonFromServer  = new JSONObject();
-            jsonFromServer.put("messageFromServer", result);
-            jsonFromServer.put("login", jsonObject.getString("login"));
-            resp.setContentType("text/json");
-            resp.setCharacterEncoding("UTF-8");
-            PrintWriter writer = resp.getWriter();
-            writer.print(jsonFromServer);
-            writer.flush();
-
+        String result = userValidator.addUser(jsonObject);
+        JSONObject jsonFromServer = new JSONObject();
+        jsonFromServer.put("messageFromServer", result);
+        jsonFromServer.put("login", jsonObject.getString("login"));
+        resp.setContentType("text/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter writer = resp.getWriter();
+        writer.print(jsonFromServer);
+        writer.flush();
     }
 
     @Autowired
-    public void setValidateUser(ValidateUser validateUser) {
-        this.validateUser = validateUser;
+    public void setUserValidator(UserValidator userValidator) {
+        this.userValidator = userValidator;
     }
 }

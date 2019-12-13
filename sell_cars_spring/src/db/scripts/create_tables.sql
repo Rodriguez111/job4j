@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS cars
 CREATE TABLE IF NOT EXISTS users
 (
     id serial primary key,
-    login character varying(20) NOT NULL,
+    login character varying(20) UNIQUE NOT NULL,
     password character varying(255) NOT NULL,
     name character varying(20) NOT NULL,
     surname character varying(20) NOT NULL,

@@ -23,8 +23,14 @@
 <body>
 <div class="user_block">
 
-    <div class="info_block" <c:if test="${errorMessage != null}">style="color: #DB1013; font-size: 13px" </c:if>>
-        <c:if test="${errorMessage != null}">${errorMessage}</c:if>
+    <div class="info_block" <c:if test="${param.error == true}">style="color: #DB1013; font-size: 13px" </c:if>>
+
+<c:if test="${param.error == true}">
+            <%=((Exception) request.getSession().getAttribute("SPRING_SECURITY_LAST_EXCEPTION")).getMessage()%>
+</c:if>
+
+
+
         <sec:authorize access="isAuthenticated()">Вы вошли как  <sec:authentication property="principal.login" /> </sec:authorize>
     </div>
 

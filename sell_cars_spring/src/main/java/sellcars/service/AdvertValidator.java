@@ -9,8 +9,6 @@ public interface AdvertValidator {
 
     String setSoldStatus(int advertId);
 
-    String deleteAdvert(int id);
-
     String getAllAdverts();
 
     String getAdvertById(int id);

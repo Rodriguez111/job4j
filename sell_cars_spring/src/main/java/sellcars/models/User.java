@@ -21,7 +21,7 @@ public class User {
     private String login;
 
 
-    @Column(name = "password", length = 255, nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "name", length = 20, nullable = false)
@@ -37,8 +37,7 @@ public class User {
     private String email;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //user - имя поля в классе Advert
-    //FetchType.LAZY - загрузка коллекции только по требованию
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //user - имя поля в классе Advert
     private Set<Advert> adverts = new HashSet<>();
 
     public User() {
@@ -117,21 +116,16 @@ public class User {
         this.adverts = adverts;
     }
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id;
+        return Objects.equals(login, user.login);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(login);
     }
 }

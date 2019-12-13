@@ -2,13 +2,19 @@ package sellcars.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.criterion.Restrictions;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sellcars.models.*;
-import sellcars.persistent.*;
+import sellcars.repository.AdvertRepository;
+import sellcars.repository.CarRepository;
+import sellcars.repository.PhotoRepository;
+import sellcars.repository.UserRepository;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -17,36 +23,45 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component
+@Service
+@Transactional
 public class ValidateAdvert implements AdvertValidator {
     private final static Logger LOG = LoggerFactory.getLogger(ValidateAdvert.class);
 
-    private CarStorage carStorage;
-    private UserStorage userStorage;
-    private AdvertStorage advertStorage;
-    private PhotoStorage photoStorage;
+    private CarRepository carRepository;
+
+    private UserRepository userRepository;
+    private AdvertRepository advertRepository;
+    private PhotoRepository photoRepository;
+
+    private CarValidator carValidator;
 
     private ValidateAdvert() {
     }
 
 
-
     @Override
     public String addAdvert(int carId, double price, List<String> listOfPhotos, String userLogin) {
         LOG.info("Enter method");
-        String result;
+        String result = "";
         Advert advert = new Advert();
-        Car car = carStorage.findCarById(carId);
-        User user = userStorage.findUserByLogin(userLogin);
-        if (car.getBodyType() == null) {
+        Optional<Car> optionalCar = carRepository.findById(carId);
+        User user = userRepository.findByLogin(userLogin);
+        if (optionalCar.isEmpty()) {
             result = "Произошла непредвиденная ошибка, при создании объявления не найден объект Car";
             LOG.error(result);
         } else {
+            Car car = optionalCar.get();
             advert.setCar(car);
             advert.setUser(user);
             advert.setDate(getFormattedDateStamp());
             advert.setPrice(price);
-            result = advertStorage.add(advert);
+            Advert savedAdvert = advertRepository.save(advert);
+            if (savedAdvert != null) {
+                result = String.valueOf(savedAdvert.getId());
+            } else {
+                result = "При добавлении объявления произошла непредвиденная ошибка.";
+            }
         }
         LOG.info("Exit method");
 
@@ -66,21 +81,19 @@ public class ValidateAdvert implements AdvertValidator {
     @Override
     public String setSoldStatus(int advertId) {
         LOG.info("Enter method");
-        Advert advert = advertStorage.findById(advertId);
-        advert.setSold(true);
-        advertStorage.update(advert);
+        Optional<Advert> optionalAdvert = advertRepository.findById(advertId);
+        if (optionalAdvert.isPresent()) {
+            Advert advert = optionalAdvert.get();
+            advert.setSold(true);
+            advertRepository.save(advert);
+        }
         LOG.info("Exit method");
         return "OK";
     }
 
     @Override
-    public String deleteAdvert(int id) {
-        return null;
-    }
-
-    @Override
     public String getAllAdverts() {
-        List<Advert> allAdverts = advertStorage.getAll();
+        List<Advert> allAdverts = (List<Advert>) advertRepository.findAll();
         allAdverts.sort(new Comparator<Advert>() {
             @Override
             public int compare(Advert o1, Advert o2) {
@@ -98,12 +111,15 @@ public class ValidateAdvert implements AdvertValidator {
 
     @Override
     public String getAdvertById(int id) {
-        Advert advert = advertStorage.findById(id);
         String result = "";
-        try {
-            result = new ObjectMapper().writeValueAsString(advert);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        Optional<Advert> optionalAdvert = advertRepository.findById(id);
+        if (optionalAdvert.isPresent()) {
+            Advert advert = optionalAdvert.get();
+            try {
+                result = new ObjectMapper().writeValueAsString(advert);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }
@@ -115,35 +131,62 @@ public class ValidateAdvert implements AdvertValidator {
     }
 
     private void setPhotos(int advertId, List<String> listOfPhotos) {
-        Advert advert = advertStorage.findById(advertId);
         List<Photo> list = new ArrayList<>();
-        for (String eachFileName : listOfPhotos) {
-            Photo photo = new Photo(eachFileName);
-            photo.setAdvertId(advertId);
-            photoStorage.add(photo);
+        Optional<Advert> optionalAdvert = advertRepository.findById(advertId);
+        if (optionalAdvert.isPresent()) {
+            Advert advert = optionalAdvert.get();
+            for (String eachFileName : listOfPhotos) {
+                Photo photo = new Photo(eachFileName);
+                photo.setAdvertId(advertId);
+                photoRepository.save(photo);
+            }
+            advert.setPhotos(list);
+
         }
-        advert.setPhotos(list);
+
+
     }
 
     @Override
     public String getAdvertByFilters(String jsonFromClient) {
-                JSONObject json = new JSONObject(jsonFromClient);
+        JSONObject json = new JSONObject(jsonFromClient);
         Map<String, List<String>> params = json.getJSONObject("filterSelect").toMap().entrySet()
                 .stream().collect(Collectors.toMap(Map.Entry::getKey, e -> List.of((String) e.getValue())));
 
-        if (params.containsKey("lastDay")) {
-            params.put("date", List.of(getSomeDaysAgoFormattedTime(1), getCurrentFormattedTime()));
-            params.remove("lastDay");
-        }
-        if (params.containsKey("priceFrom") || params.containsKey("priceTo")) {
-            handlePriceParameters(params);
+        List<Car> listOfCars = carValidator.getCarsByFilter(params);
+
+        Specification<Advert> specification = AdvertSpecifications.matchAdvertsByCarList(listOfCars);
+        List<Advert> resultList = new ArrayList<>();
+        if (listOfCars.size() > 0) {
+            if (params.containsKey("lastDay")) {
+                params.put("date", List.of(getSomeDaysAgoFormattedTime(1), getCurrentFormattedTime()));
+                params.remove("lastDay");
+                String min = params.get("date").get(0);
+                String max = params.get("date").get(1);
+                specification = specification.and(AdvertSpecifications.selectByDateBetween(min, max));
+            }
+            if (params.containsKey("priceFrom") || params.containsKey("priceTo")) {
+                handlePriceParameters(params);
+                double min = Double.parseDouble(params.get("price").get(0));
+                double max = Double.parseDouble(params.get("price").get(1));
+                specification = specification.and(AdvertSpecifications.selectByPriceBetween(min, max));
+            }
+            if (params.containsKey("sold")) {
+                boolean IsSold = params.get("sold").get(0).equals("true");
+                specification = specification.and(AdvertSpecifications.selectBySoldStatus(IsSold));
+            }
+            if (params.containsKey("photos")) {
+                if (params.get("photos").get(0).equals("true")) {
+                    specification = specification.and(AdvertSpecifications.selectOnlyWithPhoto());
+                }
+            }
+            resultList = advertRepository.findAll(specification);
         }
 
-        List<Advert> listOfAdverts = advertStorage.findByFilter(params);
-        listOfAdverts.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+
         String result = "";
         try {
-            result = new ObjectMapper().writeValueAsString(listOfAdverts);
+            result = new ObjectMapper().writeValueAsString(resultList);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -169,10 +212,10 @@ public class ValidateAdvert implements AdvertValidator {
         params.put("price", list);
         if (params.containsKey("priceFrom")) {
             params.computeIfPresent("price", (k, v) -> {
-                        v.remove(0);
-                        v.add(0, params.get("priceFrom").get(0));
-                        return v;
-                    });
+                v.remove(0);
+                v.add(0, params.get("priceFrom").get(0));
+                return v;
+            });
             params.remove("priceFrom");
         }
         if (params.containsKey("priceTo")) {
@@ -185,23 +228,29 @@ public class ValidateAdvert implements AdvertValidator {
         }
     }
 
+
     @Autowired
-    public void setCarStorage(CarStorage carStorage) {
-        this.carStorage = carStorage;
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Autowired
-    public void setUserStorage(UserStorage userStorage) {
-        this.userStorage = userStorage;
+    public void setPhotoRepository(PhotoRepository photoRepository) {
+        this.photoRepository = photoRepository;
     }
 
     @Autowired
-    public void setAdvertStorage(AdvertStorage advertStorage) {
-        this.advertStorage = advertStorage;
+    public void setCarRepository(CarRepository carRepository) {
+        this.carRepository = carRepository;
     }
 
     @Autowired
-    public void setPhotoStorage(PhotoStorage photoStorage) {
-        this.photoStorage = photoStorage;
+    public void setAdvertRepository(AdvertRepository advertRepository) {
+        this.advertRepository = advertRepository;
+    }
+
+    @Autowired
+    public void setCarValidator(CarValidator carValidator) {
+        this.carValidator = carValidator;
     }
 }

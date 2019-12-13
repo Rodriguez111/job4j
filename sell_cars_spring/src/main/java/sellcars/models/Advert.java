@@ -6,10 +6,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "adverts")
@@ -42,7 +39,6 @@ public class Advert {
 
     @Fetch(FetchMode.SELECT)
     @OneToMany(mappedBy = "advertId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //mappedBy = "advertId" - ссылка на поле advertId класса Photo;
     private List<Photo> photos = new ArrayList<>();
 
 
@@ -112,4 +108,22 @@ public class Advert {
         this.photos = photos;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Advert advert = (Advert) o;
+        return id == advert.id &&
+                Double.compare(advert.price, price) == 0 &&
+                sold == advert.sold &&
+                Objects.equals(date, advert.date) &&
+                Objects.equals(car, advert.car) &&
+                Objects.equals(user, advert.user) &&
+                Objects.equals(photos, advert.photos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, car, price, user, sold, photos);
+    }
 }

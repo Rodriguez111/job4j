@@ -11,7 +11,6 @@ public interface UserValidator {
 
     String deleteUser(int id);
 
-    JSONObject authorizeUser(String login, String password);
 
 
 }

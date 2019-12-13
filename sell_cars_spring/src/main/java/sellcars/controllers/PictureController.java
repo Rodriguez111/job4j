@@ -10,10 +10,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
 @Controller
 public class PictureController {
     private static final String UPLOAD_DIRECTORY = "uploaded_photos/";
-
 
     @RequestMapping(value = "/picture", method = RequestMethod.GET)
     protected void showPictures(HttpServletRequest req, HttpServletResponse resp) throws IOException {

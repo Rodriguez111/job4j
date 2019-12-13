@@ -52,14 +52,16 @@ public class JsonController {
             jsonStringToClient = advertValidator.getAllAdverts();
         } else if (requestFromClient.contains("getAdvert")) {
             ObjectMapper mapper = new ObjectMapper();
-            TypeReference<HashMap<String, Integer>> typeRef = new TypeReference<>() { };
+            TypeReference<HashMap<String, Integer>> typeRef = new TypeReference<>() {
+            };
             Map<String, Integer> mapFromJson = mapper.readValue(requestFromClient, typeRef);
             int id = mapFromJson.get("getAdvert");
             jsonStringToClient = advertValidator.getAdvertById(id);
             req.setAttribute("userLogin", req.getSession().getAttribute("userLogin"));
         } else if (requestFromClient.contains("setSoldStatus")) {
             ObjectMapper mapper = new ObjectMapper();
-            TypeReference<HashMap<String, Integer>> typeRef = new TypeReference<>() { };
+            TypeReference<HashMap<String, Integer>> typeRef = new TypeReference<>() {
+            };
             Map<String, Integer> mapFromJson = mapper.readValue(requestFromClient, typeRef);
             int id = mapFromJson.get("setSoldStatus");
             String result = advertValidator.setSoldStatus(id);
@@ -86,18 +88,22 @@ public class JsonController {
     public void setCarBrand(ValidateCarBrand carBrand) {
         this.carBrand = carBrand;
     }
+
     @Autowired
     public void setCarBody(ValidateCarBody carBody) {
         this.carBody = carBody;
     }
+
     @Autowired
     public void setCarTransmission(ValidateTransmission carTransmission) {
         this.carTransmission = carTransmission;
     }
+
     @Autowired
     public void setCarEngine(ValidateEngine carEngine) {
         this.carEngine = carEngine;
     }
+
     @Autowired
     public void setAdvertValidator(AdvertValidator advertValidator) {
         this.advertValidator = advertValidator;

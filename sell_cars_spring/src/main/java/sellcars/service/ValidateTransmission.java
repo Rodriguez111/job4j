@@ -2,17 +2,19 @@ package sellcars.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import sellcars.models.Transmission;
-import sellcars.persistent.GetModel;
-import sellcars.persistent.ModelGetter;
+import sellcars.repository.TransmissionRepository;
 
 import java.util.Comparator;
 import java.util.List;
-@Component
+
+@Service
 public class ValidateTransmission implements ModelValidator {
 
-    private final static ModelGetter<Transmission> MODEL_GETTER = new GetModel<>();
+    private TransmissionRepository transmissionRepository;
+
 
     private ValidateTransmission() {
     }
@@ -20,7 +22,7 @@ public class ValidateTransmission implements ModelValidator {
 
     @Override
     public String getModels() {
-        List<Transmission> list = MODEL_GETTER.getAll("Transmission");
+        List<Transmission> list = (List<Transmission>) transmissionRepository.findAll();
         list.sort(new Comparator<Transmission>() {
             @Override
             public int compare(Transmission o1, Transmission o2) {
@@ -36,4 +38,8 @@ public class ValidateTransmission implements ModelValidator {
         return result;
     }
 
+    @Autowired
+    public void setTransmissionRepository(TransmissionRepository transmissionRepository) {
+        this.transmissionRepository = transmissionRepository;
+    }
 }

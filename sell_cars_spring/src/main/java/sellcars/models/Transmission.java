@@ -1,6 +1,7 @@
 package sellcars.models;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "transmission")
@@ -34,5 +35,19 @@ public class Transmission {
 
     public void setTransmissionType(String transmissionType) {
         this.transmissionType = transmissionType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transmission that = (Transmission) o;
+        return id == that.id &&
+                Objects.equals(transmissionType, that.transmissionType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, transmissionType);
     }
 }

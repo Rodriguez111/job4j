@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Controller
 public class IssueAdvertController {
     private CarValidator carValidator;
@@ -118,7 +119,6 @@ public class IssueAdvertController {
         }
         return res;
     }
-
 
     private void getParameter(FileItem item) {
         String paramValue = new String(item.getString().getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);

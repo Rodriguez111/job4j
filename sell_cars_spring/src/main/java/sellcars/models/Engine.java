@@ -1,6 +1,7 @@
 package sellcars.models;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "engine")
@@ -19,7 +20,6 @@ public class Engine {
 
     public Engine(String engineType) {
         this.engineType = engineType;
-
     }
 
     public int getId() {
@@ -38,4 +38,17 @@ public class Engine {
         this.engineType = engineType;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Engine engine = (Engine) o;
+        return id == engine.id &&
+                Objects.equals(engineType, engine.engineType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, engineType);
+    }
 }
