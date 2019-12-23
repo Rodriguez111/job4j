@@ -1,0 +1,259 @@
+body{
+    background-color: #E1F5FF;
+}
+
+.user_block {
+    width: 100%;
+    height: 60px;
+    border: thin solid #F9C37B;
+}
+
+.login_block {
+    position: absolute;
+    font-size: 12px;
+    right: 60px;
+
+}
+
+.logout_form {
+    position: absolute;
+    font-size: 12px;
+    right: 60px;
+    top: 14px;
+}
+
+.register_block {
+    position: absolute;
+    top: 35px;
+}
+
+.register_form {
+    position: absolute;
+    left: 135px;
+    top: -3px;
+}
+
+#register_button {
+    height: 20px;
+    font-size: 12px;
+}
+
+#login_field, #password_field {
+    width: 90px;
+    height: 12px;
+    margin-top: 6px;
+}
+
+#login_field {
+    margin-right: 10px;
+}
+
+#enter_button {
+    margin-left: 8px;
+    height: 19px;
+
+}
+
+
+.issue_advert_button {
+    position: absolute;
+    left: 60px;
+    top: 18px;
+    width: 180px;
+    padding:10px;
+    font-size: 15px;
+    font-weight: bold;
+    color:#FFFFFF;
+    background:#FF7733;
+    display: block;
+    text-align: center;
+    border-radius:5px;
+    -moz-user-select: none; /* Mozilla Firefox */
+    -ms-user-select: none; /* Internet Explorer (не поддерживается) */
+    -o-user-select: none; /* Opera Presto (не поддерживается) */
+    -webkit-user-select: none; /* Google Chrome, Opera Next, Safari */
+}
+
+.issue_advert_button:hover {
+    background-color: #CB4908;
+}
+
+.issue_advert_button:active {
+    background-color: #A73801;
+}
+
+
+
+.main_table {
+    width: 100%;
+    margin: auto;
+    background-color: rgba(245, 245, 245, 0.81);
+    border-collapse: collapse;
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border: #F9C37B solid thin;
+    display: block;
+}
+
+
+
+.left_margin {
+    width: 28%;
+    height: 50px;
+    display: inline-block;
+    position: relative;
+    margin-left: -1px;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-size: 14px ;
+    font-weight: bold ;
+
+}
+
+.central_container {
+    position: relative;
+    width: 44%;
+    height: 50px;
+    display: inline-block;
+    margin-left: -4px;
+
+}
+
+.right_margin {
+    position: relative;
+    width: 28%;
+    height: 50px;
+    display: inline-block;
+    margin-left: -4px;
+
+
+}
+
+
+.first_column {
+    width: 20%;
+}
+.second_column {
+    width: 40%;
+}
+.third_column {
+    width: 15%;
+}
+.fourth_column {
+    width: 15%;
+}
+.fifth_column {
+    width: 10%;
+}
+
+.info_block {
+    position: absolute;
+    color: #0ecd00;
+    font-weight: bold;
+    right: 430px;
+    top: 25px;
+    width: 280px;
+    font-size: 18px;
+    vertical-align:middle;
+}
+
+
+thead tr {
+    height: 60px;
+    text-align: center;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #6199c1;
+}
+
+tr {
+    /*border: #F9C37B solid thin;*/
+    /*border-radius: 25px;*/
+    height: 80px;
+    border-top: #F9C37B solid thin;
+}
+
+.inner_cell {
+    border-right: #F9C37B solid thin;
+    border-left: #F9C37B solid thin;
+}
+
+tbody td {
+
+    padding: 5px;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+
+}
+
+.header_row {
+    border-top: none;
+}
+
+
+
+.filters_container {
+    position: absolute;
+    width: 230px;
+    height: 240px;
+    background-color: #c8dce6;
+    right: 10px;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.filters_title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.last_day_container, .only_with_photo_container, .brand_selector_container, .price_container {
+    position: relative;
+    margin-top: 15px;
+}
+
+
+
+
+
+#for_last_day_input {
+    position: absolute;
+    top: 0;
+    left: 150px;
+}
+
+#only_with_photo_input {
+    position: absolute;
+    top: 0;
+    left: 120px;
+}
+
+#brand_selector {
+    position: absolute;
+    top: 0;
+    left: 80px;
+    width: 100px;
+}
+
+#apply_filter_button {
+    position: absolute;
+    bottom: 25px;
+
+}
+
+#reset_filter_button {
+    margin-top: 20px;
+    right: 20px;
+}
+
+.price_title_from, .price_title_to, #price_from, #price_to {
+    display: inline-block;
+}
+
+#price_from, #price_to {
+    width: 65px;
+}

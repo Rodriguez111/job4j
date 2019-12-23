@@ -17,9 +17,6 @@ public class ValidateUser implements UserValidator {
 
     private UserRepository userRepository;
 
-    private ValidateUser() {
-    }
-
     @Transactional
     @Override
     public String addUser(JSONObject jsonFromClient) {

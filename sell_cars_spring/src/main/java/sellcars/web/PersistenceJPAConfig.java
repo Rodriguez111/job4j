@@ -1,4 +1,4 @@
-package sellcars.config;
+package sellcars.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
