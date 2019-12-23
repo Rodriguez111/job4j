@@ -1,7 +1,8 @@
-package sellcars.controller;
+package sellcars.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.domain.Specification;
 import sellcars.models.*;
 import sellcars.persistent.*;
 
@@ -76,7 +77,4 @@ public class ValidateCar implements CarValidator {
         return null;
     }
 
-    public static void main(String[] args) {
-
-    }
 }

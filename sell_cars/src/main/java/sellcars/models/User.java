@@ -37,7 +37,7 @@ public class User {
     private String email;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //user - имя поля в классе Advert
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //user - имя поля в классе Advert
     //FetchType.LAZY - загрузка коллекции только по требованию
     private Set<Advert> adverts = new HashSet<>();
 

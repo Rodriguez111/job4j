@@ -1,11 +1,11 @@
-package sellcars.servlets;
+package sellcars.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sellcars.controller.*;
+import sellcars.service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

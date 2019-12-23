@@ -1,4 +1,4 @@
-package sellcars.servlets;
+package sellcars.controllers;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

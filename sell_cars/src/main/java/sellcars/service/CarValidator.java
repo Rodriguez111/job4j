@@ -1,4 +1,4 @@
-package sellcars.controller;
+package sellcars.service;
 
 import sellcars.models.Car;
 

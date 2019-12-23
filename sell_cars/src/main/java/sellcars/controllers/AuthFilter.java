@@ -1,4 +1,4 @@
-package sellcars.servlets;
+package sellcars.controllers;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

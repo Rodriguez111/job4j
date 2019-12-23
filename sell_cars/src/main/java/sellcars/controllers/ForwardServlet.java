@@ -1,16 +1,13 @@
-package sellcars.servlets;
+package sellcars.controllers;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class ForwardServlet extends HttpServlet {
     private final Map<String, BiConsumer<HttpServletRequest, HttpServletResponse>> dispatcher = new HashMap<>();

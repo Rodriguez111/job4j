@@ -1,9 +1,7 @@
-package sellcars.servlets;
+package sellcars.controllers;
 
-import org.hibernate.Session;
-import org.json.JSONObject;
-import sellcars.controller.UserValidator;
-import sellcars.controller.ValidateUser;
+import sellcars.service.UserValidator;
+import sellcars.service.ValidateUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

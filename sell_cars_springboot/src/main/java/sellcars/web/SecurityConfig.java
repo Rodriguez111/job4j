@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan("sellcars.security")
+@ComponentScan("sellcars")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private AuthenticationProvider authProvider;
@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login/process")
                 .usernameParameter("login")
                 .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/")//авторизованный пользователь редиректится сюда
+                //.defaultSuccessUrl("/")//авторизованный пользователь редиректится сюда
                 //.and().exceptionHandling().accessDeniedPage("/") //авторизованный пользователь редиректится сюда при попытке попасть на страницу, которая служит только для неавторизованных
                 .and().logout();
     }

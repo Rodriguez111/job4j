@@ -1,15 +1,14 @@
-package sellcars.servlets;
+package sellcars.controllers;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import sellcars.controller.AdvertValidator;
-import sellcars.controller.CarValidator;
-import sellcars.controller.ValidateAdvert;
-import sellcars.controller.ValidateCar;
+import sellcars.service.AdvertValidator;
+import sellcars.service.CarValidator;
+import sellcars.service.ValidateAdvert;
+import sellcars.service.ValidateCar;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

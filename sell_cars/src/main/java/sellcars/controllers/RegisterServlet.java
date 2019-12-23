@@ -1,8 +1,8 @@
-package sellcars.servlets;
+package sellcars.controllers;
 
 import org.json.JSONObject;
-import sellcars.controller.UserValidator;
-import sellcars.controller.ValidateUser;
+import sellcars.service.UserValidator;
+import sellcars.service.ValidateUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.BiConsumer;
 
 public class RegisterServlet extends HttpServlet {
 
