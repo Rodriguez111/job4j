@@ -129,8 +129,8 @@ public class User {
         return Objects.hash(login);
     }
 
-    @Override
-    public String toString() {
-        return login;
-    }
+//    @Override
+//    public String toString() {
+//        return login;
+//    }
 }
