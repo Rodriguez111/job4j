@@ -169,8 +169,8 @@ public class ValidateAdvert implements AdvertValidator {
                 specification = specification.and(AdvertSpecifications.selectByPriceBetween(min, max));
             }
             if (params.containsKey("sold")) {
-                boolean IsSold = params.get("sold").get(0).equals("true");
-                specification = specification.and(AdvertSpecifications.selectBySoldStatus(IsSold));
+                boolean isSold = params.get("sold").get(0).equals("true");
+                specification = specification.and(AdvertSpecifications.selectBySoldStatus(isSold));
             }
             if (params.containsKey("photos")) {
                 if (params.get("photos").get(0).equals("true")) {

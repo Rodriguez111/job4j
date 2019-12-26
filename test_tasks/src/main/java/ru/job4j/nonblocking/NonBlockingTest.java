@@ -25,7 +25,7 @@ public class NonBlockingTest {
         List<Future> list = new ArrayList<>();
 
       long start = System.currentTimeMillis();
-      for(int i = 0; i < THREADS_AMOUNT; i++) {
+      for (int i = 0; i < THREADS_AMOUNT; i++) {
           Future future = executor.submit(new Runnable() {
               @Override
               public void run() {
@@ -37,7 +37,7 @@ public class NonBlockingTest {
           list.add(future);
       }
 
-      for(Future eachTask : list) {
+      for (Future eachTask : list) {
           try {
               eachTask.get();
           } catch (ExecutionException e) {
@@ -49,7 +49,7 @@ public class NonBlockingTest {
 
 
         start = System.currentTimeMillis();
-        for(int i = 0; i < THREADS_AMOUNT; i++) {
+        for (int i = 0; i < THREADS_AMOUNT; i++) {
             Future future = executor.submit(new Runnable() {
                 @Override
                 public void run() {
@@ -61,7 +61,7 @@ public class NonBlockingTest {
             list.add(future);
         }
 
-        for(Future eachTask : list) {
+        for (Future eachTask : list) {
             try {
                 eachTask.get();
             } catch (ExecutionException e) {

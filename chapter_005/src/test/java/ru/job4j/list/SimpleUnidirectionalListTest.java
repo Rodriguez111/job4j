@@ -42,7 +42,7 @@ public class SimpleUnidirectionalListTest {
     @Test
     public void whenDeleteFromTheEmptyListThenNoSuchElementException() {
         list = new SimpleUnidirectionalList<>();
-        Throwable exception = assertThrows(NoSuchElementException.class, ()-> {
+        Throwable exception = assertThrows(NoSuchElementException.class, () -> {
             list.delete();
 
         });

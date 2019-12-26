@@ -28,7 +28,7 @@ public class SimpleArrayListTest {
 
     @Test
     public void shouldThrowConcurrentModificationExceptionWhenGrowArrayDuringIteration() {
-        Throwable exception = assertThrows(ConcurrentModificationException.class, ()-> {
+        Throwable exception = assertThrows(ConcurrentModificationException.class, () -> {
             for (Integer each : listOfIntegers) {
                 if (each == 1) {
                     listOfIntegers.add(3);
@@ -40,7 +40,7 @@ public class SimpleArrayListTest {
     @Test
     public void shouldThrowNoSuchElementExceptionWhenNextInvokedAndNoElementsMore() {
         Iterator iterator = listOfIntegers.iterator();
-        Throwable exception = assertThrows(NoSuchElementException.class, ()-> {
+        Throwable exception = assertThrows(NoSuchElementException.class, () -> {
             iterator.next();
             iterator.next();
             iterator.next();

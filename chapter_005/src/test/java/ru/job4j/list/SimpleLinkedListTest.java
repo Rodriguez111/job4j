@@ -41,7 +41,7 @@ public class SimpleLinkedListTest {
 
     @Test
     public void shouldThrowConcurrentModificationExceptionWhenGrowArrayDuringIteration() {
-        Throwable exception = assertThrows(ConcurrentModificationException.class, ()-> {
+        Throwable exception = assertThrows(ConcurrentModificationException.class, () -> {
             for (Integer each : listOfIntegers) {
                 if (each == 1) {
                     listOfIntegers.add(10);

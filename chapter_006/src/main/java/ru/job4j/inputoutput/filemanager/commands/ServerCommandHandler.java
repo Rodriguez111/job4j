@@ -25,7 +25,7 @@ public class ServerCommandHandler extends CommandHandler {
         menu.get(4).setCommand(exitProgram);
     }
 
-    Consumer<Integer> enterDirectory = (commandIndex)-> {
+    Consumer<Integer> enterDirectory = (commandIndex) -> {
         String directoryToEnter = connection.read();
         if (fileManager.enterDirectory(directoryToEnter)) {
             sendOkMessageToClient("");
@@ -34,7 +34,7 @@ public class ServerCommandHandler extends CommandHandler {
         }
     };
 
-    Consumer<Integer> exitDirectory = (commandIndex)-> {
+    Consumer<Integer> exitDirectory = (commandIndex) -> {
         if (fileManager.exitDirectory()) {
         sendOkMessageToClient("");
     } else {

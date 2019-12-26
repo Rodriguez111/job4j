@@ -74,7 +74,7 @@ class CarDBTest {
     }
 
     @Test
-    void WhenIdExistsThenGetCar() {
+    void whenIdExistsThenGetCar() {
         Car car = generateCar1();
         CarStorage carStorage = CarDB.getINSTANCE();
         carStorage.add(car);
@@ -85,7 +85,7 @@ class CarDBTest {
     }
 
     @Test
-    void WhenFindByModelThenReturn1CarOf2() {
+    void whenFindByModelThenReturn1CarOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
         CarStorage carStorage = CarDB.getINSTANCE();
@@ -100,7 +100,7 @@ class CarDBTest {
     }
 
     @Test
-    void WhenFindByModelThenReturn2CarsOf2() {
+    void whenFindByModelThenReturn2CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
         CarStorage carStorage = CarDB.getINSTANCE();
@@ -115,7 +115,7 @@ class CarDBTest {
     }
 
     @Test
-    void WhenFindByModelThenReturn0CarsOf2() {
+    void whenFindByModelThenReturn0CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
         CarStorage carStorage = CarDB.getINSTANCE();
@@ -130,7 +130,7 @@ class CarDBTest {
     }
 
     @Test
-    void WhenFindByMileageThenReturn1CarsOf2() {
+    void whenFindByMileageThenReturn1CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
         CarStorage carStorage = CarDB.getINSTANCE();
@@ -145,7 +145,7 @@ class CarDBTest {
     }
 
     @Test
-    void WhenFindByMileageThenReturn2CarsOf2() {
+    void whenFindByMileageThenReturn2CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
         CarStorage carStorage = CarDB.getINSTANCE();
@@ -160,7 +160,7 @@ class CarDBTest {
     }
 
     @Test
-    void WhenFindByEngineVolumeThenReturn1CarsOf2() {
+    void whenFindByEngineVolumeThenReturn1CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
         CarStorage carStorage = CarDB.getINSTANCE();
@@ -175,7 +175,7 @@ class CarDBTest {
     }
 
     @Test
-    void WhenFindByEngineVolumeThenReturn2CarsOf2() {
+    void whenFindByEngineVolumeThenReturn2CarsOf2() {
         Car car1 = generateCar1();
         Car car2 = generateCar2();
         CarStorage carStorage = CarDB.getINSTANCE();

@@ -67,31 +67,34 @@ public class Board {
         while (!Thread.currentThread().isInterrupted()) {
             Random random = new Random();
             int result = random.nextInt(4);
+            ReentrantLock newPrevious;
             switch (result) {
-                case 0: {
-                    ReentrantLock newPrevious = moveLeft(previous);
+                case 0:
+                    newPrevious = moveLeft(previous);
                     if (newPrevious != null) {
                         previous = newPrevious;
                     }
-                }
-                case 1: {
-                    ReentrantLock newPrevious = moveRight(previous);
+
+                case 1:
+                    newPrevious = moveRight(previous);
                     if (newPrevious != null) {
                         previous = newPrevious;
                     }
-                }
-                case 2: {
-                    ReentrantLock newPrevious = moveUp(previous);
+
+                case 2:
+                    newPrevious = moveUp(previous);
                     if (newPrevious != null) {
                         previous = newPrevious;
                     }
-                }
-                case 3: {
-                    ReentrantLock newPrevious = moveDown(previous);
+
+                case 3:
+                    newPrevious = moveDown(previous);
                     if (newPrevious != null) {
                         previous = newPrevious;
                     }
-                }
+
+                default:
+
             }
         }
     }

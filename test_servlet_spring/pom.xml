@@ -86,7 +86,7 @@
 <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.security/spring-security-config &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-config</artifactId>-->
+<!--            <artifactId>spring-security-web</artifactId>-->
 <!--            <version>5.2.0.RELEASE</version>-->
 <!--        </dependency>-->
 <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security &ndash;&gt;-->

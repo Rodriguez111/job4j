@@ -110,16 +110,20 @@ public class Advert {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Advert advert = (Advert) o;
-        return id == advert.id &&
-                Double.compare(advert.price, price) == 0 &&
-                sold == advert.sold &&
-                Objects.equals(date, advert.date) &&
-                Objects.equals(car, advert.car) &&
-                Objects.equals(user, advert.user) &&
-                Objects.equals(photos, advert.photos);
+        return id == advert.id
+                && Double.compare(advert.price, price) == 0
+                && sold == advert.sold
+                && Objects.equals(date, advert.date)
+                && Objects.equals(car, advert.car)
+                && Objects.equals(user, advert.user)
+                && Objects.equals(photos, advert.photos);
     }
 
     @Override

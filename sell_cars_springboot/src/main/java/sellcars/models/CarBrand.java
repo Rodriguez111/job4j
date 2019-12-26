@@ -40,11 +40,15 @@ public class CarBrand {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CarBrand carBrand1 = (CarBrand) o;
-        return id == carBrand1.id &&
-                Objects.equals(carBrand, carBrand1.carBrand);
+        return id == carBrand1.id
+                && Objects.equals(carBrand, carBrand1.carBrand);
     }
 
     @Override

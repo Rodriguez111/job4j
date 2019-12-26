@@ -3,7 +3,7 @@
 //import org.junit.jupiter.api.Test;
 //import org.springframework.context.ApplicationContext;
 //import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-//import sellcars.config.CoreConfig;
+//import sellcars.web.CoreConfig;
 //import sellcars.models.User;
 //
 //import static org.hamcrest.MatcherAssert.assertThat;

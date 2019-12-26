@@ -42,9 +42,8 @@ public class Analyze {
 
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
-        Map<Integer, String> currentMap = current.stream().collect(Collectors.toMap(each -> each.id, each ->each.name));
-        previous.stream().forEach(e ->
-                {
+        Map<Integer, String> currentMap = current.stream().collect(Collectors.toMap(each -> each.id, each -> each.name));
+        previous.stream().forEach(e -> {
                     String deleted = currentMap.remove(e.id);
                     if (deleted == null) {
                         info.deleted++;

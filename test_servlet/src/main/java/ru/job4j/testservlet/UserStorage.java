@@ -9,7 +9,7 @@ public class UserStorage {
     private static int count;
 
     private UserStorage() {
-        users.add(new User(generateId(),"root", "root", "root@mail.com"));
+        users.add(new User(generateId(), "root", "root", "root@mail.com"));
     }
 
     public static UserStorage getINSTANCE() {

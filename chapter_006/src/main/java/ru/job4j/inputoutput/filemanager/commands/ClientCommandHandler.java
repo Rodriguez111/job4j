@@ -23,14 +23,14 @@ public class ClientCommandHandler extends CommandHandler {
         menu.get(4).setCommand(exitProgram);
     }
 
-    Consumer<Integer> enterDirectory = (commandIndex)-> {
+    Consumer<Integer> enterDirectory = (commandIndex) -> {
         connection.write(commandIndex + Messages.END_OF_FRAME.getMessage());
         String argument = consoleManager.consoleStringReader("Enter directory:");
         connection.write(argument + Messages.END_OF_FRAME.getMessage());
         consoleManager.print(connection.read());
         };
 
-    Consumer<Integer> exitDirectory = (commandIndex)-> {
+    Consumer<Integer> exitDirectory = (commandIndex) -> {
         connection.write(commandIndex + Messages.END_OF_FRAME.getMessage());
         consoleManager.print(connection.read());
         };

@@ -82,7 +82,7 @@ class AdvertDBTest {
     }
 
     @Test
-    void WhenIdExistsThenGetCar() {
+    void whenIdExistsThenGetCar() {
         AdvertStorage advertStorage = AdvertDB.getINSTANCE();
         Advert advert1 = generateAdvert1();
         advertStorage.add(advert1);
@@ -93,7 +93,7 @@ class AdvertDBTest {
     }
 
     @Test
-    void WhenFindByModelThenReturn1AdvertOf2() {
+    void whenFindByModelThenReturn1AdvertOf2() {
         AdvertStorage advertStorage = AdvertDB.getINSTANCE();
         Advert advert1 = generateAdvert1();
         Advert advert2 = generateAdvert2();
@@ -109,7 +109,7 @@ class AdvertDBTest {
     }
 
     @Test
-    void WhenFindByModelThenReturn2AdvertOf2() {
+    void whenFindByModelThenReturn2AdvertOf2() {
         AdvertStorage advertStorage = AdvertDB.getINSTANCE();
         Advert advert1 = generateAdvert1();
         Advert advert2 = generateAdvert2();
@@ -125,7 +125,7 @@ class AdvertDBTest {
     }
 
     @Test
-    void WhenFindByPriceThenReturn1AdvertOf2() {
+    void whenFindByPriceThenReturn1AdvertOf2() {
         AdvertStorage advertStorage = AdvertDB.getINSTANCE();
         Advert advert1 = generateAdvert1();
         Advert advert2 = generateAdvert2();
@@ -141,7 +141,7 @@ class AdvertDBTest {
     }
 
     @Test
-    void WhenFindByPriceThenReturn2AdvertOf2() {
+    void whenFindByPriceThenReturn2AdvertOf2() {
         AdvertStorage advertStorage = AdvertDB.getINSTANCE();
         Advert advert1 = generateAdvert1();
         Advert advert2 = generateAdvert2();

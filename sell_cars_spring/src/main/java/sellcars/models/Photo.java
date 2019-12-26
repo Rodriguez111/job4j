@@ -51,12 +51,16 @@ public class Photo {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Photo photo = (Photo) o;
-        return id == photo.id &&
-                advertId == photo.advertId &&
-                Objects.equals(fileName, photo.fileName);
+        return id == photo.id
+               && advertId == photo.advertId
+               && Objects.equals(fileName, photo.fileName);
     }
 
     @Override

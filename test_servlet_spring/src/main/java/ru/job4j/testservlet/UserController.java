@@ -26,21 +26,21 @@ import java.io.IOException;
 public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-@RequestMapping(value="/users", method = RequestMethod.GET)
+@RequestMapping(value = "/users", method = RequestMethod.GET)
     public String showUserView(ModelMap model) {
     model.addAttribute("users", UserStorage.getINSTANCE().getUsers());
     return "User_view";
 
     }
 
-    @RequestMapping(value="/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
     protected String addUser(HttpServletRequest req) {
         String id = req.getParameter("id");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         UserStorage.getINSTANCE().add(new User(id, login, password, email));
-        return "redirect:" +"/users";
+        return "redirect:" + "/users";
 
     }
 }
