@@ -6,6 +6,7 @@
   <build>
     <defaultGoal>validate</defaultGoal>
     <plugins>
+
     </plugins>
   </build>
 
