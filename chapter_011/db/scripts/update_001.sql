@@ -1,6 +1,3 @@
-create database users;
-
-
 CREATE TABLE IF NOT EXISTS roles
                (id serial primary key,
                role character varying(60) UNIQUE NOT NULL);
