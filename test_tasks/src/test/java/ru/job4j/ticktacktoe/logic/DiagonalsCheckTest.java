@@ -14,6 +14,7 @@ import static org.junit.Assert.assertThat;
 
 public class DiagonalsCheckTest {
     private DiagonalsChecker diagonalsChecker;
+    private String ls = System.lineSeparator();
 
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     private PrintStream originalStream;
@@ -78,7 +79,7 @@ public class DiagonalsCheckTest {
         init(test);
         diagonalsChecker.isWin('X', 'O');
         String actual = baos.toString();
-        String expected = "X Won!\r\n";
+        String expected = "X Won!" + ls;
         assertThat(actual, is(expected));
     }
 
@@ -88,7 +89,7 @@ public class DiagonalsCheckTest {
         init(test);
         diagonalsChecker.isWin('X', 'O');
         String actual = baos.toString();
-        String expected = "O Won!\r\n";
+        String expected = "O Won!" + ls;
         assertThat(actual, is(expected));
     }
 

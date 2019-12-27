@@ -17,6 +17,8 @@ public class SidesAndDiagonalsCheckTest {
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     private PrintStream originalStream;
     private PrintStream newStream;
+    private String ls = System.lineSeparator();
+
 
     @Before
     public void before() {
@@ -114,7 +116,7 @@ public class SidesAndDiagonalsCheckTest {
         init(test);
         sidesAndDiagonalsCheck.isWin('X', 'O');
         String actual = baos.toString();
-        String expected = "X Won!\r\n";
+        String expected = "X Won!" + ls;
         assertThat(actual, is(expected));
     }
 
@@ -124,7 +126,7 @@ public class SidesAndDiagonalsCheckTest {
         init(test);
         sidesAndDiagonalsCheck.isWin('X', 'O');
         String actual = baos.toString();
-        String expected = "O Won!\r\n";
+        String expected = "O Won!" + ls;
         assertThat(actual, is(expected));
     }
 
@@ -134,7 +136,7 @@ public class SidesAndDiagonalsCheckTest {
         init(test);
         sidesAndDiagonalsCheck.isWin('X', 'O');
         String actual = baos.toString();
-        String expected = "X Won!\r\n";
+        String expected = "X Won!" + ls;
         assertThat(actual, is(expected));
     }
 
@@ -144,7 +146,7 @@ public class SidesAndDiagonalsCheckTest {
         init(test);
         sidesAndDiagonalsCheck.isWin('X', 'O');
         String actual = baos.toString();
-        String expected = "O Won!\r\n";
+        String expected = "O Won!" + ls;
         assertThat(actual, is(expected));
     }
 
@@ -154,7 +156,7 @@ public class SidesAndDiagonalsCheckTest {
         init(test);
         sidesAndDiagonalsCheck.isWin('X', 'O');
         String actual = baos.toString();
-        String expected = "X Won!\r\n";
+        String expected = "X Won!" + ls;
         assertThat(actual, is(expected));
     }
 
@@ -164,7 +166,7 @@ public class SidesAndDiagonalsCheckTest {
         init(test);
         sidesAndDiagonalsCheck.isWin('X', 'O');
         String actual = baos.toString();
-        String expected = "O Won!\r\n";
+        String expected = "O Won!" + ls;
         assertThat(actual, is(expected));
     }
 

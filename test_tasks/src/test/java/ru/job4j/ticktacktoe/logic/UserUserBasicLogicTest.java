@@ -17,6 +17,7 @@ import static org.junit.Assert.assertThat;
 
 public class UserUserBasicLogicTest {
     private UserUserBasicLogic userUserBasicLogic;
+    private String ls = System.lineSeparator();
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
     private PrintStream originalStream;
@@ -93,7 +94,7 @@ public class UserUserBasicLogicTest {
         init(test, sidesCheck);
         userUserBasicLogic.isWin();
         String actual = baos.toString();
-        String expected = "X Won!\r\n";
+        String expected = "X Won!" + ls;
         assertThat(actual, is(expected));
     }
 
@@ -104,7 +105,7 @@ public class UserUserBasicLogicTest {
         init(test, sidesCheck);
         userUserBasicLogic.isWin();
         String actual = baos.toString();
-        String expected = "O Won!\r\n";
+        String expected = "O Won!" + ls;
         assertThat(actual, is(expected));
     }
 
@@ -126,7 +127,7 @@ public class UserUserBasicLogicTest {
         init(test, winChecker);
         userUserBasicLogic.isWin();
         String actual = baos.toString();
-        String expected = "O Won!\r\n";
+        String expected = "O Won!" + ls;
         assertThat(actual, is(expected));
     }
 
@@ -148,7 +149,7 @@ public class UserUserBasicLogicTest {
         init(test, winChecker);
         userUserBasicLogic.isWin();
         String actual = baos.toString();
-        String expected = "O Won!\r\n";
+        String expected = "O Won!" + ls;
         assertThat(actual, is(expected));
     }
 
@@ -159,7 +160,7 @@ public class UserUserBasicLogicTest {
         init(test, winChecker);
         userUserBasicLogic.isWin();
         String actual = baos.toString();
-        String expected = "X Won!\r\n";
+        String expected = "X Won!" + ls;
         assertThat(actual, is(expected));
     }
 }

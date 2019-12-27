@@ -146,7 +146,6 @@
 
         var form = document.getElementById("issue_form");
         if (validateForm() && fileSizeIsValidated) {
-            console.log("submit");
             form.submit();
         }
     }
@@ -184,7 +183,7 @@
         if (result) {
             result = testNumericForPrice(price);
         }
-        return true;
+        return result;
     }
 
     function checkAllFields() {

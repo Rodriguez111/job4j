@@ -28,9 +28,9 @@
 
         <div sec:authorize="isAuthenticated()">
             Вы вошли как
-<!--            <span sec:authentication="name"></span>-->
+            <span sec:authentication="name"></span>
 <!--            <span th:text="${#authentication.principal.login}"></span>-->
-            <span th:text="${#authentication.getPrincipal().getLogin()}"></span>
+<!--            <span th:text="${#authentication.getPrincipal().getLogin()}"></span>-->
         </div>
 
         <span th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]?.message}"></span>
