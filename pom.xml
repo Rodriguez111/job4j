@@ -35,6 +35,8 @@
         <module>sell_cars</module>
         <module>sell_cars_spring</module>
         <module>sell_cars_springboot</module>
+        <module>urlshort</module>
+
 
     </modules>
 
