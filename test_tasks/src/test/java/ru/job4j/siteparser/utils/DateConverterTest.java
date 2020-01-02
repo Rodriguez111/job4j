@@ -47,7 +47,7 @@ public class DateConverterTest {
 
     @Test
     public void whenElementIsInCorrectDateThenTrue2() {
-        String html = "<td style=\"text-align:center\" class=\"altCol\">29 мар 19, 13:16</td>";
+        String html = "<td style=\"text-align:center\" class=\"altCol\">29 мар 20, 13:16</td>";
         Document document = Jsoup.parse(html, "", Parser.xmlParser());
         Element element = document;
 
