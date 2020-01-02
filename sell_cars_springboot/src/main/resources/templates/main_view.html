@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+
 >
 
 
@@ -28,8 +28,8 @@
 
         <div sec:authorize="isAuthenticated()">
             Вы вошли как
-            <span sec:authentication="name"></span>
-<!--            <span th:text="${#authentication.principal.login}"></span>-->
+<!--            <span sec:authentication="name"></span>-->
+            <span th:text="${#authentication.principal.login}"></span>
 <!--            <span th:text="${#authentication.getPrincipal().getLogin()}"></span>-->
         </div>
 
