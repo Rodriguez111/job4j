@@ -17,6 +17,7 @@ public class ThreadState {
         join(first);
         join(second);
         System.out.println("Job is done");
+
     }
 
     private static void printThreadState(Thread thread) {
