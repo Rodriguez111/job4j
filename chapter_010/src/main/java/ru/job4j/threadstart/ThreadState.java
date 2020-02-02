@@ -1,5 +1,8 @@
 package ru.job4j.threadstart;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ThreadState {
     public static void main(String[] args) {
         Thread first = new Thread(
@@ -14,8 +17,10 @@ public class ThreadState {
         printThreadName(second);
         second.start();
         printThreadState(second);
-        join(first);
-        join(second);
+        List<Thread> threads = new ArrayList<>();
+        threads.add(first);
+        threads.add(second);
+        waitAllFinish(threads);
         System.out.println("Job is done");
 
     }
@@ -34,13 +39,22 @@ public class ThreadState {
         System.out.println(Thread.currentThread().getName());
     }
 
-    private static void join(Thread thread) {
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    private static void waitAllFinish(List<Thread> threads) {
+        boolean result = false;
+        do {
+            if (threads.size() == 0) {
+                result = true;
+            }
+            for (Thread eachThread : threads) {
+                if (eachThread.getState() == Thread.State.TERMINATED) {
+                    threads.remove(eachThread);
+                    break;
+                }
+            }
+        }while (!result);
     }
+
+
 
 
 
