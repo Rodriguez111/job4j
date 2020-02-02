@@ -7,8 +7,6 @@ public class Wget {
                 Wget::download
         );
         downloadThread.start();
-        join(downloadThread);
-        finish();
     }
 
     private static void download() {
@@ -20,19 +18,7 @@ public class Wget {
                 e.printStackTrace();
             }
         }
-    }
-
-    private static void join(Thread thread) {
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void finish() {
-        System.out.println();
-        System.out.println("Download complete");
+        System.out.print("\rDownload complete");
     }
 
 }
