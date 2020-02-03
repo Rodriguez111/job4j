@@ -4,21 +4,19 @@ public class Wget {
 
     public static void main(String[] args) {
         Thread downloadThread = new Thread(
-                Wget::download
+                () -> {
+                    for (int i = 0; i <= 100; i++) {
+                        System.out.print("\rLoading : " + i + "%");
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.print("\rDownload complete");
+                }
         );
         downloadThread.start();
-    }
-
-    private static void download() {
-        for (int i = 0; i <= 100; i++) {
-            System.out.print("\rLoading : " + i + "%");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.print("\rDownload complete");
     }
 
 }
