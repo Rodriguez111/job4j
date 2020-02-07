@@ -12,14 +12,21 @@ public class ThreadState {
         first.start();
         second.start();
 
-        while (first.getState() != Thread.State.TERMINATED && second.getState() != Thread.State.TERMINATED){
+        while (!(first.getState() == Thread.State.TERMINATED && second.getState() == Thread.State.TERMINATED)){
+            System.out.println("First - " + first.getState() + " and second - " + second.getState());
 
         };
+        System.out.println("END: First - " + first.getState() + " and second - " + second.getState());
         System.out.println("Job is done");
     }
 
     private static void run() {
         System.out.println(Thread.currentThread().getName());
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
